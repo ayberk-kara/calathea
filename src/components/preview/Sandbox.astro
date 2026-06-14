@@ -78,7 +78,8 @@ import Eyebrow from '../Eyebrow.astro';
     <ExperienceRow
       title="Senior ML Systems Engineer · Acme Corp"
       range="2024 — Present"
-      description="Leading the inference platform team."
+      summary="Leading the inference platform team."
+      bullets={['Shipped the fused-attention serving runtime.', 'Owns the paged KV-cache rollout.']}
     />
     <ExperienceRow title="Line Cook · Riverside Diner" range="2016 — 2018" nonEng />
   </div>
@@ -87,8 +88,16 @@ import Eyebrow from '../Eyebrow.astro';
 <div class="sample">
   <p class="sample__label">EDUCATIONROW</p>
   <div class="stack">
-    <EducationRow degree="M.S. Computer Science" line="Stanford University · Systems" year="2023" highlight />
-    <EducationRow degree="B.S. Electrical Engineering" line="UC Berkeley" year="2019" />
+    <EducationRow
+      degree="M.S. Computer Science"
+      org="Stanford University"
+      location="Systems"
+      range="2023"
+      summary="Focused on distributed systems and ML infrastructure."
+      bullets={['Thesis on large-scale embedding retrieval.', 'TA for distributed systems.']}
+      highlight
+    />
+    <EducationRow degree="B.S. Electrical Engineering" org="UC Berkeley" range="2019" />
   </div>
 </div>
 

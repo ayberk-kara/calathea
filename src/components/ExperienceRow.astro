@@ -2,20 +2,28 @@
 interface Props {
   title: string;
   range: string;
-  description?: string;
+  summary?: string;
+  bullets?: string[];
   nonEng?: boolean;
 }
 
-const { title, range, description, nonEng = false } = Astro.props;
+const { title, range, summary, bullets = [], nonEng = false } = Astro.props;
 ---
 
-<div class:list={['experience-row', { 'experience-row--non-eng': nonEng }]}>
+<div class:list={['experience-row', { 'experience-row--non-eng': nonEng }]} tabindex="0">
   <div class="experience-row__main">
     <div class="experience-row__heading">
       <span class="experience-row__title">{title}</span>
       {nonEng && <span class="experience-row__tag">non-eng</span>}
     </div>
-    {description && <p class="experience-row__desc">{description}</p>}
+    {summary && <p class="experience-row__desc">{summary}</p>}
+    {bullets.length > 0 && (
+      <div class="experience-row__details">
+        <ul class="experience-row__bullets">
+          {bullets.map((bullet) => <li>{bullet}</li>)}
+        </ul>
+      </div>
+    )}
   </div>
   <div class="experience-row__range">{range}</div>
 </div>
@@ -81,5 +89,48 @@ const { title, range, description, nonEng = false } = Astro.props;
     font-size: 11.5px;
     color: var(--muted);
     white-space: nowrap;
+  }
+
+  .experience-row__details {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    margin-top: 0;
+    transition: grid-template-rows 0.25s ease, margin-top 0.25s ease;
+  }
+
+  .experience-row:hover .experience-row__details,
+  .experience-row:focus-within .experience-row__details {
+    grid-template-rows: 1fr;
+    margin-top: var(--space-7);
+  }
+
+  .experience-row__bullets {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    list-style: none;
+  }
+
+  .experience-row__bullets li {
+    position: relative;
+    padding-left: var(--space-14);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .experience-row__bullets li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--rust);
+  }
+
+  .experience-row:focus-visible {
+    outline: var(--border-width-focus) solid var(--amber);
+    outline-offset: 2px;
   }
 </style>

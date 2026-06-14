@@ -26,7 +26,8 @@ const t = getUI(locale);
         <ExperienceRow
           title={`${entry.title} · ${entry.org}`}
           range={entry.range}
-          description={entry.description}
+          summary={entry.summary}
+          bullets={entry.bullets}
           nonEng={!entry.eng}
         />
       ))}
@@ -39,8 +40,11 @@ const t = getUI(locale);
       {education.map((entry) => (
         <EducationRow
           degree={entry.degree}
-          line={[entry.org, entry.description].filter(Boolean).join(' · ')}
-          year={entry.year}
+          org={entry.org}
+          location={entry.location}
+          range={entry.range}
+          summary={entry.summary}
+          bullets={entry.bullets}
           highlight={entry.highlight}
         />
       ))}
