@@ -12,6 +12,8 @@ project: gpu-inference
 lang: en
 ---
 
+import Callout from '../../components/Callout.astro';
+
 ## Counting the bytes
 
 Take a square multiply of size `N`. It does `2N³` floating-point operations
@@ -20,7 +22,7 @@ hierarchy — every output element re-reads a full row and column. The ratio
 of those two numbers, flops per byte, is the **arithmetic intensity**, and
 it's the single most useful number you can compute about a kernel.
 
-```
+```rust
 flops = 2*N*N*N
 bytes  = N*N*N * 4   // one f32 read per MAC, roughly
 intensity = flops / bytes  // ~0.5, independent of N
@@ -35,6 +37,12 @@ inside the memory-bound region — the math is cheap, the data movement isn't.
 
 That tells you exactly what to fix first, and it isn't the math.
 
+<Callout label="If you remember one thing:">
+  Faster math can't move a point that's sitting on the bandwidth diagonal. To
+  go faster you have to move right — raise the intensity by reusing each byte
+  you fetch.
+</Callout>
+
 ## Tiling for reuse
 
 The fix is to stop streaming whole rows and columns from global memory.
@@ -43,7 +51,7 @@ every thread in the block reuse them for a tile of outputs. Reuse is the
 whole game: a tile of size `T` cuts global traffic by roughly a factor of
 `T`, which shifts the intensity right by the same factor.
 
-```
+```rust
 Asub[local] = A[tileRow(t)];   // one global read…
 Bsub[local] = B[tileCol(t)];   // …reused T times from shared memory
 barrier();

@@ -1,0 +1,107 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TagChip from '../../components/TagChip.astro';
+import VersionPill from '../../components/VersionPill.astro';
+import Prose from '../../components/Prose.astro';
+import { getPostPill, formatPostDate, getReadingTime } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+interface Props {
+  post: Awaited<ReturnType<typeof getCollection<'posts'>>>[number];
+}
+
+const { post } = Astro.props;
+const { data, body } = post;
+const { Content } = await render(post);
+
+const pill = getPostPill(post);
+const read = getReadingTime(body ?? '');
+const project = data.project ? await getEntry(data.project) : undefined;
+---
+
+<BaseLayout title={`${data.title} — AK`} description={data.excerpt} active="blog">
+  <article class="post">
+    <a href="/blog" class="post__breadcrumb">← THE BLOG</a>
+
+    <div class="post__tags">
+      <VersionPill kind={pill.kind} major={pill.major}>{pill.label}</VersionPill>
+      {data.tags.map((tag) => <TagChip variant="muted">{tag}</TagChip>)}
+    </div>
+
+    <h1 class="post__title">{data.title}</h1>
+
+    <div class="post__meta">
+      <span>{formatPostDate(data.date, 'long')}</span>
+      <span>·</span>
+      <span>{read} min read</span>
+      {project && (
+        <a href={`/projects/${project.id}`} class="post__project">↳ back to {project.data.title}</a>
+      )}
+    </div>
+
+    <Prose>
+      <Content />
+    </Prose>
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    max-width: var(--measure-sm);
+    margin: 0 auto;
+    padding: var(--space-44) var(--space-32) var(--space-56);
+  }
+
+  .post__breadcrumb {
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+  }
+
+  .post__tags {
+    display: flex;
+    align-items: center;
+    gap: var(--space-9);
+    flex-wrap: wrap;
+    margin: var(--space-24) 0 var(--space-16);
+  }
+
+  .post__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(30px, 4.4vw, 50px);
+    line-height: 1.08;
+    margin: 0 0 var(--space-18);
+    letter-spacing: 0.3px;
+    color: var(--ink);
+  }
+
+  .post__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-16);
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: var(--space-30);
+    padding-bottom: var(--space-22);
+    border-bottom: var(--border-width) solid var(--border-strong);
+  }
+
+  .post__project {
+    margin-left: auto;
+    text-decoration: none;
+    color: var(--rust);
+    font-weight: 700;
+    border-bottom: var(--border-width-sm) solid var(--rust);
+    padding-bottom: var(--space-2);
+  }
+</style>
