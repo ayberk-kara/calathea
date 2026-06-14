@@ -45,6 +45,13 @@ export interface UIStrings {
     contactSubject: string;
     contactMessage: string;
     contactSend: string;
+    contactSending: string;
+    contactNameLabel: string;
+    contactEmailLabel: string;
+    contactSubjectLabel: string;
+    contactMessageLabel: string;
+    contactSuccess: string;
+    contactError: string;
   };
   projectsPage: {
     eyebrow: string;
@@ -129,6 +136,13 @@ export const en: UIStrings = {
     contactSubject: 'Subject',
     contactMessage: 'Message…',
     contactSend: 'Send message →',
+    contactSending: 'Sending…',
+    contactNameLabel: 'Your name',
+    contactEmailLabel: 'Your email address',
+    contactSubjectLabel: 'Subject',
+    contactMessageLabel: 'Your message',
+    contactSuccess: "Thanks — your message is on its way. I'll get back to you soon.",
+    contactError: 'Something went wrong sending that. Please try again in a moment.',
   },
   projectsPage: {
     eyebrow: 'THE WHOLE SHELF',

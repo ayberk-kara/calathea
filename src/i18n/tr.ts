@@ -48,6 +48,13 @@ export const tr: UIStrings = {
     contactSubject: 'Konu',
     contactMessage: 'Mesaj…',
     contactSend: 'Mesaj gönder →',
+    contactSending: 'Gönderiliyor…',
+    contactNameLabel: 'İsminiz',
+    contactEmailLabel: 'E-posta adresiniz',
+    contactSubjectLabel: 'Konu',
+    contactMessageLabel: 'Mesajınız',
+    contactSuccess: 'Teşekkürler — mesajınız iletildi. En kısa sürede dönüş yapacağım.',
+    contactError: 'Gönderirken bir sorun oluştu. Lütfen birazdan tekrar deneyin.',
   },
   projectsPage: {
     eyebrow: 'TÜM RAF',
