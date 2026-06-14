@@ -37,21 +37,30 @@ const feed = localizeAll(await getCollection('posts'), locale)
 
   <div class="blog-contact__col" id="contact">
     <SectionHeader color="rust" size="md">{t.home.contactHeading}</SectionHeader>
-    <form class="contact-form">
+    <form
+      class="contact-form"
+      data-contact-form
+      data-sending-text={t.home.contactSending}
+      data-success-text={t.home.contactSuccess}
+      data-error-text={t.home.contactError}
+    >
       <div class="contact-form__row">
-        <input class="field" type="text" name="name" placeholder={t.home.contactName} required />
-        <input class="field" type="email" name="email" placeholder={t.home.contactEmail} required />
+        <label class="sr-only" for="contact-name">{t.home.contactNameLabel}</label>
+        <input class="field" id="contact-name" type="text" name="name" placeholder={t.home.contactName} required />
+        <label class="sr-only" for="contact-email">{t.home.contactEmailLabel}</label>
+        <input class="field" id="contact-email" type="email" name="email" placeholder={t.home.contactEmail} required />
       </div>
-      <input class="field" type="text" name="subject" placeholder={t.home.contactSubject} />
-      <textarea class="field field--area" name="message" placeholder={t.home.contactMessage} rows="5" required></textarea>
+      <label class="sr-only" for="contact-subject">{t.home.contactSubjectLabel}</label>
+      <input class="field" id="contact-subject" type="text" name="subject" placeholder={t.home.contactSubject} />
+      <label class="sr-only" for="contact-message">{t.home.contactMessageLabel}</label>
+      <textarea class="field field--area" id="contact-message" name="message" placeholder={t.home.contactMessage} rows="5" required></textarea>
+      <div class="sr-only" aria-hidden="true">
+        <input type="text" name="botcheck" tabindex="-1" autocomplete="off" />
+      </div>
       <div class="contact-form__footer">
+        <p class="contact-form__status" data-contact-status role="status" aria-live="polite"></p>
         <Button type="submit" variant="accent">{t.home.contactSend}</Button>
       </div>
-      <!--
-        TODO: wire this form to a backend-agnostic form service (Web3Forms or
-        Formspree, per CLAUDE.md). Add the provider's `action` URL / access
-        key and any hidden fields it requires — no submission endpoint yet.
-      -->
     </form>
   </div>
 </section>
@@ -136,7 +145,30 @@ const feed = localizeAll(await getCollection('posts'), locale)
 
   .contact-form__footer {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-13);
+  }
+
+  .contact-form__status {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    color: var(--muted);
+  }
+
+  .contact-form__status[data-state='success'] {
+    color: var(--olive);
+  }
+
+  .contact-form__status[data-state='error'] {
+    color: var(--rust);
+  }
+
+  .contact-form :global(.btn:disabled) {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 
   @media (max-width: 880px) {
@@ -146,6 +178,11 @@ const feed = localizeAll(await getCollection('posts'), locale)
 
     .contact-form__row {
       grid-template-columns: 1fr;
+    }
+
+    .contact-form__footer {
+      flex-direction: column-reverse;
+      align-items: stretch;
     }
   }
 </style>
