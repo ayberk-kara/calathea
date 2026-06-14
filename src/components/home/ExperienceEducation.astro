@@ -85,9 +85,27 @@ import { experience, education } from '../../data/profile';
     font-weight: 700;
   }
 
+  [data-filter='eng'] :global(.experience-row--non-eng) {
+    display: none;
+  }
+
   @media (max-width: 880px) {
     .experience-education {
       grid-template-columns: 1fr;
     }
   }
 </style>
+
+<script>
+  const toggle = document.querySelector('[data-exp-toggle]');
+  const rows = document.querySelector('[data-exp-rows]');
+
+  toggle?.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    const button = target.closest('button[data-filter]');
+    if (!(button instanceof HTMLButtonElement) || !rows) return;
+
+    rows.setAttribute('data-filter', button.dataset.filter ?? 'eng');
+    toggle.querySelectorAll('button').forEach((b) => b.classList.toggle('is-active', b === button));
+  });
+</script>
