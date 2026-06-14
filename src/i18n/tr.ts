@@ -28,7 +28,6 @@ export const tr: UIStrings = {
       'Makine öğrenmesi sistemleri ve etraflarındaki araçları geliştiriyorum — eğitim hatlarından üstteki cilalı ürüne kadar. Hızlı, güvenilir ve kullanması gerçekten hoş şeyler üretmeye önem veriyorum.',
     viewProjects: 'Projeleri gör',
     downloadCv: 'CV indir',
-    portraitLabel: 'Portre',
     skillsHeading: 'YETENEKLER',
     skillsLanguages: 'DİLLER',
     skillsMl: 'ML / AI',

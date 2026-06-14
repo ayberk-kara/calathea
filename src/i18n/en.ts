@@ -25,7 +25,6 @@ export interface UIStrings {
     heroLead: string;
     viewProjects: string;
     downloadCv: string;
-    portraitLabel: string;
     skillsHeading: string;
     skillsLanguages: string;
     skillsMl: string;
@@ -116,7 +115,6 @@ export const en: UIStrings = {
       'I build machine-learning systems and the tools around them — from training pipelines to the polished product on top. I care about shipping things that are fast, reliable, and genuinely nice to use.',
     viewProjects: 'View projects',
     downloadCv: 'Download CV',
-    portraitLabel: 'Portrait',
     skillsHeading: 'SKILLS',
     skillsLanguages: 'LANGUAGES',
     skillsMl: 'ML / AI',
