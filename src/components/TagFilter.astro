@@ -1,0 +1,118 @@
+---
+interface Props {
+  items: { tags: string[] }[];
+  activeColor: 'ink' | 'amber';
+  label: string;
+  noun: string;
+}
+
+const { items, activeColor, label, noun } = Astro.props;
+
+const counts = new Map<string, number>();
+for (const item of items) {
+  for (const tag of item.tags) {
+    counts.set(tag, (counts.get(tag) ?? 0) + 1);
+  }
+}
+const tags = [...counts.keys()].sort();
+const total = items.length;
+---
+
+<div class="tag-filter" data-tag-filter data-active-color={activeColor} data-noun={noun.toUpperCase()}>
+  <span class="tag-filter__label">{label}</span>
+  <button type="button" class="tag-filter__chip is-active" data-tag="all">
+    all<span class="tag-filter__count">{total}</span>
+  </button>
+  {tags.map((tag) => (
+    <button type="button" class="tag-filter__chip" data-tag={tag}>
+      {tag}<span class="tag-filter__count">{counts.get(tag)}</span>
+    </button>
+  ))}
+  <span class="tag-filter__status" data-tag-filter-status>
+    SHOWING {total} / {total} {noun.toUpperCase()}
+  </span>
+</div>
+
+<style>
+  .tag-filter {
+    max-width: var(--measure-xl);
+    margin: 0 auto;
+    padding: var(--space-18) var(--space-36) var(--space-8);
+    display: flex;
+    align-items: center;
+    gap: var(--space-10);
+    flex-wrap: wrap;
+  }
+
+  .tag-filter__label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-right: var(--space-4);
+  }
+
+  .tag-filter__chip {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    border-radius: var(--radius-pill);
+    padding: var(--space-6) var(--space-13);
+    border: var(--border-width-sm) solid var(--border-strong);
+    background: var(--card);
+    color: var(--ink);
+  }
+
+  [data-active-color='ink'] .tag-filter__chip.is-active {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  [data-active-color='amber'] .tag-filter__chip.is-active {
+    background: var(--amber);
+    color: var(--on-amber);
+  }
+
+  .tag-filter__count {
+    opacity: 0.55;
+    margin-left: var(--space-6);
+  }
+
+  .tag-filter__status {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tag-filter]').forEach((bar) => {
+    const items = document.querySelectorAll<HTMLElement>('[data-tags]');
+    const status = bar.querySelector<HTMLElement>('[data-tag-filter-status]');
+    const noun = bar.dataset.noun ?? '';
+    const total = items.length;
+
+    bar.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      const button = target.closest<HTMLButtonElement>('button[data-tag]');
+      if (!button) return;
+
+      const tag = button.dataset.tag ?? 'all';
+      bar.querySelectorAll('button').forEach((b) => b.classList.toggle('is-active', b === button));
+
+      let visible = 0;
+      items.forEach((item) => {
+        const tags = (item.dataset.tags ?? '').split(' ');
+        const show = tag === 'all' || tags.includes(tag);
+        item.style.display = show ? '' : 'none';
+        if (show) visible += 1;
+      });
+
+      if (status) status.textContent = `SHOWING ${visible} / ${total} ${noun}`;
+    });
+  });
+</script>
