@@ -114,6 +114,6 @@ export const education: EducationEntry[] = [
       'Software Engineering (Agile practices, Scrum, CI/CD, containerization, microservices)',
       'Data Structures and Algorithms',
     ],
-    highlight: true,
+    highlight: false,
   },
 ];
