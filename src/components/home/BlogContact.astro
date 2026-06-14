@@ -82,6 +82,10 @@ const feed = localizeAll(await getCollection('posts'), locale)
     grid-row: span 2;
   }
 
+  .blog-contact__col > :global(.section-header) {
+    align-self: start;
+  }
+
   .blog-contact__feed {
     display: flex;
     flex-direction: column;
