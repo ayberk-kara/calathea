@@ -13,11 +13,13 @@ const { color = 'rust', size = 'lg', actionLabel, actionHref } = Astro.props;
   <h2 class:list={['section-header__title', `section-header__title--${color}`]}>
     <slot />
   </h2>
-  {actionLabel && actionHref && (
-    <a href={actionHref} class:list={['section-header__action', `section-header__action--${color}`]}>
-      {actionLabel} →
-    </a>
-  )}
+  <slot name="action">
+    {actionLabel && actionHref && (
+      <a href={actionHref} class:list={['section-header__action', `section-header__action--${color}`]}>
+        {actionLabel} →
+      </a>
+    )}
+  </slot>
 </div>
 
 <style>
