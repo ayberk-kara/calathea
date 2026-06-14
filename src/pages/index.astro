@@ -1,20 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
 ---
 
 <BaseLayout title="AK — ML & Systems Engineer" description="Portfolio and dev blog of AK." active="home">
-  <section class="placeholder">
-    <p>Foundation phase — layout, tokens, nav and footer are wired up. Page content lands in later phases.</p>
-  </section>
+  <Hero />
 </BaseLayout>
-
-<style>
-  .placeholder {
-    max-width: var(--measure-xl);
-    margin: 0 auto;
-    padding: var(--space-56) var(--space-36);
-    font-family: var(--font-mono);
-    font-size: 14px;
-    color: var(--muted);
-  }
-</style>
