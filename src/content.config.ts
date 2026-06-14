@@ -15,6 +15,9 @@ const projects = defineCollection({
     repo: z.url().optional(),
     liveDemo: z.url().optional(),
     featured: z.boolean(),
+    role: z.string().optional(),
+    timeline: z.string().optional(),
+    status: z.string().optional(),
     lang: z.enum(['en', 'tr']),
   }),
 });

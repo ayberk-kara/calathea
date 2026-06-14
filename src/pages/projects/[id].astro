@@ -1,0 +1,240 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TagChip from '../../components/TagChip.astro';
+import Button from '../../components/Button.astro';
+import MediaSlot from '../../components/MediaSlot.astro';
+import Prose from '../../components/Prose.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({ params: { id: project.id }, props: { project } }));
+}
+
+interface Props {
+  project: Awaited<ReturnType<typeof getCollection<'projects'>>>[number];
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={`${data.title} — AK`} description={data.summary} active="projects">
+  <article class="project">
+    <a href="/projects" class="project__breadcrumb">← PROJECTS</a>
+
+    <div class="project__eyebrow">{data.index} · {data.type}</div>
+    <h1 class="project__title">{data.title}</h1>
+    <p class="project__summary">{data.summary}</p>
+
+    <div class="project__stack">
+      {data.stack.map((tech) => <TagChip>{tech}</TagChip>)}
+    </div>
+
+    <div class="project__links">
+      {data.liveDemo && (
+        <Button href={data.liveDemo} variant="filled" target="_blank" rel="noopener">Live demo ↗</Button>
+      )}
+      {data.repo && (
+        <Button href={data.repo} variant="outline" target="_blank" rel="noopener">GitHub repo →</Button>
+      )}
+    </div>
+
+    {data.role && (
+      <div class="project__meta">
+        <div class="project__meta-item">
+          <div class="project__meta-label">ROLE</div>
+          <div class="project__meta-value">{data.role}</div>
+        </div>
+        <div class="project__meta-item">
+          <div class="project__meta-label">TIMELINE</div>
+          <div class="project__meta-value">{data.timeline}</div>
+        </div>
+        <div class="project__meta-item">
+          <div class="project__meta-label">STACK</div>
+          <div class="project__meta-value">{data.stack.slice(0, 3).join(' · ')}</div>
+        </div>
+        <div class="project__meta-item">
+          <div class="project__meta-label">STATUS</div>
+          <div class="project__meta-value">{data.status}</div>
+        </div>
+      </div>
+    )}
+
+    <h2 class="project__heading">Walkthrough</h2>
+    <MediaSlot kind="video" ratio="16/9" label="YouTube / Vimeo embed" embedUrl={data.demoVideo} />
+
+    <h2 class="project__heading">Screenshots</h2>
+    <div class="project__gallery">
+      <MediaSlot kind="gallery" ratio="16/10" label="Drop a dashboard screenshot" />
+      <MediaSlot kind="gallery" ratio="16/10" label="Drop a profiler screenshot" />
+    </div>
+
+    <h2 class="project__heading">Architecture</h2>
+    <MediaSlot
+      kind="architecture"
+      ratio="21/9"
+      label="Drop the architecture diagram (host runtime → scheduler → kernels → cache)"
+    />
+
+    <div class="project__body">
+      <h2 class="project__heading">The writeup</h2>
+      <Prose>
+        <Content />
+      </Prose>
+    </div>
+
+    <div class="project__footer">
+      <a href="/projects" class="project__footer-link project__footer-link--rust">← all projects</a>
+      <a href="/blog" class="project__footer-link project__footer-link--amber">dev blog →</a>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .project {
+    max-width: var(--measure-lg);
+    margin: 0 auto;
+    padding: var(--space-44) var(--space-36) var(--space-56);
+  }
+
+  .project__breadcrumb {
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+  }
+
+  .project__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 2px;
+    color: var(--rust);
+    font-weight: 700;
+    margin: var(--space-22) 0 var(--space-12);
+  }
+
+  .project__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(34px, 5vw, 64px);
+    line-height: 1.02;
+    margin: 0 0 var(--space-18);
+    letter-spacing: 0.5px;
+    color: var(--ink);
+  }
+
+  .project__summary {
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink);
+    opacity: 0.9;
+    max-width: var(--measure-sm);
+    margin: 0 0 var(--space-22);
+  }
+
+  .project__stack {
+    display: flex;
+    gap: var(--space-8);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-24);
+  }
+
+  .project__links {
+    display: flex;
+    gap: var(--space-12);
+    flex-wrap: wrap;
+  }
+
+  .project__meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-12);
+    margin: var(--space-28) 0 var(--space-4);
+  }
+
+  .project__meta-item {
+    border: var(--border-width) solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    background: var(--card);
+    padding: var(--space-15) var(--space-16);
+  }
+
+  .project__meta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: var(--space-7);
+  }
+
+  .project__meta-value {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+
+  .project__heading {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(22px, 2.6vw, 32px);
+    margin: var(--space-48) 0 var(--space-16);
+    color: var(--ink);
+    letter-spacing: 0.5px;
+  }
+
+  .project__gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-14);
+  }
+
+  .project__body {
+    margin-top: var(--space-48);
+  }
+
+  .project__body .project__heading {
+    margin-top: 0;
+  }
+
+  .project__footer {
+    margin-top: var(--space-32);
+    padding-top: var(--space-22);
+    border-top: var(--border-width) solid var(--border-strong);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-14);
+  }
+
+  .project__footer-link {
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--ink);
+    padding-bottom: var(--space-2);
+    border-bottom: var(--border-width-sm) solid transparent;
+  }
+
+  .project__footer-link--rust {
+    border-bottom-color: var(--rust);
+  }
+
+  .project__footer-link--amber {
+    border-bottom-color: var(--amber);
+  }
+
+  @media (max-width: 880px) {
+    .project__meta {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .project__gallery {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
