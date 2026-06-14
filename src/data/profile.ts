@@ -84,18 +84,21 @@ export const experience: ExperienceEntry[] = [
 
 export const education: EducationEntry[] = [
   {
+    degree: 'M.Eng. in Artificial Intelligence',
+    org: 'University of California, Los Angeles',
+    range: 'Sep 2026 — Jun 2027',
+    highlight: false,
+  },
+  {
     degree: 'B.S. Computer Science',
     org: 'Sabancı University',
-    location: 'Istanbul, Tuzla',
+    location: 'Istanbul',
     range: 'Sep 2021 — Jun 2025',
     summary:
-      'Honors-track CS degree with a 3.69 GPA, full scholarship, and a top 0.0003% national university entrance ranking.',
+      'Dean’s List (High Honors) · GPA 3.69 / 4.00 · Honor Scholarship recipient (full tuition, merit-based).',
     bullets: [
-      'Honor Scholarship — full (100%) tuition scholarship.',
-      'Dean’s List with high honors in all 5 semesters.',
-      'Cumulative GPA 3.69 / 4.0.',
-      'Ranked in the top 0.0003% among 2.6 million participants in the Turkish National University Examination (YKS 2021).',
-      'Coursework: Computational Approach to Problem-Solving (Python), Advanced Programming (C++), Logic & Digital System Design (Verilog), Introduction to Data Science (Python), Mobile Application Development (Java, Kotlin), Systems Modelling & Control (MATLAB Simulink), Internet of Things, Programming Languages (Flex, Bison, Basic Ada), Database Systems (MySQL), Machine Learning, Software Engineering, Data Structures, Algorithms.',
+      'Ranked in the top 0.04% (first 1,000) among approximately 2.6 million candidates in the 2021 Turkish national university entrance exam (YKS), earning a 4-year scholarship to Sabancı University.',
+      'Relevant coursework: Computational Approach to Problem-Solving (Python), Advanced Programming (C++), Logic & Digital System Design (Verilog), Introduction to Data Science (Python, data extraction, feature engineering), Mobile Application Development (Java, Kotlin), Systems Modelling & Control (MATLAB, Simulink), Internet of Things (edge computing, BERT, GRU networks), Programming Languages (Flex, Bison, Ada), Database Systems (MySQL), Machine Learning (unsupervised learning, CNNs), Software Engineering (Agile practices, Scrum, CI/CD, containerization, microservices), Data Structures and Algorithms.',
     ],
     highlight: true,
   },
