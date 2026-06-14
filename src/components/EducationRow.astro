@@ -1,0 +1,55 @@
+---
+interface Props {
+  degree: string;
+  line: string;
+  year: string;
+  highlight?: boolean;
+}
+
+const { degree, line, year, highlight = false } = Astro.props;
+---
+
+<div class:list={['education-row', { 'education-row--highlight': highlight }]}>
+  <div class="education-row__main">
+    <div class="education-row__degree">{degree}</div>
+    <div class="education-row__line">{line}</div>
+  </div>
+  <div class="education-row__year">{year}</div>
+</div>
+
+<style>
+  .education-row {
+    border: var(--border-width) solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    padding: var(--space-15) var(--space-20);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-16);
+    background: var(--card);
+    color: var(--ink);
+  }
+
+  .education-row--highlight {
+    background: var(--olive);
+    color: var(--on-olive);
+  }
+
+  .education-row__degree {
+    font-weight: 800;
+    font-size: 16.5px;
+  }
+
+  .education-row__line {
+    font-size: 13.5px;
+    margin-top: var(--space-5);
+    opacity: 0.82;
+  }
+
+  .education-row__year {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    white-space: nowrap;
+    opacity: 0.85;
+  }
+</style>
