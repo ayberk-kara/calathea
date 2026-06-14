@@ -34,3 +34,16 @@ export function formatRelativeDate(date: Date, now: Date = new Date()): string {
   if (days < 365) return `${Math.floor(days / 30)}mo ago`;
   return `${Math.floor(days / 365)}y ago`;
 }
+
+const WORDS_PER_MINUTE = 200;
+
+/** Estimated reading time in minutes for a post's raw MD/MDX body. */
+export function getReadingTime(body: string): number {
+  const words = body.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / WORDS_PER_MINUTE));
+}
+
+/** "Sep 28, 2025" (short) or "September 28, 2025" (long). */
+export function formatPostDate(date: Date, style: 'short' | 'long' = 'short'): string {
+  return date.toLocaleDateString('en-US', { month: style, day: 'numeric', year: 'numeric' });
+}
