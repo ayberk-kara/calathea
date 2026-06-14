@@ -111,7 +111,7 @@ export const en: UIStrings = {
   home: {
     heroEyebrow: 'DESIGNER OF SYSTEMS, NOT JUST MODELS',
     heroGreeting: "Hey, I'm",
-    heroName: 'AK',
+    heroName: 'Ayberk',
     heroLead:
       'I build machine-learning systems and the tools around them — from training pipelines to the polished product on top. I care about shipping things that are fast, reliable, and genuinely nice to use.',
     viewProjects: 'View projects',

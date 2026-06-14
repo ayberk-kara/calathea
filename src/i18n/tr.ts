@@ -23,7 +23,7 @@ export const tr: UIStrings = {
   home: {
     heroEyebrow: 'SİSTEM TASARIMCISI, SADECE MODEL DEĞİL',
     heroGreeting: 'Merhaba, ben',
-    heroName: 'AK',
+    heroName: 'Ayberk',
     heroLead:
       'Makine öğrenmesi sistemleri ve etraflarındaki araçları geliştiriyorum — eğitim hatlarından üstteki cilalı ürüne kadar. Hızlı, güvenilir ve kullanması gerçekten hoş şeyler üretmeye önem veriyorum.',
     viewProjects: 'Projeleri gör',
