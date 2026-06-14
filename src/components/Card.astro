@@ -2,19 +2,20 @@
 interface Props {
   href?: string;
   interactive?: boolean;
+  class?: string;
 }
 
-const { href, interactive = false } = Astro.props;
+const { href, interactive = false, class: className, ...rest } = Astro.props;
 
-const classes = ['card', { 'card--interactive': interactive }];
+const classes = ['card', { 'card--interactive': interactive }, className];
 ---
 
 {href ? (
-  <a href={href} class:list={classes}>
+  <a href={href} class:list={classes} {...rest}>
     <slot />
   </a>
 ) : (
-  <div class:list={classes}>
+  <div class:list={classes} {...rest}>
     <slot />
   </div>
 )}

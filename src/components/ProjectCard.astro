@@ -1,0 +1,71 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Card from './Card.astro';
+import TagChip from './TagChip.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { id, data } = project;
+---
+
+<Card href={`/projects/${id}`} interactive data-tags={data.tags.join(' ')}>
+  <div class="project-card__top">
+    <span class="project-card__meta">{data.index} · {data.type}</span>
+    {data.liveDemo && <span class="project-card__badge">LIVE DEMO</span>}
+  </div>
+  <span class="project-card__title">{data.title}</span>
+  <span class="project-card__summary">{data.summary}</span>
+  <div class="project-card__tags">
+    {data.stack.map((tech) => <TagChip>{tech}</TagChip>)}
+  </div>
+</Card>
+
+<style>
+  .project-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+
+  .project-card__meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+  }
+
+  .project-card__badge {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    background: var(--rust);
+    color: var(--on-rust);
+    border-radius: var(--radius-xs);
+    padding: var(--space-2) var(--space-7);
+  }
+
+  .project-card__title {
+    font-size: 21px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+
+  .project-card__summary {
+    color: var(--ink);
+    opacity: 0.82;
+    font-size: 14.5px;
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .project-card__tags {
+    display: flex;
+    gap: var(--space-7);
+    flex-wrap: wrap;
+  }
+</style>

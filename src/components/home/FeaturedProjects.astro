@@ -1,8 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import SectionHeader from '../SectionHeader.astro';
-import Card from '../Card.astro';
-import TagChip from '../TagChip.astro';
+import ProjectCard from '../ProjectCard.astro';
 
 const featured = (await getCollection('projects'))
   .filter((project) => project.data.featured)
@@ -13,16 +12,7 @@ const featured = (await getCollection('projects'))
 <section class="featured-projects" id="projects">
   <SectionHeader color="rust" actionLabel="view all projects" actionHref="/projects">PROJECTS</SectionHeader>
   <div class="featured-projects__grid">
-    {featured.map((project) => (
-      <Card href={`/projects/${project.id}`} interactive>
-        <span class="featured-projects__meta">{project.data.index} · {project.data.type}</span>
-        <span class="featured-projects__title">{project.data.title}</span>
-        <span class="featured-projects__summary">{project.data.summary}</span>
-        <div class="featured-projects__tags">
-          {project.data.stack.map((tech) => <TagChip>{tech}</TagChip>)}
-        </div>
-      </Card>
-    ))}
+    {featured.map((project) => <ProjectCard project={project} />)}
   </div>
 </section>
 
@@ -37,33 +27,6 @@ const featured = (await getCollection('projects'))
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-16);
-  }
-
-  .featured-projects__meta {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    color: var(--muted);
-  }
-
-  .featured-projects__title {
-    font-size: 21px;
-    font-weight: 800;
-    color: var(--ink);
-  }
-
-  .featured-projects__summary {
-    color: var(--ink);
-    opacity: 0.82;
-    font-size: 14.5px;
-    line-height: 1.5;
-    flex: 1;
-  }
-
-  .featured-projects__tags {
-    display: flex;
-    gap: var(--space-7);
-    flex-wrap: wrap;
   }
 
   @media (max-width: 880px) {
