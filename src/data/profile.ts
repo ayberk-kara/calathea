@@ -2,15 +2,18 @@ export interface ExperienceEntry {
   title: string;
   org: string;
   range: string;
-  description?: string;
+  summary?: string;
+  bullets?: string[];
   eng: boolean;
 }
 
 export interface EducationEntry {
   degree: string;
   org: string;
-  description?: string;
-  year: string;
+  location?: string;
+  range: string;
+  summary?: string;
+  bullets?: string[];
   highlight: boolean;
 }
 
@@ -24,55 +27,78 @@ export const skills = {
 
 export const experience: ExperienceEntry[] = [
   {
-    title: 'Senior ML Systems Engineer',
-    org: 'Solace AI',
-    range: '2024 — Present',
-    description:
-      'Leading the inference platform team; shipped the fused-attention, paged KV-cache serving runtime now running in production.',
+    title: 'Full Stack Developer Intern',
+    org: 'Mimiqit Oy (Espoo, Finland)',
+    range: 'Jul 2024 — Oct 2024',
+    summary:
+      'Took a two-person team’s social app from concept to launch, building the database, auth, and core social features end to end.',
+    bullets: [
+      'Part of a two-person team that designed and launched CyphrSpace, a social media app, from concept to full release.',
+      'Designed and managed the database using Firebase and AWS for user interactions and media content.',
+      'Implemented user authentication, including sign-in, sign-up, and backend services for managing accounts.',
+      'Built following, messaging, comments, likes, and shares functionality.',
+      'Built and optimized profile management — editing profiles, following others, and managing settings.',
+      'Created video recording/publishing features and image editing tools, including cropping and camera access.',
+    ],
     eng: true,
   },
   {
-    title: 'ML Engineer',
-    org: 'Meridian Labs',
-    range: '2022 — 2024',
-    description:
-      'Owned search relevance and ranking for the core product; built the offline evaluation harness every ranking change runs through.',
-    eng: true,
+    title: 'Food & Beverage Attendant',
+    org: 'Cinder House, Four Seasons Hotel St. Louis (MO, USA)',
+    range: 'Jun 2023 — Sep 2023',
+    summary:
+      'Covered food runner, barback, banquet, and pool service shifts at an elite restaurant, often working 100-hour weeks.',
+    bullets: [
+      'Undertook food runner, barback, banquet server, and pool server roles, demonstrating adaptability and teamwork in a fast-paced elite restaurant.',
+      'Developed strong teamwork skills, English speaking proficiency, and the ability to work under intense pressure over an average of 100 hours per week.',
+    ],
+    eng: false,
   },
   {
-    title: 'Backend Engineer',
-    org: 'Northwind Systems',
-    range: '2020 — 2022',
-    description: 'Built and operated the API gateway and internal tooling platform serving the rest of engineering.',
+    title: 'Backend Developer',
+    org: 'BIST100 Stock Market Prediction Research Project',
+    range: 'Apr 2023 — Jul 2023',
+    summary:
+      'Helped build the backend for a national-scale stock-market prediction project alongside senior engineers.',
+    bullets: [
+      'Worked on a national-scale project involving data management and analysis.',
+      'Collaborated with senior backend developers to build RESTful APIs using ASP.NET Core MVC and C#.',
+      'Participated in designing and optimizing the database schema for improved performance and scalability.',
+      'Worked closely with frontend developers to integrate backend functionality into the user interface.',
+      'Contributed to code reviews, providing feedback on code optimization and maintainability.',
+    ],
     eng: true,
   },
   {
     title: 'Research Assistant',
-    org: 'Bilkent University',
-    range: '2019 — 2020',
-    description: 'Worked on approximate nearest-neighbor search for large-scale embedding retrieval.',
+    org: 'PURE — Program for Undergraduate Research',
+    range: 'Sep 2022 — Feb 2023',
+    summary:
+      'Ran an NLP study on employee survey data to surface what drives organizational trust and engagement.',
+    bullets: [
+      'Conducted an academic research study using NLP to process and evaluate 1,120 open-ended employee survey responses from 60 organizations.',
+      'Used sentiment analysis, BERTopic-based topic modeling, and exploratory clustering techniques.',
+      'Identified key drivers of organizational trust and workforce engagement.',
+    ],
     eng: true,
-  },
-  {
-    title: 'Barista',
-    org: 'Kahve Dünyası',
-    range: '2016 — 2018',
-    eng: false,
   },
 ];
 
 export const education: EducationEntry[] = [
   {
-    degree: 'M.S. Computer Science',
-    org: 'Bilkent University',
-    description: 'Systems & Machine Learning',
-    year: '2021',
+    degree: 'B.S. Computer Science',
+    org: 'Sabancı University',
+    location: 'Istanbul, Tuzla',
+    range: 'Sep 2021 — Jun 2025',
+    summary:
+      'Honors-track CS degree with a 3.69 GPA, full scholarship, and a top 0.0003% national university entrance ranking.',
+    bullets: [
+      'Honor Scholarship — full (100%) tuition scholarship.',
+      'Dean’s List with high honors in all 5 semesters.',
+      'Cumulative GPA 3.69 / 4.0.',
+      'Ranked in the top 0.0003% among 2.6 million participants in the Turkish National University Examination (YKS 2021).',
+      'Coursework: Computational Approach to Problem-Solving (Python), Advanced Programming (C++), Logic & Digital System Design (Verilog), Introduction to Data Science (Python), Mobile Application Development (Java, Kotlin), Systems Modelling & Control (MATLAB Simulink), Internet of Things, Programming Languages (Flex, Bison, Basic Ada), Database Systems (MySQL), Machine Learning, Software Engineering, Data Structures, Algorithms.',
+    ],
     highlight: true,
-  },
-  {
-    degree: 'B.S. Computer Engineering',
-    org: 'Boğaziçi University',
-    year: '2019',
-    highlight: false,
   },
 ];
