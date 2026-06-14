@@ -18,6 +18,12 @@ const navItems = [
   { key: 'blog', href: getRelativeLocaleUrl(locale, 'blog'), label: t.nav.blog },
   { key: 'contact', href: `${homeHref}#contact`, label: t.nav.contact },
 ] as const;
+
+const path = Astro.url.pathname.replace(/^\/(en|tr)\/?/, '').replace(/\/$/, '');
+const localeHrefs: Record<Locale, string> = {
+  en: path ? getRelativeLocaleUrl('en', path) : getRelativeLocaleUrl('en'),
+  tr: path ? getRelativeLocaleUrl('tr', path) : getRelativeLocaleUrl('tr'),
+};
 ---
 
 <header class="site-header">
@@ -38,8 +44,8 @@ const navItems = [
 
     <div class="site-header__actions">
       <div class="locale-pill" role="group" aria-label={t.nav.languageLabel}>
-        <a href={getRelativeLocaleUrl('en')} class="locale-pill__option" aria-current={locale === 'en' ? 'true' : undefined}>EN</a>
-        <a href={getRelativeLocaleUrl('tr')} class="locale-pill__option" aria-current={locale === 'tr' ? 'true' : undefined}>TR</a>
+        <a href={localeHrefs.en} class="locale-pill__option" aria-current={locale === 'en' ? 'true' : undefined}>EN</a>
+        <a href={localeHrefs.tr} class="locale-pill__option" aria-current={locale === 'tr' ? 'true' : undefined}>TR</a>
       </div>
 
       <button id="theme-toggle" class="icon-btn" type="button" aria-label={t.nav.themeToggle}>
