@@ -1,0 +1,64 @@
+---
+// Component sandbox — not part of the site. Remove (or keep gated) before Phase 4.
+import '../../styles/global.css';
+import Sandbox from '../../components/preview/Sandbox.astro';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rye&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Component preview</title>
+  </head>
+  <body>
+    <div class="preview-grid">
+      <div class="theme-pane" data-theme="light">
+        <p class="theme-pane__label">LIGHT</p>
+        <Sandbox />
+      </div>
+      <div class="theme-pane" data-theme="dark">
+        <p class="theme-pane__label">DARK</p>
+        <Sandbox />
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  .preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+  }
+
+  .theme-pane {
+    background: var(--bg);
+    color: var(--ink);
+    padding: var(--space-32);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-32);
+  }
+
+  .theme-pane__label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  @media (max-width: 880px) {
+    .preview-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
