@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/home/Hero.astro';
+import FeaturedProjects from '../../components/home/FeaturedProjects.astro';
+import Skills from '../../components/home/Skills.astro';
+import ExperienceEducation from '../../components/home/ExperienceEducation.astro';
+import BlogContact from '../../components/home/BlogContact.astro';
+import { LOCALES } from '../../lib/i18n';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+---
+
+<BaseLayout title="AK — ML & Systems Engineer" description="Portfolio and dev blog of AK." active="home">
+  <Hero />
+  <FeaturedProjects />
+  <Skills />
+  <ExperienceEducation />
+  <BlogContact />
+</BaseLayout>

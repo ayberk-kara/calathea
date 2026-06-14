@@ -1,8 +1,12 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import Eyebrow from '../Eyebrow.astro';
 import Button from '../Button.astro';
 import StatChip from '../StatChip.astro';
 import { stats } from '../../data/profile';
+import { DEFAULT_LOCALE } from '../../lib/i18n';
+
+const locale = Astro.currentLocale ?? DEFAULT_LOCALE;
 ---
 
 <header class="hero">
@@ -22,7 +26,7 @@ import { stats } from '../../data/profile';
       genuinely nice to use.
     </p>
     <div class="hero__actions">
-      <Button href="/projects" variant="filled">View projects</Button>
+      <Button href={getRelativeLocaleUrl(locale, 'projects')} variant="filled">View projects</Button>
       <Button href="/cv.pdf" variant="outline">Download CV</Button>
     </div>
   </div>

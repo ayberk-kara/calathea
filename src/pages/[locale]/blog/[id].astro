@@ -1,39 +1,52 @@
 ---
-import { getCollection, getEntry, render } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import TagChip from '../../components/TagChip.astro';
-import VersionPill from '../../components/VersionPill.astro';
-import Prose from '../../components/Prose.astro';
-import { getPostPill, formatPostDate, getReadingTime } from '../../lib/posts';
+import { getCollection, render } from 'astro:content';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import TagChip from '../../../components/TagChip.astro';
+import VersionPill from '../../../components/VersionPill.astro';
+import Prose from '../../../components/Prose.astro';
+import { getPostPill, formatPostDate, getReadingTime } from '../../../lib/posts';
+import { LOCALES, getSlug, localize, localizeAll } from '../../../lib/i18n';
 
 export async function getStaticPaths() {
-  const posts = (await getCollection('posts')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-  return posts.map((post, index) => ({
-    params: { id: post.id },
-    props: { post, prev: posts[index + 1], next: posts[index - 1] },
-  }));
+  const allPosts = await getCollection('posts');
+  const allProjects = await getCollection('projects');
+
+  return LOCALES.flatMap((locale) => {
+    const posts = localizeAll(allPosts, locale).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+    return posts.map((post, index) => {
+      const project = post.data.project ? localize(allProjects, getSlug(post.data.project.id), locale) : undefined;
+      return {
+        params: { locale, id: getSlug(post.id) },
+        props: { post, prev: posts[index + 1], next: posts[index - 1], project },
+      };
+    });
+  });
 }
 
 type Post = Awaited<ReturnType<typeof getCollection<'posts'>>>[number];
+type Project = Awaited<ReturnType<typeof getCollection<'projects'>>>[number];
 
 interface Props {
   post: Post;
   prev?: Post;
   next?: Post;
+  project?: Project;
 }
 
-const { post, prev, next } = Astro.props;
+const { locale } = Astro.params;
+const { post, prev, next, project } = Astro.props;
 const { data, body } = post;
 const { Content } = await render(post);
 
 const pill = getPostPill(post);
 const read = getReadingTime(body ?? '');
-const project = data.project ? await getEntry(data.project) : undefined;
 ---
 
 <BaseLayout title={`${data.title} — AK`} description={data.excerpt} active="blog">
   <article class="post">
-    <a href="/blog" class="post__breadcrumb">← THE BLOG</a>
+    <a href={getRelativeLocaleUrl(locale, 'blog')} class="post__breadcrumb">← THE BLOG</a>
 
     <div class="post__tags">
       <VersionPill kind={pill.kind} major={pill.major}>{pill.label}</VersionPill>
@@ -47,7 +60,7 @@ const project = data.project ? await getEntry(data.project) : undefined;
       <span>·</span>
       <span>{read} min read</span>
       {project && (
-        <a href={`/projects/${project.id}`} class="post__project">↳ back to {project.data.title}</a>
+        <a href={getRelativeLocaleUrl(locale, `projects/${getSlug(project.id)}`)} class="post__project">↳ back to {project.data.title}</a>
       )}
     </div>
 
@@ -57,13 +70,13 @@ const project = data.project ? await getEntry(data.project) : undefined;
 
     <div class="post__prevnext">
       {prev && (
-        <a href={`/blog/${prev.id}`} class="post__nav-card post__nav-card--prev">
+        <a href={getRelativeLocaleUrl(locale, `blog/${getSlug(prev.id)}`)} class="post__nav-card post__nav-card--prev">
           <span class="post__nav-label">← PREVIOUS</span>
           <span class="post__nav-title">{prev.data.title}</span>
         </a>
       )}
       {next && (
-        <a href={`/blog/${next.id}`} class="post__nav-card post__nav-card--next">
+        <a href={getRelativeLocaleUrl(locale, `blog/${getSlug(next.id)}`)} class="post__nav-card post__nav-card--next">
           <span class="post__nav-label">NEXT →</span>
           <span class="post__nav-title">{next.data.title}</span>
         </a>

@@ -1,25 +1,29 @@
 ---
 import { getCollection } from 'astro:content';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import SectionHeader from '../SectionHeader.astro';
 import VersionPill from '../VersionPill.astro';
 import Button from '../Button.astro';
 import { getPostPill, formatRelativeDate } from '../../lib/posts';
+import { DEFAULT_LOCALE, getSlug, localizeAll, type Locale } from '../../lib/i18n';
 
-const feed = (await getCollection('posts'))
+const locale = (Astro.currentLocale ?? DEFAULT_LOCALE) as Locale;
+
+const feed = localizeAll(await getCollection('posts'), locale)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 5);
 ---
 
 <section class="blog-contact">
   <div class="blog-contact__col">
-    <SectionHeader color="amber" size="md" actionLabel="all posts" actionHref="/blog">
+    <SectionHeader color="amber" size="md" actionLabel="all posts" actionHref={getRelativeLocaleUrl(locale, 'blog')}>
       DEV BLOG &amp; RELEASES
     </SectionHeader>
     <div class="blog-contact__feed">
       {feed.map((post) => {
         const pill = getPostPill(post);
         return (
-          <a href={`/blog/${post.id}`} class="feed-row">
+          <a href={getRelativeLocaleUrl(locale, `blog/${getSlug(post.id)}`)} class="feed-row">
             <VersionPill kind={pill.kind} major={pill.major}>{pill.label}</VersionPill>
             <span class="feed-row__title">{post.data.title}</span>
             <span class="feed-row__time">{formatRelativeDate(post.data.date)}</span>

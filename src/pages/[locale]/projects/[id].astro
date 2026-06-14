@@ -1,27 +1,37 @@
 ---
 import { getCollection, render } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import TagChip from '../../components/TagChip.astro';
-import Button from '../../components/Button.astro';
-import MediaSlot from '../../components/MediaSlot.astro';
-import Prose from '../../components/Prose.astro';
-import VersionPill from '../../components/VersionPill.astro';
-import { getPostPill, getReadingTime } from '../../lib/posts';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import TagChip from '../../../components/TagChip.astro';
+import Button from '../../../components/Button.astro';
+import MediaSlot from '../../../components/MediaSlot.astro';
+import Prose from '../../../components/Prose.astro';
+import VersionPill from '../../../components/VersionPill.astro';
+import { getPostPill, getReadingTime } from '../../../lib/posts';
+import { LOCALES, getSlug, localize, localizeAll } from '../../../lib/i18n';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
-  return projects.map((project) => ({ params: { id: project.id }, props: { project } }));
+  const slugs = [...new Set(projects.map((project) => getSlug(project.id)))];
+
+  return LOCALES.flatMap((locale) =>
+    slugs.map((slug) => ({
+      params: { locale, id: slug },
+      props: { project: localize(projects, slug, locale) },
+    })),
+  );
 }
 
 interface Props {
   project: Awaited<ReturnType<typeof getCollection<'projects'>>>[number];
 }
 
+const { locale } = Astro.params;
 const { project } = Astro.props;
 const { data } = project;
 const { Content } = await render(project);
 
-const relatedPosts = (await getCollection('posts'))
+const relatedPosts = localizeAll(await getCollection('posts'), locale)
   .filter((post) => post.data.project?.id === project.id || post.data.tags.some((tag) => data.tags.includes(tag)))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 5);
@@ -29,7 +39,7 @@ const relatedPosts = (await getCollection('posts'))
 
 <BaseLayout title={`${data.title} — AK`} description={data.summary} active="projects">
   <article class="project">
-    <a href="/projects" class="project__breadcrumb">← PROJECTS</a>
+    <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__breadcrumb">← PROJECTS</a>
 
     <div class="project__eyebrow">{data.index} · {data.type}</div>
     <h1 class="project__title">{data.title}</h1>
@@ -100,7 +110,7 @@ const relatedPosts = (await getCollection('posts'))
             const pill = getPostPill(post);
             const read = getReadingTime(post.body ?? '');
             return (
-              <a href={`/blog/${post.id}`} class="related-row">
+              <a href={getRelativeLocaleUrl(locale, `blog/${getSlug(post.id)}`)} class="related-row">
                 <VersionPill kind={pill.kind} major={pill.major}>{pill.label}</VersionPill>
                 <span class="related-row__title">{post.data.title}</span>
                 <span class="related-row__read">{read} min read</span>
@@ -112,8 +122,8 @@ const relatedPosts = (await getCollection('posts'))
     )}
 
     <div class="project__footer">
-      <a href="/projects" class="project__footer-link project__footer-link--rust">← all projects</a>
-      <a href="/blog" class="project__footer-link project__footer-link--amber">dev blog →</a>
+      <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__footer-link project__footer-link--rust">← all projects</a>
+      <a href={getRelativeLocaleUrl(locale, 'blog')} class="project__footer-link project__footer-link--amber">dev blog →</a>
     </div>
   </article>
 </BaseLayout>

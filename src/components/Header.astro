@@ -1,20 +1,26 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { DEFAULT_LOCALE } from '../lib/i18n';
+
 interface Props {
   active?: 'home' | 'projects' | 'blog';
 }
 
 const { active = 'home' } = Astro.props;
+const locale = Astro.currentLocale ?? DEFAULT_LOCALE;
+
+const homeHref = getRelativeLocaleUrl(locale);
 
 const navItems = [
-  { key: 'projects', href: '/projects', label: 'Projects' },
-  { key: 'blog', href: '/blog', label: 'Blog' },
-  { key: 'contact', href: '/#contact', label: 'Contact' },
+  { key: 'projects', href: getRelativeLocaleUrl(locale, 'projects'), label: 'Projects' },
+  { key: 'blog', href: getRelativeLocaleUrl(locale, 'blog'), label: 'Blog' },
+  { key: 'contact', href: `${homeHref}#contact`, label: 'Contact' },
 ] as const;
 ---
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a href="/" class="logo" aria-label="AK — home">AK</a>
+    <a href={homeHref} class="logo" aria-label="AK — home">AK</a>
 
     <nav class="nav-links" aria-label="Primary">
       {navItems.map((item) => (
@@ -30,8 +36,8 @@ const navItems = [
 
     <div class="site-header__actions">
       <div class="locale-pill" role="group" aria-label="Language">
-        <a href="/" class="locale-pill__option" aria-current="true">EN</a>
-        <a href="/tr/" class="locale-pill__option">TR</a>
+        <a href={getRelativeLocaleUrl('en')} class="locale-pill__option" aria-current={locale === 'en' ? 'true' : undefined}>EN</a>
+        <a href={getRelativeLocaleUrl('tr')} class="locale-pill__option" aria-current={locale === 'tr' ? 'true' : undefined}>TR</a>
       </div>
 
       <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle color theme">

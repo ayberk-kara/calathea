@@ -1,16 +1,20 @@
 ---
 import { getCollection } from 'astro:content';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import SectionHeader from '../SectionHeader.astro';
 import ProjectCard from '../ProjectCard.astro';
+import { DEFAULT_LOCALE, localizeAll, type Locale } from '../../lib/i18n';
 
-const featured = (await getCollection('projects'))
+const locale = (Astro.currentLocale ?? DEFAULT_LOCALE) as Locale;
+
+const featured = localizeAll(await getCollection('projects'), locale)
   .filter((project) => project.data.featured)
   .sort((a, b) => a.data.index.localeCompare(b.data.index))
   .slice(0, 3);
 ---
 
 <section class="featured-projects" id="projects">
-  <SectionHeader color="rust" actionLabel="view all projects" actionHref="/projects">PROJECTS</SectionHeader>
+  <SectionHeader color="rust" actionLabel="view all projects" actionHref={getRelativeLocaleUrl(locale, 'projects')}>PROJECTS</SectionHeader>
   <div class="featured-projects__grid">
     {featured.map((project) => <ProjectCard project={project} />)}
   </div>

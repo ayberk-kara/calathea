@@ -1,9 +1,11 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import Card from './Card.astro';
 import TagChip from './TagChip.astro';
 import VersionPill from './VersionPill.astro';
 import { getPostPill, formatPostDate, getReadingTime } from '../lib/posts';
+import { DEFAULT_LOCALE, getSlug } from '../lib/i18n';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -14,9 +16,10 @@ const { post, projectTitle } = Astro.props;
 const { data, body } = post;
 const pill = getPostPill(post);
 const read = getReadingTime(body ?? '');
+const locale = Astro.currentLocale ?? DEFAULT_LOCALE;
 ---
 
-<Card href={`/blog/${post.id}`} interactive data-tags={data.tags.join(' ')}>
+<Card href={getRelativeLocaleUrl(locale, `blog/${getSlug(post.id)}`)} interactive data-tags={data.tags.join(' ')}>
   <div class="post-row">
     <div class="post-row__main">
       <div class="post-row__tags">

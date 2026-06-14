@@ -1,7 +1,9 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import Card from './Card.astro';
 import TagChip from './TagChip.astro';
+import { DEFAULT_LOCALE, getSlug } from '../lib/i18n';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -9,9 +11,10 @@ interface Props {
 
 const { project } = Astro.props;
 const { id, data } = project;
+const locale = Astro.currentLocale ?? DEFAULT_LOCALE;
 ---
 
-<Card href={`/projects/${id}`} interactive data-tags={data.tags.join(' ')}>
+<Card href={getRelativeLocaleUrl(locale, `projects/${getSlug(id)}`)} interactive data-tags={data.tags.join(' ')}>
   <div class="project-card__top">
     <span class="project-card__meta">{data.index} · {data.type}</span>
     {data.liveDemo && <span class="project-card__badge">LIVE DEMO</span>}
