@@ -11,31 +11,27 @@ const { title, range, summary, bullets = [], nonEng = false } = Astro.props;
 ---
 
 <div class:list={['experience-row', { 'experience-row--non-eng': nonEng }]} tabindex="0">
-  <div class="experience-row__main">
+  <div class="experience-row__top">
     <div class="experience-row__heading">
       <span class="experience-row__title">{title}</span>
       {nonEng && <span class="experience-row__tag">non-eng</span>}
     </div>
-    {summary && <p class="experience-row__desc">{summary}</p>}
-    {bullets.length > 0 && (
-      <div class="experience-row__details">
-        <ul class="experience-row__bullets">
-          {bullets.map((bullet) => <li>{bullet}</li>)}
-        </ul>
-      </div>
-    )}
+    <div class="experience-row__range">{range}</div>
   </div>
-  <div class="experience-row__range">{range}</div>
+  {summary && <p class="experience-row__desc">{summary}</p>}
+  {bullets.length > 0 && (
+    <div class="experience-row__details">
+      <ul class="experience-row__bullets">
+        {bullets.map((bullet) => <li>{bullet}</li>)}
+      </ul>
+    </div>
+  )}
 </div>
 
 <style>
   .experience-row {
     border-radius: var(--radius-lg);
     padding: var(--space-15) var(--space-20);
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: var(--space-16);
     border: var(--border-width) solid var(--border-strong);
     background: var(--card);
   }
@@ -44,9 +40,11 @@ const { title, range, summary, bullets = [], nonEng = false } = Astro.props;
     border-style: dashed;
   }
 
-  .experience-row__main {
-    flex: 1;
-    min-width: 0;
+  .experience-row__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-16);
   }
 
   .experience-row__heading {
@@ -54,6 +52,8 @@ const { title, range, summary, bullets = [], nonEng = false } = Astro.props;
     align-items: center;
     gap: var(--space-10);
     flex-wrap: wrap;
+    flex: 1;
+    min-width: 0;
   }
 
   .experience-row__title {
