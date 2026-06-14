@@ -1,0 +1,64 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'filled' | 'outline' | 'accent';
+  size?: 'md' | 'sm';
+  type?: 'button' | 'submit';
+  target?: string;
+  rel?: string;
+}
+
+const { href, variant = 'filled', size = 'md', type = 'button', target, rel } = Astro.props;
+
+const classes = ['btn', `btn--${variant}`, `btn--${size}`];
+---
+
+{href ? (
+  <a href={href} class:list={classes} target={target} rel={rel}>
+    <slot />
+  </a>
+) : (
+  <button type={type} class:list={classes}>
+    <slot />
+  </button>
+)}
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    white-space: nowrap;
+    text-decoration: none;
+    border: var(--border-width) solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .btn--md {
+    padding: var(--space-12) var(--space-24);
+    font-size: 15px;
+  }
+
+  .btn--sm {
+    padding: var(--space-10) var(--space-22);
+    font-size: 14.5px;
+  }
+
+  .btn--filled {
+    background: var(--olive);
+    color: var(--on-olive);
+  }
+
+  .btn--outline {
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .btn--accent {
+    background: var(--rust);
+    color: var(--on-rust);
+  }
+</style>
