@@ -6,8 +6,10 @@ import VersionPill from '../VersionPill.astro';
 import Button from '../Button.astro';
 import { getPostPill, formatRelativeDate } from '../../lib/posts';
 import { DEFAULT_LOCALE, getSlug, localizeAll, type Locale } from '../../lib/i18n';
+import { getUI } from '../../i18n';
 
 const locale = (Astro.currentLocale ?? DEFAULT_LOCALE) as Locale;
+const t = getUI(locale);
 
 const feed = localizeAll(await getCollection('posts'), locale)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -16,8 +18,8 @@ const feed = localizeAll(await getCollection('posts'), locale)
 
 <section class="blog-contact">
   <div class="blog-contact__col">
-    <SectionHeader color="amber" size="md" actionLabel="all posts" actionHref={getRelativeLocaleUrl(locale, 'blog')}>
-      DEV BLOG &amp; RELEASES
+    <SectionHeader color="amber" size="md" actionLabel={t.home.blogAllPosts} actionHref={getRelativeLocaleUrl(locale, 'blog')}>
+      {t.home.blogHeading}
     </SectionHeader>
     <div class="blog-contact__feed">
       {feed.map((post) => {
@@ -34,16 +36,16 @@ const feed = localizeAll(await getCollection('posts'), locale)
   </div>
 
   <div class="blog-contact__col" id="contact">
-    <SectionHeader color="rust" size="md">CONTACT</SectionHeader>
+    <SectionHeader color="rust" size="md">{t.home.contactHeading}</SectionHeader>
     <form class="contact-form">
       <div class="contact-form__row">
-        <input class="field" type="text" name="name" placeholder="Name" required />
-        <input class="field" type="email" name="email" placeholder="Email" required />
+        <input class="field" type="text" name="name" placeholder={t.home.contactName} required />
+        <input class="field" type="email" name="email" placeholder={t.home.contactEmail} required />
       </div>
-      <input class="field" type="text" name="subject" placeholder="Subject" />
-      <textarea class="field field--area" name="message" placeholder="Message…" rows="5" required></textarea>
+      <input class="field" type="text" name="subject" placeholder={t.home.contactSubject} />
+      <textarea class="field field--area" name="message" placeholder={t.home.contactMessage} rows="5" required></textarea>
       <div class="contact-form__footer">
-        <Button type="submit" variant="accent">Send message →</Button>
+        <Button type="submit" variant="accent">{t.home.contactSend}</Button>
       </div>
       <!--
         TODO: wire this form to a backend-agnostic form service (Web3Forms or

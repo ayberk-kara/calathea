@@ -5,12 +5,14 @@ import PageHeader from '../../../components/PageHeader.astro';
 import TagFilter from '../../../components/TagFilter.astro';
 import PostRow from '../../../components/PostRow.astro';
 import { LOCALES, getSlug, localize, localizeAll } from '../../../lib/i18n';
+import { getUI } from '../../../i18n';
 
 export function getStaticPaths() {
   return LOCALES.map((locale) => ({ params: { locale } }));
 }
 
 const { locale } = Astro.params;
+const t = getUI(locale);
 
 const posts = localizeAll(await getCollection('posts'), locale).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -31,15 +33,16 @@ for (const post of posts) {
   description="Notes from the kernel mines — deep dives, dev notes, and release logs, cross-linked to the projects they came out of."
   active="blog"
 >
-  <PageHeader
-    color="amber"
-    measure="md"
-    eyebrow="DEV NOTES & RELEASES"
-    title="THE BLOG"
-    subtitle="Notes from the kernel mines — deep dives, short dev notes, and release logs. Cross-linked to the projects they came out of."
-  />
+  <PageHeader color="amber" measure="md" eyebrow={t.blogPage.eyebrow} title={t.blogPage.title} subtitle={t.blogPage.subtitle} />
 
-  <TagFilter items={posts.map((p) => ({ tags: p.data.tags }))} activeColor="amber" label="TAG" noun="posts" />
+  <TagFilter
+    items={posts.map((p) => ({ tags: p.data.tags }))}
+    activeColor="amber"
+    label={t.filter.tagLabel}
+    noun={t.filter.postsNoun}
+    allLabel={t.filter.all}
+    showingTemplate={t.filter.showing('{visible}', '{total}', '{noun}')}
+  />
 
   <section class="post-list">
     {posts.map((post) => <PostRow post={post} projectTitle={projectTitles.get(post.id)} />)}

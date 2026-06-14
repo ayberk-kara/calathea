@@ -9,6 +9,7 @@ import Prose from '../../../components/Prose.astro';
 import VersionPill from '../../../components/VersionPill.astro';
 import { getPostPill, getReadingTime } from '../../../lib/posts';
 import { LOCALES, getSlug, localize, localizeAll } from '../../../lib/i18n';
+import { getUI } from '../../../i18n';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -27,6 +28,7 @@ interface Props {
 }
 
 const { locale } = Astro.params;
+const t = getUI(locale);
 const { project } = Astro.props;
 const { data } = project;
 const { Content } = await render(project);
@@ -39,7 +41,7 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
 
 <BaseLayout title={`${data.title} — AK`} description={data.summary} active="projects">
   <article class="project">
-    <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__breadcrumb">← PROJECTS</a>
+    <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__breadcrumb">{t.project.breadcrumb}</a>
 
     <div class="project__eyebrow">{data.index} · {data.type}</div>
     <h1 class="project__title">{data.title}</h1>
@@ -51,44 +53,44 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
 
     <div class="project__links">
       {data.liveDemo && (
-        <Button href={data.liveDemo} variant="filled" target="_blank" rel="noopener">Live demo ↗</Button>
+        <Button href={data.liveDemo} variant="filled" target="_blank" rel="noopener">{t.project.liveDemo}</Button>
       )}
       {data.repo && (
-        <Button href={data.repo} variant="outline" target="_blank" rel="noopener">GitHub repo →</Button>
+        <Button href={data.repo} variant="outline" target="_blank" rel="noopener">{t.project.repo}</Button>
       )}
     </div>
 
     {data.role && (
       <div class="project__meta">
         <div class="project__meta-item">
-          <div class="project__meta-label">ROLE</div>
+          <div class="project__meta-label">{t.project.role}</div>
           <div class="project__meta-value">{data.role}</div>
         </div>
         <div class="project__meta-item">
-          <div class="project__meta-label">TIMELINE</div>
+          <div class="project__meta-label">{t.project.timeline}</div>
           <div class="project__meta-value">{data.timeline}</div>
         </div>
         <div class="project__meta-item">
-          <div class="project__meta-label">STACK</div>
+          <div class="project__meta-label">{t.project.stack}</div>
           <div class="project__meta-value">{data.stack.slice(0, 3).join(' · ')}</div>
         </div>
         <div class="project__meta-item">
-          <div class="project__meta-label">STATUS</div>
+          <div class="project__meta-label">{t.project.status}</div>
           <div class="project__meta-value">{data.status}</div>
         </div>
       </div>
     )}
 
-    <h2 class="project__heading">Walkthrough</h2>
+    <h2 class="project__heading">{t.project.walkthrough}</h2>
     <MediaSlot kind="video" ratio="16/9" label="YouTube / Vimeo embed" embedUrl={data.demoVideo} />
 
-    <h2 class="project__heading">Screenshots</h2>
+    <h2 class="project__heading">{t.project.screenshots}</h2>
     <div class="project__gallery">
       <MediaSlot kind="gallery" ratio="16/10" label="Drop a dashboard screenshot" />
       <MediaSlot kind="gallery" ratio="16/10" label="Drop a profiler screenshot" />
     </div>
 
-    <h2 class="project__heading">Architecture</h2>
+    <h2 class="project__heading">{t.project.architecture}</h2>
     <MediaSlot
       kind="architecture"
       ratio="21/9"
@@ -96,7 +98,7 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
     />
 
     <div class="project__body">
-      <h2 class="project__heading">The writeup</h2>
+      <h2 class="project__heading">{t.project.writeup}</h2>
       <Prose>
         <Content />
       </Prose>
@@ -104,7 +106,7 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
 
     {relatedPosts.length > 0 && (
       <div class="project__related">
-        <h2 class="project__heading project__heading--amber">Related dev notes</h2>
+        <h2 class="project__heading project__heading--amber">{t.project.relatedNotes}</h2>
         <div class="project__related-list">
           {relatedPosts.map((post) => {
             const pill = getPostPill(post);
@@ -113,7 +115,7 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
               <a href={getRelativeLocaleUrl(locale, `blog/${getSlug(post.id)}`)} class="related-row">
                 <VersionPill kind={pill.kind} major={pill.major}>{pill.label}</VersionPill>
                 <span class="related-row__title">{post.data.title}</span>
-                <span class="related-row__read">{read} min read</span>
+                <span class="related-row__read">{t.post.readingTime(read)}</span>
               </a>
             );
           })}
@@ -122,8 +124,8 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
     )}
 
     <div class="project__footer">
-      <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__footer-link project__footer-link--rust">← all projects</a>
-      <a href={getRelativeLocaleUrl(locale, 'blog')} class="project__footer-link project__footer-link--amber">dev blog →</a>
+      <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__footer-link project__footer-link--rust">{t.project.allProjects}</a>
+      <a href={getRelativeLocaleUrl(locale, 'blog')} class="project__footer-link project__footer-link--amber">{t.project.devBlog}</a>
     </div>
   </article>
 </BaseLayout>

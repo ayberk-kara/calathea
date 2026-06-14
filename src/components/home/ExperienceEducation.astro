@@ -3,16 +3,21 @@ import SectionHeader from '../SectionHeader.astro';
 import ExperienceRow from '../ExperienceRow.astro';
 import EducationRow from '../EducationRow.astro';
 import { experience, education } from '../../data/profile';
+import { DEFAULT_LOCALE, type Locale } from '../../lib/i18n';
+import { getUI } from '../../i18n';
+
+const locale = (Astro.currentLocale ?? DEFAULT_LOCALE) as Locale;
+const t = getUI(locale);
 ---
 
 <section class="experience-education" id="experience">
   <div class="experience-education__col">
     <SectionHeader color="rust">
-      EXPERIENCE
+      {t.home.experienceHeading}
       <Fragment slot="action">
-        <div class="exp-toggle" data-exp-toggle role="group" aria-label="Filter experience">
-          <button type="button" class="exp-toggle__btn" data-filter="all">All</button>
-          <button type="button" class="exp-toggle__btn is-active" data-filter="eng">Engineering only</button>
+        <div class="exp-toggle" data-exp-toggle role="group" aria-label={t.home.experienceFilterAriaLabel}>
+          <button type="button" class="exp-toggle__btn" data-filter="all">{t.home.experienceFilterAll}</button>
+          <button type="button" class="exp-toggle__btn is-active" data-filter="eng">{t.home.experienceFilterEng}</button>
         </div>
       </Fragment>
     </SectionHeader>
@@ -29,7 +34,7 @@ import { experience, education } from '../../data/profile';
   </div>
 
   <div class="experience-education__col">
-    <SectionHeader color="olive">EDUCATION</SectionHeader>
+    <SectionHeader color="olive">{t.home.educationHeading}</SectionHeader>
     <div class="experience-education__rows">
       {education.map((entry) => (
         <EducationRow

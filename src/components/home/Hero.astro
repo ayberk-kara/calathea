@@ -4,9 +4,11 @@ import Eyebrow from '../Eyebrow.astro';
 import Button from '../Button.astro';
 import StatChip from '../StatChip.astro';
 import { stats } from '../../data/profile';
-import { DEFAULT_LOCALE } from '../../lib/i18n';
+import { DEFAULT_LOCALE, type Locale } from '../../lib/i18n';
+import { getUI } from '../../i18n';
 
-const locale = Astro.currentLocale ?? DEFAULT_LOCALE;
+const locale = (Astro.currentLocale ?? DEFAULT_LOCALE) as Locale;
+const t = getUI(locale);
 ---
 
 <header class="hero">
@@ -18,22 +20,20 @@ const locale = Astro.currentLocale ?? DEFAULT_LOCALE;
   </svg>
 
   <div class="hero__intro">
-    <Eyebrow color="rust">DESIGNER OF SYSTEMS, NOT JUST MODELS</Eyebrow>
-    <h1 class="hero__heading">Hey, I'm<br />AK</h1>
+    <Eyebrow color="rust">{t.home.heroEyebrow}</Eyebrow>
+    <h1 class="hero__heading">{t.home.heroGreeting}<br />{t.home.heroName}</h1>
     <p class="hero__lead">
-      I build machine-learning systems and the tools around them — from training pipelines to
-      the polished product on top. I care about shipping things that are fast, reliable, and
-      genuinely nice to use.
+      {t.home.heroLead}
     </p>
     <div class="hero__actions">
-      <Button href={getRelativeLocaleUrl(locale, 'projects')} variant="filled">View projects</Button>
-      <Button href="/cv.pdf" variant="outline">Download CV</Button>
+      <Button href={getRelativeLocaleUrl(locale, 'projects')} variant="filled">{t.home.viewProjects}</Button>
+      <Button href="/cv.pdf" variant="outline">{t.home.downloadCv}</Button>
     </div>
   </div>
 
   <div class="hero__portrait">
     <div class="hero__portrait-art">
-      <span class="hero__portrait-label">Portrait</span>
+      <span class="hero__portrait-label">{t.home.portraitLabel}</span>
     </div>
     <div class="hero__stats">
       {stats.map((stat) => <StatChip>{stat}</StatChip>)}

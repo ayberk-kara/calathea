@@ -4,8 +4,10 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import SectionHeader from '../SectionHeader.astro';
 import ProjectCard from '../ProjectCard.astro';
 import { DEFAULT_LOCALE, localizeAll, type Locale } from '../../lib/i18n';
+import { getUI } from '../../i18n';
 
 const locale = (Astro.currentLocale ?? DEFAULT_LOCALE) as Locale;
+const t = getUI(locale);
 
 const featured = localizeAll(await getCollection('projects'), locale)
   .filter((project) => project.data.featured)
@@ -14,7 +16,7 @@ const featured = localizeAll(await getCollection('projects'), locale)
 ---
 
 <section class="featured-projects" id="projects">
-  <SectionHeader color="rust" actionLabel="view all projects" actionHref={getRelativeLocaleUrl(locale, 'projects')}>PROJECTS</SectionHeader>
+  <SectionHeader color="rust" actionLabel={t.home.projectsViewAll} actionHref={getRelativeLocaleUrl(locale, 'projects')}>{t.home.projectsHeading}</SectionHeader>
   <div class="featured-projects__grid">
     {featured.map((project) => <ProjectCard project={project} />)}
   </div>

@@ -1,10 +1,15 @@
 ---
+import { DEFAULT_LOCALE, type Locale } from '../lib/i18n';
+import { getUI } from '../i18n';
+
 const year = new Date().getFullYear();
+const locale = (Astro.currentLocale ?? DEFAULT_LOCALE) as Locale;
+const t = getUI(locale);
 ---
 
 <footer class="site-footer">
   <div class="site-footer__inner">
-    <span class="site-footer__copy">© {year} AK — built with Astro · Cloudflare Pages</span>
+    <span class="site-footer__copy">{t.footer.copy(year)}</span>
     <!--
       TODO: re-add the "press ~ for terminal · ⌘K to search" hint here once the
       command palette and terminal-mode easter egg ship.

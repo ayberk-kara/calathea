@@ -7,6 +7,7 @@ import VersionPill from '../../../components/VersionPill.astro';
 import Prose from '../../../components/Prose.astro';
 import { getPostPill, formatPostDate, getReadingTime } from '../../../lib/posts';
 import { LOCALES, getSlug, localize, localizeAll } from '../../../lib/i18n';
+import { getUI } from '../../../i18n';
 
 export async function getStaticPaths() {
   const allPosts = await getCollection('posts');
@@ -36,6 +37,7 @@ interface Props {
 }
 
 const { locale } = Astro.params;
+const t = getUI(locale);
 const { post, prev, next, project } = Astro.props;
 const { data, body } = post;
 const { Content } = await render(post);
@@ -46,7 +48,7 @@ const read = getReadingTime(body ?? '');
 
 <BaseLayout title={`${data.title} — AK`} description={data.excerpt} active="blog">
   <article class="post">
-    <a href={getRelativeLocaleUrl(locale, 'blog')} class="post__breadcrumb">← THE BLOG</a>
+    <a href={getRelativeLocaleUrl(locale, 'blog')} class="post__breadcrumb">{t.post.breadcrumb}</a>
 
     <div class="post__tags">
       <VersionPill kind={pill.kind} major={pill.major}>{pill.label}</VersionPill>
@@ -58,9 +60,9 @@ const read = getReadingTime(body ?? '');
     <div class="post__meta">
       <span>{formatPostDate(data.date, 'long')}</span>
       <span>·</span>
-      <span>{read} min read</span>
+      <span>{t.post.readingTime(read)}</span>
       {project && (
-        <a href={getRelativeLocaleUrl(locale, `projects/${getSlug(project.id)}`)} class="post__project">↳ back to {project.data.title}</a>
+        <a href={getRelativeLocaleUrl(locale, `projects/${getSlug(project.id)}`)} class="post__project">{t.post.backToProject} {project.data.title}</a>
       )}
     </div>
 
@@ -71,13 +73,13 @@ const read = getReadingTime(body ?? '');
     <div class="post__prevnext">
       {prev && (
         <a href={getRelativeLocaleUrl(locale, `blog/${getSlug(prev.id)}`)} class="post__nav-card post__nav-card--prev">
-          <span class="post__nav-label">← PREVIOUS</span>
+          <span class="post__nav-label">{t.post.prev}</span>
           <span class="post__nav-title">{prev.data.title}</span>
         </a>
       )}
       {next && (
         <a href={getRelativeLocaleUrl(locale, `blog/${getSlug(next.id)}`)} class="post__nav-card post__nav-card--next">
-          <span class="post__nav-label">NEXT →</span>
+          <span class="post__nav-label">{t.post.next}</span>
           <span class="post__nav-title">{next.data.title}</span>
         </a>
       )}

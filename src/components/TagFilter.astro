@@ -4,9 +4,11 @@ interface Props {
   activeColor: 'ink' | 'amber';
   label: string;
   noun: string;
+  allLabel: string;
+  showingTemplate: string;
 }
 
-const { items, activeColor, label, noun } = Astro.props;
+const { items, activeColor, label, noun, allLabel, showingTemplate } = Astro.props;
 
 const counts = new Map<string, number>();
 for (const item of items) {
@@ -16,12 +18,24 @@ for (const item of items) {
 }
 const tags = [...counts.keys()].sort();
 const total = items.length;
+
+const renderStatus = (visible: number) =>
+  showingTemplate
+    .replace('{visible}', String(visible))
+    .replace('{total}', String(total))
+    .replace('{noun}', noun.toUpperCase());
 ---
 
-<div class="tag-filter" data-tag-filter data-active-color={activeColor} data-noun={noun.toUpperCase()}>
+<div
+  class="tag-filter"
+  data-tag-filter
+  data-active-color={activeColor}
+  data-noun={noun.toUpperCase()}
+  data-showing-template={showingTemplate}
+>
   <span class="tag-filter__label">{label}</span>
   <button type="button" class="tag-filter__chip is-active" data-tag="all">
-    all<span class="tag-filter__count">{total}</span>
+    {allLabel}<span class="tag-filter__count">{total}</span>
   </button>
   {tags.map((tag) => (
     <button type="button" class="tag-filter__chip" data-tag={tag}>
@@ -29,7 +43,7 @@ const total = items.length;
     </button>
   ))}
   <span class="tag-filter__status" data-tag-filter-status>
-    SHOWING {total} / {total} {noun.toUpperCase()}
+    {renderStatus(total)}
   </span>
 </div>
 
@@ -94,6 +108,7 @@ const total = items.length;
     const items = document.querySelectorAll<HTMLElement>('[data-tags]');
     const status = bar.querySelector<HTMLElement>('[data-tag-filter-status]');
     const noun = bar.dataset.noun ?? '';
+    const template = bar.dataset.showingTemplate ?? '{visible} / {total} {noun}';
     const total = items.length;
 
     bar.addEventListener('click', (event) => {
@@ -112,7 +127,12 @@ const total = items.length;
         if (show) visible += 1;
       });
 
-      if (status) status.textContent = `SHOWING ${visible} / ${total} ${noun}`;
+      if (status) {
+        status.textContent = template
+          .replace('{visible}', String(visible))
+          .replace('{total}', String(total))
+          .replace('{noun}', noun);
+      }
     });
   });
 </script>

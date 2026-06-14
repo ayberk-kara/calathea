@@ -1,20 +1,22 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { DEFAULT_LOCALE } from '../lib/i18n';
+import { DEFAULT_LOCALE, type Locale } from '../lib/i18n';
+import { getUI } from '../i18n';
 
 interface Props {
   active?: 'home' | 'projects' | 'blog';
 }
 
 const { active = 'home' } = Astro.props;
-const locale = Astro.currentLocale ?? DEFAULT_LOCALE;
+const locale = (Astro.currentLocale ?? DEFAULT_LOCALE) as Locale;
+const t = getUI(locale);
 
 const homeHref = getRelativeLocaleUrl(locale);
 
 const navItems = [
-  { key: 'projects', href: getRelativeLocaleUrl(locale, 'projects'), label: 'Projects' },
-  { key: 'blog', href: getRelativeLocaleUrl(locale, 'blog'), label: 'Blog' },
-  { key: 'contact', href: `${homeHref}#contact`, label: 'Contact' },
+  { key: 'projects', href: getRelativeLocaleUrl(locale, 'projects'), label: t.nav.projects },
+  { key: 'blog', href: getRelativeLocaleUrl(locale, 'blog'), label: t.nav.blog },
+  { key: 'contact', href: `${homeHref}#contact`, label: t.nav.contact },
 ] as const;
 ---
 
@@ -35,12 +37,12 @@ const navItems = [
     </nav>
 
     <div class="site-header__actions">
-      <div class="locale-pill" role="group" aria-label="Language">
+      <div class="locale-pill" role="group" aria-label={t.nav.languageLabel}>
         <a href={getRelativeLocaleUrl('en')} class="locale-pill__option" aria-current={locale === 'en' ? 'true' : undefined}>EN</a>
         <a href={getRelativeLocaleUrl('tr')} class="locale-pill__option" aria-current={locale === 'tr' ? 'true' : undefined}>TR</a>
       </div>
 
-      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle color theme">
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label={t.nav.themeToggle}>
         <svg class="icon icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <circle cx="12" cy="12" r="4.5"></circle>
           <path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3M18.5 5.5l-2 2M7.5 16.5l-2 2M18.5 18.5l-2-2M7.5 7.5l-2-2"></path>
@@ -50,7 +52,7 @@ const navItems = [
         </svg>
       </button>
 
-      <button id="nav-burger" class="icon-btn burger" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
+      <button id="nav-burger" class="icon-btn burger" type="button" aria-label={t.nav.menuToggle} aria-expanded="false" aria-controls="mobile-nav">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <path d="M3.5 6.5h17M3.5 12h17M3.5 17.5h17"></path>
         </svg>
