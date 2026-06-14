@@ -72,7 +72,14 @@ const feed = localizeAll(await getCollection('posts'), locale)
     padding: var(--space-40) var(--space-36) var(--space-32);
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
     gap: var(--space-40);
+  }
+
+  .blog-contact__col {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
   }
 
   .blog-contact__feed {
@@ -174,6 +181,12 @@ const feed = localizeAll(await getCollection('posts'), locale)
   @media (max-width: 880px) {
     .blog-contact {
       grid-template-columns: 1fr;
+      grid-template-rows: none;
+    }
+
+    .blog-contact__col {
+      display: block;
+      grid-row: auto;
     }
 
     .contact-form__row {
