@@ -1,0 +1,89 @@
+---
+import SectionHeader from '../SectionHeader.astro';
+import TagChip from '../TagChip.astro';
+import { skills } from '../../data/profile';
+---
+
+<section class="skills" id="skills">
+  <SectionHeader color="olive">SKILLS</SectionHeader>
+  <div class="skills__grid">
+    <div class="skills__card skills__card--olive">
+      <div class="skills__label">LANGUAGES</div>
+      <div class="skills__pills">
+        {skills.languages.map((s) => <TagChip variant="inverse">{s}</TagChip>)}
+      </div>
+    </div>
+    <div class="skills__card skills__card--amber">
+      <div class="skills__label">ML / AI</div>
+      <div class="skills__pills">
+        {skills.ml.map((s) => <TagChip variant="inverse">{s}</TagChip>)}
+      </div>
+    </div>
+    <div class="skills__card skills__card--card">
+      <div class="skills__label skills__label--muted">INFRA</div>
+      <div class="skills__pills">
+        {skills.infra.map((s) => <TagChip>{s}</TagChip>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills {
+    max-width: var(--measure-xl);
+    margin: 0 auto;
+    padding: var(--space-40) var(--space-36) var(--space-24);
+  }
+
+  .skills__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-16);
+  }
+
+  .skills__card {
+    border: var(--border-width) solid var(--border-strong);
+    border-radius: var(--radius-xl);
+    padding: var(--space-22);
+  }
+
+  .skills__card--olive {
+    background: var(--olive);
+    color: var(--on-olive);
+  }
+
+  .skills__card--amber {
+    background: var(--amber);
+    color: var(--on-amber);
+  }
+
+  .skills__card--card {
+    background: var(--card);
+    color: var(--ink);
+  }
+
+  .skills__label {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 2px;
+    opacity: 0.85;
+    margin-bottom: var(--space-16);
+  }
+
+  .skills__label--muted {
+    color: var(--muted);
+    opacity: 1;
+  }
+
+  .skills__pills {
+    display: flex;
+    gap: var(--space-8);
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 880px) {
+    .skills__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
