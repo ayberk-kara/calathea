@@ -7,15 +7,22 @@ import Prose from '../../components/Prose.astro';
 import { getPostPill, formatPostDate, getReadingTime } from '../../lib/posts';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts');
-  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+  const posts = (await getCollection('posts')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  return posts.map((post, index) => ({
+    params: { id: post.id },
+    props: { post, prev: posts[index + 1], next: posts[index - 1] },
+  }));
 }
+
+type Post = Awaited<ReturnType<typeof getCollection<'posts'>>>[number];
 
 interface Props {
-  post: Awaited<ReturnType<typeof getCollection<'posts'>>>[number];
+  post: Post;
+  prev?: Post;
+  next?: Post;
 }
 
-const { post } = Astro.props;
+const { post, prev, next } = Astro.props;
 const { data, body } = post;
 const { Content } = await render(post);
 
@@ -47,6 +54,21 @@ const project = data.project ? await getEntry(data.project) : undefined;
     <Prose>
       <Content />
     </Prose>
+
+    <div class="post__prevnext">
+      {prev && (
+        <a href={`/blog/${prev.id}`} class="post__nav-card post__nav-card--prev">
+          <span class="post__nav-label">← PREVIOUS</span>
+          <span class="post__nav-title">{prev.data.title}</span>
+        </a>
+      )}
+      {next && (
+        <a href={`/blog/${next.id}`} class="post__nav-card post__nav-card--next">
+          <span class="post__nav-label">NEXT →</span>
+          <span class="post__nav-title">{next.data.title}</span>
+        </a>
+      )}
+    </div>
   </article>
 </BaseLayout>
 
@@ -103,5 +125,52 @@ const project = data.project ? await getEntry(data.project) : undefined;
     font-weight: 700;
     border-bottom: var(--border-width-sm) solid var(--rust);
     padding-bottom: var(--space-2);
+  }
+
+  .post__prevnext {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-14);
+    margin-top: var(--space-40);
+  }
+
+  .post__nav-card {
+    text-decoration: none;
+    border: var(--border-width) solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    padding: var(--space-16) var(--space-18);
+    background: var(--card);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .post__nav-card--next {
+    grid-column: 2;
+    text-align: right;
+  }
+
+  .post__nav-label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+
+  .post__nav-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--ink);
+  }
+
+  @media (max-width: 880px) {
+    .post__prevnext {
+      grid-template-columns: 1fr;
+    }
+
+    .post__nav-card--next {
+      grid-column: 1;
+      text-align: left;
+    }
   }
 </style>
