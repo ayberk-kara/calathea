@@ -5,6 +5,8 @@ import TagChip from '../../components/TagChip.astro';
 import Button from '../../components/Button.astro';
 import MediaSlot from '../../components/MediaSlot.astro';
 import Prose from '../../components/Prose.astro';
+import VersionPill from '../../components/VersionPill.astro';
+import { getPostPill, getReadingTime } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -18,6 +20,11 @@ interface Props {
 const { project } = Astro.props;
 const { data } = project;
 const { Content } = await render(project);
+
+const relatedPosts = (await getCollection('posts'))
+  .filter((post) => post.data.project?.id === project.id || post.data.tags.some((tag) => data.tags.includes(tag)))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 5);
 ---
 
 <BaseLayout title={`${data.title} — AK`} description={data.summary} active="projects">
@@ -84,6 +91,25 @@ const { Content } = await render(project);
         <Content />
       </Prose>
     </div>
+
+    {relatedPosts.length > 0 && (
+      <div class="project__related">
+        <h2 class="project__heading project__heading--amber">Related dev notes</h2>
+        <div class="project__related-list">
+          {relatedPosts.map((post) => {
+            const pill = getPostPill(post);
+            const read = getReadingTime(post.body ?? '');
+            return (
+              <a href={`/blog/${post.id}`} class="related-row">
+                <VersionPill kind={pill.kind} major={pill.major}>{pill.label}</VersionPill>
+                <span class="related-row__title">{post.data.title}</span>
+                <span class="related-row__read">{read} min read</span>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    )}
 
     <div class="project__footer">
       <a href="/projects" class="project__footer-link project__footer-link--rust">← all projects</a>
@@ -198,6 +224,50 @@ const { Content } = await render(project);
 
   .project__body .project__heading {
     margin-top: 0;
+  }
+
+  .project__heading--amber {
+    color: var(--amber);
+  }
+
+  .project__related {
+    margin-top: var(--space-48);
+  }
+
+  .project__related-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-11);
+  }
+
+  .related-row {
+    text-decoration: none;
+    border: var(--border-width) solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    padding: var(--space-14) var(--space-18);
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    gap: var(--space-13);
+    transition: border-color 0.15s;
+  }
+
+  .related-row:hover {
+    border-color: var(--rust);
+  }
+
+  .related-row__title {
+    font-weight: 700;
+    font-size: 14.5px;
+    flex: 1;
+    color: var(--ink);
+  }
+
+  .related-row__read {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    white-space: nowrap;
   }
 
   .project__footer {
