@@ -17,8 +17,6 @@ export interface EducationEntry {
   highlight: boolean;
 }
 
-export const stats = ['5+ yrs', '30+ models shipped', 'OSS maintainer'];
-
 export const skills = {
   languages: ['Python', 'C++', 'CUDA', 'Rust', 'Go', 'TypeScript', 'SQL'],
   ml: ['PyTorch', 'Triton', 'Transformers', 'LangChain', 'vLLM', 'ONNX'],
