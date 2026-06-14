@@ -1,0 +1,53 @@
+---
+interface Props {
+  kind?: 'release' | 'docs' | 'deep-dive' | 'note';
+  major?: boolean;
+}
+
+const { kind = 'note', major = false } = Astro.props;
+---
+
+<span
+  class:list={['version-pill', `version-pill--${kind}`, { 'version-pill--major': kind === 'release' && major }]}
+>
+  <slot />
+</span>
+
+<style>
+  .version-pill {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-9);
+    white-space: nowrap;
+    border: var(--border-width-sm) solid var(--border-strong);
+  }
+
+  .version-pill--release {
+    background: var(--olive);
+    color: var(--on-olive);
+  }
+
+  .version-pill--release.version-pill--major {
+    background: var(--rust);
+    color: var(--on-rust);
+  }
+
+  .version-pill--docs {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .version-pill--deep-dive {
+    background: var(--amber);
+    color: var(--on-amber);
+  }
+
+  .version-pill--note {
+    background: var(--card);
+    color: var(--muted);
+  }
+</style>
