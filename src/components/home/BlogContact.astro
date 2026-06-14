@@ -1,0 +1,145 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHeader from '../SectionHeader.astro';
+import VersionPill from '../VersionPill.astro';
+import Button from '../Button.astro';
+import { getPostPill, formatRelativeDate } from '../../lib/posts';
+
+const feed = (await getCollection('posts'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 5);
+---
+
+<section class="blog-contact">
+  <div class="blog-contact__col">
+    <SectionHeader color="amber" size="md" actionLabel="all posts" actionHref="/blog">
+      DEV BLOG &amp; RELEASES
+    </SectionHeader>
+    <div class="blog-contact__feed">
+      {feed.map((post) => {
+        const pill = getPostPill(post);
+        return (
+          <a href={`/blog/${post.id}`} class="feed-row">
+            <VersionPill kind={pill.kind} major={pill.major}>{pill.label}</VersionPill>
+            <span class="feed-row__title">{post.data.title}</span>
+            <span class="feed-row__time">{formatRelativeDate(post.data.date)}</span>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+
+  <div class="blog-contact__col" id="contact">
+    <SectionHeader color="rust" size="md">CONTACT</SectionHeader>
+    <form class="contact-form">
+      <div class="contact-form__row">
+        <input class="field" type="text" name="name" placeholder="Name" required />
+        <input class="field" type="email" name="email" placeholder="Email" required />
+      </div>
+      <input class="field" type="text" name="subject" placeholder="Subject" />
+      <textarea class="field field--area" name="message" placeholder="Message…" rows="5" required></textarea>
+      <div class="contact-form__footer">
+        <Button type="submit" variant="accent">Send message →</Button>
+      </div>
+      <!--
+        TODO: wire this form to a backend-agnostic form service (Web3Forms or
+        Formspree, per CLAUDE.md). Add the provider's `action` URL / access
+        key and any hidden fields it requires — no submission endpoint yet.
+      -->
+    </form>
+  </div>
+</section>
+
+<style>
+  .blog-contact {
+    max-width: var(--measure-xl);
+    margin: 0 auto;
+    padding: var(--space-40) var(--space-36) var(--space-30);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-40);
+  }
+
+  .blog-contact__feed {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-11);
+  }
+
+  .feed-row {
+    text-decoration: none;
+    border: var(--border-width) solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    padding: var(--space-14) var(--space-18);
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    gap: var(--space-13);
+    transition: border-color 0.15s;
+  }
+
+  .feed-row:hover {
+    border-color: var(--rust);
+  }
+
+  .feed-row__title {
+    font-weight: 700;
+    font-size: 14.5px;
+    flex: 1;
+    color: var(--ink);
+  }
+
+  .feed-row__time {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .contact-form {
+    border: var(--border-width) solid var(--border-strong);
+    border-radius: var(--radius-xl);
+    background: var(--card);
+    padding: var(--space-22);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-13);
+  }
+
+  .contact-form__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-13);
+  }
+
+  .field {
+    width: 100%;
+    border: var(--border-width) solid var(--field-line);
+    border-radius: var(--radius-md);
+    background: var(--field);
+    color: var(--ink);
+    padding: var(--space-11) var(--space-14);
+    font-size: 14.5px;
+    outline: none;
+  }
+
+  .field--area {
+    resize: vertical;
+    min-height: var(--space-96);
+  }
+
+  .contact-form__footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 880px) {
+    .blog-contact {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-form__row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
