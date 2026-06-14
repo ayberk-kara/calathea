@@ -14,6 +14,7 @@ export interface EducationEntry {
   range: string;
   summary?: string;
   bullets?: string[];
+  coursework?: string[];
   highlight: boolean;
 }
 
@@ -98,7 +99,20 @@ export const education: EducationEntry[] = [
       'Dean’s List (High Honors) · GPA 3.69 / 4.00 · Honor Scholarship recipient (full tuition, merit-based).',
     bullets: [
       'Ranked in the top 0.04% (first 1,000) among approximately 2.6 million candidates in the 2021 Turkish national university entrance exam (YKS), earning a 4-year scholarship to Sabancı University.',
-      'Relevant coursework: Computational Approach to Problem-Solving (Python), Advanced Programming (C++), Logic & Digital System Design (Verilog), Introduction to Data Science (Python, data extraction, feature engineering), Mobile Application Development (Java, Kotlin), Systems Modelling & Control (MATLAB, Simulink), Internet of Things (edge computing, BERT, GRU networks), Programming Languages (Flex, Bison, Ada), Database Systems (MySQL), Machine Learning (unsupervised learning, CNNs), Software Engineering (Agile practices, Scrum, CI/CD, containerization, microservices), Data Structures and Algorithms.',
+    ],
+    coursework: [
+      'Computational Approach to Problem-Solving (Python)',
+      'Advanced Programming (C++)',
+      'Logic & Digital System Design (Verilog)',
+      'Introduction to Data Science (Python, data extraction, feature engineering)',
+      'Mobile Application Development (Java, Kotlin)',
+      'Systems Modelling & Control (MATLAB, Simulink)',
+      'Internet of Things (edge computing, BERT, GRU networks)',
+      'Programming Languages (Flex, Bison, Ada)',
+      'Database Systems (MySQL)',
+      'Machine Learning (unsupervised learning, CNNs)',
+      'Software Engineering (Agile practices, Scrum, CI/CD, containerization, microservices)',
+      'Data Structures and Algorithms',
     ],
     highlight: true,
   },

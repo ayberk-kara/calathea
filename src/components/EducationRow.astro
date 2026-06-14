@@ -6,10 +6,11 @@ interface Props {
   range: string;
   summary?: string;
   bullets?: string[];
+  coursework?: string[];
   highlight?: boolean;
 }
 
-const { degree, org, location, range, summary, bullets = [], highlight = false } = Astro.props;
+const { degree, org, location, range, summary, bullets = [], coursework = [], highlight = false } = Astro.props;
 const line = [org, location].filter(Boolean).join(' · ');
 ---
 
@@ -18,11 +19,23 @@ const line = [org, location].filter(Boolean).join(' · ');
     <div class="education-row__degree">{degree}</div>
     <div class="education-row__line">{line}</div>
     {summary && <p class="education-row__desc">{summary}</p>}
-    {bullets.length > 0 && (
+    {(bullets.length > 0 || coursework.length > 0) && (
       <div class="education-row__details">
-        <ul class="education-row__bullets">
-          {bullets.map((bullet) => <li>{bullet}</li>)}
-        </ul>
+        <div class="education-row__details-inner">
+          {bullets.length > 0 && (
+            <ul class="education-row__bullets">
+              {bullets.map((bullet) => <li>{bullet}</li>)}
+            </ul>
+          )}
+          {coursework.length > 0 && (
+            <div class="education-row__coursework">
+              <p class="education-row__coursework-label">Relevant coursework</p>
+              <ul class="education-row__coursework-list">
+                {coursework.map((course) => <li>{course}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
     )}
   </div>
@@ -86,10 +99,16 @@ const line = [org, location].filter(Boolean).join(' · ');
     margin-top: var(--space-7);
   }
 
+  .education-row__details-inner {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
   .education-row__bullets {
     margin: 0;
     padding: 0;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: var(--space-5);
@@ -112,6 +131,43 @@ const line = [org, location].filter(Boolean).join(' · ');
   }
 
   .education-row--highlight .education-row__bullets li::before {
+    color: var(--on-olive);
+  }
+
+  .education-row__coursework-label {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .education-row__coursework-list {
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    list-style: none;
+  }
+
+  .education-row__coursework-list li {
+    position: relative;
+    padding-left: var(--space-14);
+    font-size: 13px;
+    line-height: 1.5;
+    opacity: 0.82;
+  }
+
+  .education-row__coursework-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--rust);
+  }
+
+  .education-row--highlight .education-row__coursework-list li::before {
     color: var(--on-olive);
   }
 

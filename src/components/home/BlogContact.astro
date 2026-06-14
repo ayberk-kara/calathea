@@ -73,7 +73,8 @@ const feed = localizeAll(await getCollection('posts'), locale)
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 1fr;
-    gap: var(--space-40);
+    column-gap: var(--space-40);
+    row-gap: var(--space-16);
   }
 
   .blog-contact__col {
@@ -186,6 +187,7 @@ const feed = localizeAll(await getCollection('posts'), locale)
     .blog-contact {
       grid-template-columns: 1fr;
       grid-template-rows: none;
+      row-gap: var(--space-40);
     }
 
     .blog-contact__col {
