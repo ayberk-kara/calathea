@@ -75,11 +75,16 @@ const skillGroups = [
 </section>
 
 <section class="swiss-shell swiss-section">
-  <div class="swiss-section__head">
-    <h2 class="swiss-section__heading"><span class="swiss-section__index">03 /</span> {t.home.experienceHeading}</h2>
-    <div class="swiss-filter" data-filter-group data-filter-target="experience-list" aria-label={t.home.experienceFilterAriaLabel}>
-      <button type="button" data-filter-value="all" aria-pressed="true">{t.home.experienceFilterAll}</button>
-      <button type="button" data-filter-value="eng" aria-pressed="false">{t.home.experienceFilterEng}</button>
+  <div class="swiss-grid-2">
+    <div class="swiss-section__head">
+      <h2 class="swiss-section__heading"><span class="swiss-section__index">03 /</span> {t.home.experienceHeading}</h2>
+      <div class="swiss-filter" data-filter-group data-filter-target="experience-list" aria-label={t.home.experienceFilterAriaLabel}>
+        <button type="button" data-filter-value="all" aria-pressed="true">{t.home.experienceFilterAll}</button>
+        <button type="button" data-filter-value="eng" aria-pressed="false">{t.home.experienceFilterEng}</button>
+      </div>
+    </div>
+    <div class="swiss-section__head">
+      <h2 class="swiss-section__heading"><span class="swiss-section__index">04 /</span> {t.home.educationHeading}</h2>
     </div>
   </div>
   <div class="swiss-grid-2">
@@ -87,7 +92,6 @@ const skillGroups = [
       {experience.map((entry) => <ExperienceRow {...entry} />)}
     </div>
     <div>
-      <h2 class="swiss-section__heading swiss-education-heading"><span class="swiss-section__index">04 /</span> {t.home.educationHeading}</h2>
       {education.map((entry) => <EducationRow {...entry} />)}
     </div>
   </div>
@@ -196,12 +200,6 @@ const skillGroups = [
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-  }
-
-  .swiss-education-heading {
-    margin-bottom: 24px;
-    border-bottom: 1px solid var(--swiss-border);
-    padding-bottom: 12px;
   }
 
   .contact-form {

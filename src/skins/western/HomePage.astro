@@ -75,22 +75,24 @@ const skillGroups = [
 </section>
 
 <section class="western-shell western-section">
-  <div class="western-section__head">
-    <h2 class="western-section__title">{t.home.experienceHeading}</h2>
-    <div class="western-filter" data-filter-group data-filter-target="experience-list" aria-label={t.home.experienceFilterAriaLabel}>
-      <button type="button" data-filter-value="all" aria-pressed="true">{t.home.experienceFilterAll}</button>
-      <button type="button" data-filter-value="eng" aria-pressed="false">{t.home.experienceFilterEng}</button>
+  <div class="western-grid-2">
+    <div class="western-section__head">
+      <h2 class="western-section__title">{t.home.experienceHeading}</h2>
+      <div class="western-filter" data-filter-group data-filter-target="experience-list" aria-label={t.home.experienceFilterAriaLabel}>
+        <button type="button" data-filter-value="all" aria-pressed="true">{t.home.experienceFilterAll}</button>
+        <button type="button" data-filter-value="eng" aria-pressed="false">{t.home.experienceFilterEng}</button>
+      </div>
+    </div>
+    <div class="western-section__head">
+      <h2 class="western-section__title">{t.home.educationHeading}</h2>
     </div>
   </div>
   <div class="western-grid-2">
     <div id="experience-list" data-filter-list class="row-list">
       {experience.map((entry) => <ExperienceRow {...entry} />)}
     </div>
-    <div>
-      <h2 class="western-section__title western-education-heading">{t.home.educationHeading}</h2>
-      <div class="row-list">
-        {education.map((entry) => <EducationRow {...entry} />)}
-      </div>
+    <div class="row-list">
+      {education.map((entry) => <EducationRow {...entry} />)}
     </div>
   </div>
 </section>
@@ -215,10 +217,6 @@ const skillGroups = [
     display: flex;
     flex-direction: column;
     gap: 14px;
-  }
-
-  .western-education-heading {
-    margin-bottom: 24px;
   }
 
   .blog-feed {
