@@ -26,10 +26,29 @@ const locale = Astro.currentLocale ?? DEFAULT_LOCALE;
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    {/* Default theme (Western) fonts — preloaded, render-blocking. */}
     <link
       href="https://fonts.googleapis.com/css2?family=Rye&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
+
+    {/* Fonts for the other themes — loaded without blocking render; applied once downloaded. */}
+    <script is:inline>
+      (function () {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href =
+          'https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Syne:wght@500;600;700;800&display=swap';
+        document.head.appendChild(link);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Syne:wght@500;600;700;800&display=swap"
+      />
+    </noscript>
 
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
