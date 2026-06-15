@@ -1,0 +1,65 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { CollectionEntry } from 'astro:content';
+import { getSlug, type Locale } from '../../lib/i18n';
+import { getPostPill, formatPostDate } from '../../lib/posts';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  locale: Locale;
+  projectTitle?: string;
+}
+
+const { post, locale, projectTitle } = Astro.props;
+const { data } = post;
+const pill = getPostPill(post);
+const href = getRelativeLocaleUrl(locale, `blog/${getSlug(post.id)}`);
+
+const pillVariant: Record<string, string> = {
+  release: pill.major ? 'western-pill--accent-2' : '',
+  docs: 'western-pill--muted',
+  'deep-dive': 'western-pill--accent-3',
+  note: 'western-pill--muted',
+};
+---
+
+<a href={href} class="post-card" data-filter-item data-filter-tags={data.tags.join(' ')}>
+  <span class:list={['western-pill', pillVariant[pill.kind]]}>{pill.label}</span>
+  <span class="post-card__title">{data.title}</span>
+  {projectTitle && <span class="post-card__project">{projectTitle}</span>}
+  <span class="post-card__date">{formatPostDate(data.date)}</span>
+</a>
+
+<style>
+  .post-card {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 2px;
+    border-bottom: 1.5px solid var(--western-border);
+    color: var(--western-text);
+  }
+
+  .post-card__title {
+    font-size: 14px;
+    font-weight: 700;
+    flex: 1;
+    line-height: 1.35;
+  }
+
+  .post-card__project {
+    font-family: var(--western-font-mono);
+    font-size: 11px;
+    color: var(--western-accent-2);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .post-card__date {
+    font-family: var(--western-font-mono);
+    font-size: 11px;
+    color: var(--western-muted);
+    white-space: nowrap;
+  }
+</style>

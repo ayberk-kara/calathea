@@ -1,0 +1,111 @@
+---
+interface Props {
+  title: string;
+  org: string;
+  range: string;
+  summary?: string;
+  bullets?: string[];
+  eng: boolean;
+}
+
+const { title, org, range, summary, bullets, eng } = Astro.props;
+---
+
+<div class="western-card exp-row" data-expand data-filter-item data-filter-tags={eng ? 'eng' : ''} tabindex="0">
+  <div class="exp-row__head">
+    <h3 class="exp-row__title">{title}</h3>
+    <span class="exp-row__range">{range}</span>
+  </div>
+  <div class="exp-row__org">{org}</div>
+  {summary && <p class="exp-row__summary">{summary}</p>}
+  {
+    bullets && bullets.length > 0 && (
+      <div class="exp-row__details" data-expand-region>
+        <ul class="exp-row__bullets">
+          {bullets.map((bullet) => <li>{bullet}</li>)}
+        </ul>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .exp-row {
+    cursor: pointer;
+  }
+
+  .exp-row:focus-visible {
+    outline: 2px solid var(--western-accent-2);
+    outline-offset: 4px;
+  }
+
+  .exp-row__head {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: baseline;
+  }
+
+  .exp-row__title {
+    margin: 0;
+    font-family: var(--western-font-display);
+    font-weight: 400;
+    font-size: 17px;
+    letter-spacing: 0.3px;
+  }
+
+  .exp-row__range {
+    font-family: var(--western-font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--western-muted);
+    white-space: nowrap;
+  }
+
+  .exp-row__org {
+    font-family: var(--western-font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--western-accent-2);
+  }
+
+  .exp-row__summary {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--western-muted);
+  }
+
+  .exp-row__details {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+  }
+
+  .exp-row:hover .exp-row__details,
+  .exp-row:focus-within .exp-row__details,
+  .exp-row[data-expanded='true'] .exp-row__details {
+    grid-template-rows: 1fr;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .exp-row__details {
+      transition: grid-template-rows 0.25s ease;
+    }
+  }
+
+  .exp-row__bullets {
+    min-height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 10px 0 0 20px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--western-muted);
+  }
+
+  .exp-row__bullets li + li {
+    margin-top: 4px;
+  }
+</style>
