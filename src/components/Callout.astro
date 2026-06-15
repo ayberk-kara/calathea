@@ -13,14 +13,14 @@ const { label } = Astro.props;
 
 <style>
   .callout {
-    border-left: var(--space-4) solid var(--accent-3);
-    background: color-mix(in srgb, var(--accent-3) 12%, var(--surface));
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    padding: var(--space-14) var(--space-18);
-    margin: var(--space-18) 0;
+    border-left: 4px solid var(--prose-accent);
+    background: color-mix(in srgb, var(--prose-accent) 12%, var(--prose-surface));
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin: 18px 0;
     font-size: 15.5px;
     line-height: 1.6;
-    color: var(--text);
+    color: var(--prose-text);
   }
 
   .callout :global(p) {
@@ -29,5 +29,6 @@ const { label } = Astro.props;
 
   .callout strong {
     font-weight: 800;
+    color: var(--prose-heading);
   }
 </style>
