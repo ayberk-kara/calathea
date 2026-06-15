@@ -1,4 +1,5 @@
 @import './tokens.css';
+@import './themes/western.css';
 
 *,
 *::before,
@@ -12,17 +13,27 @@ body {
   padding: 0;
 }
 
-html {
-  color-scheme: light dark;
+html[data-mode='light'] {
+  color-scheme: light;
+}
+
+html[data-mode='dark'] {
+  color-scheme: dark;
 }
 
 body {
   background: var(--bg);
-  color: var(--ink);
+  color: var(--text);
   font-family: var(--font-body);
   min-height: 100vh;
   overflow-x: hidden;
   transition: background 0.25s, color 0.25s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: none;
+  }
 }
 
 a {
@@ -44,13 +55,13 @@ select {
 
 input::placeholder,
 textarea::placeholder {
-  color: var(--muted);
+  color: var(--text-muted);
   opacity: 0.8;
 }
 
 ::selection {
-  background: var(--amber);
-  color: var(--on-amber);
+  background: var(--accent-3);
+  color: var(--on-accent-3);
 }
 
 a:focus-visible,
@@ -58,7 +69,7 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: var(--border-width-focus) solid var(--amber);
+  outline: var(--border-width-focus) solid var(--accent-3);
   outline-offset: 2px;
 }
 

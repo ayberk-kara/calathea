@@ -2,6 +2,7 @@
 // Component sandbox — not part of the site. Remove (or keep gated) before Phase 4.
 import '../../styles/global.css';
 import Sandbox from '../../components/preview/Sandbox.astro';
+import { DEFAULT_THEME } from '../../config/themes';
 ---
 
 <!doctype html>
@@ -20,11 +21,11 @@ import Sandbox from '../../components/preview/Sandbox.astro';
   </head>
   <body>
     <div class="preview-grid">
-      <div class="theme-pane" data-theme="light">
+      <div class="theme-pane" data-theme={DEFAULT_THEME} data-mode="light">
         <p class="theme-pane__label">LIGHT</p>
         <Sandbox />
       </div>
-      <div class="theme-pane" data-theme="dark">
+      <div class="theme-pane" data-theme={DEFAULT_THEME} data-mode="dark">
         <p class="theme-pane__label">DARK</p>
         <Sandbox />
       </div>
@@ -41,7 +42,7 @@ import Sandbox from '../../components/preview/Sandbox.astro';
 
   .theme-pane {
     background: var(--bg);
-    color: var(--ink);
+    color: var(--text);
     padding: var(--space-32);
     display: flex;
     flex-direction: column;
@@ -52,7 +53,7 @@ import Sandbox from '../../components/preview/Sandbox.astro';
     font-family: var(--font-mono);
     font-size: 12px;
     letter-spacing: 2px;
-    color: var(--muted);
+    color: var(--text-muted);
     margin: 0;
   }
 
