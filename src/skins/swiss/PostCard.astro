@@ -1,0 +1,67 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { CollectionEntry } from 'astro:content';
+import { getSlug, type Locale } from '../../lib/i18n';
+import { getPostPill, formatPostDate } from '../../lib/posts';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  locale: Locale;
+  projectTitle?: string;
+}
+
+const { post, locale, projectTitle } = Astro.props;
+const { data } = post;
+const pill = getPostPill(post);
+const href = getRelativeLocaleUrl(locale, `blog/${getSlug(post.id)}`);
+---
+
+<a href={href} class="post-card" data-filter-item data-filter-tags={data.tags.join(' ')}>
+  <span class="post-card__pill">{pill.label}</span>
+  <span class="post-card__title">{data.title}</span>
+  {projectTitle && <span class="post-card__project">{projectTitle}</span>}
+  <span class="post-card__date">{formatPostDate(data.date)}</span>
+</a>
+
+<style>
+  .post-card {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--swiss-border);
+    color: var(--swiss-text);
+  }
+
+  .post-card__pill {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--swiss-on-accent);
+    background: var(--swiss-border-strong);
+    padding: 3px 7px;
+    white-space: nowrap;
+  }
+
+  .post-card__title {
+    font-size: 14px;
+    font-weight: 600;
+    flex: 1;
+    line-height: 1.35;
+  }
+
+  .post-card__project {
+    font-size: 11px;
+    color: var(--swiss-accent);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .post-card__date {
+    font-size: 11px;
+    color: var(--swiss-faint);
+    white-space: nowrap;
+    font-family: var(--swiss-font-mono);
+  }
+</style>
