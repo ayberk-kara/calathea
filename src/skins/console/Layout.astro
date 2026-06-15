@@ -1,0 +1,317 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { type Locale } from '../../lib/i18n';
+import { getUI } from '../../i18n';
+import { skinList } from '../../config/skin-list';
+
+interface Props {
+  skinId: string;
+  active: 'home' | 'projects' | 'blog' | null;
+  locale: Locale;
+}
+
+const { skinId, active, locale } = Astro.props;
+const t = getUI(locale);
+
+const homeHref = getRelativeLocaleUrl(locale);
+
+const navItems = [
+  { key: 'projects', href: getRelativeLocaleUrl(locale, 'projects'), label: t.nav.projects },
+  { key: 'blog', href: getRelativeLocaleUrl(locale, 'blog'), label: t.nav.blog },
+  { key: 'contact', href: `${homeHref}#contact`, label: t.nav.contact },
+] as const;
+
+const path = Astro.url.pathname.replace(/^\/(en|tr)\/?/, '').replace(/\/$/, '');
+const localeHrefs: Record<Locale, string> = {
+  en: path ? getRelativeLocaleUrl('en', path) : getRelativeLocaleUrl('en'),
+  tr: path ? getRelativeLocaleUrl('tr', path) : getRelativeLocaleUrl('tr'),
+};
+
+const year = new Date().getFullYear();
+---
+
+<div data-skin-root={skinId}>
+  <header class="console-header">
+    <div class="console-shell console-header__inner">
+      <a href={homeHref} class="console-header__brand">
+        <span class="console-dots">
+          <span class="console-dot console-dot--red"></span>
+          <span class="console-dot console-dot--amber"></span>
+          <span class="console-dot console-dot--green"></span>
+        </span>
+        <span class="console-header__path">ayberk@dev</span>
+      </a>
+
+      <nav class="console-header__links" aria-label="Primary">
+        {
+          navItems.map((item) => (
+            <a href={item.href} aria-current={active === item.key ? 'page' : undefined}>
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="console-header__actions">
+        <div class="console-locale" role="group" aria-label={t.nav.languageLabel}>
+          <a href={localeHrefs.en} aria-current={locale === 'en' ? 'true' : undefined}>EN</a>
+          <a href={localeHrefs.tr} aria-current={locale === 'tr' ? 'true' : undefined}>TR</a>
+        </div>
+
+        {
+          skinList.length > 1 && (
+            <div class="console-skin-picker">
+              <label class="sr-only" for={`skin-select-${skinId}`}>Skin</label>
+              <select id={`skin-select-${skinId}`} data-skin-select aria-label="Skin">
+                {skinList.map((skin) => (
+                  <option value={skin.id}>{skin.label}</option>
+                ))}
+              </select>
+            </div>
+          )
+        }
+
+        <button class="console-icon-btn" type="button" data-mode-toggle aria-label={t.nav.themeToggle}>
+          <svg class="console-icon console-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.5"></circle>
+            <path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3M18.5 5.5l-2 2M7.5 16.5l-2 2M18.5 18.5l-2-2M7.5 7.5l-2-2"></path>
+          </svg>
+          <svg class="console-icon console-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a7 7 0 0 0 10.7 10.7z"></path>
+          </svg>
+        </button>
+
+        <button
+          class="console-icon-btn console-burger"
+          type="button"
+          data-nav-toggle
+          aria-label={t.nav.menuToggle}
+          aria-expanded="false"
+          aria-controls={`mobile-nav-${skinId}`}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M3.5 6.5h17M3.5 12h17M3.5 17.5h17"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <nav id={`mobile-nav-${skinId}`} class="console-mobile-nav" aria-label="Primary mobile">
+      {
+        navItems.map((item) => (
+          <a href={item.href} aria-current={active === item.key ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </header>
+
+  <main class="console-main">
+    <slot />
+  </main>
+
+  <footer class="console-footer">
+    <div class="console-shell console-footer__inner">
+      <span class="console-footer__prompt">$</span>
+      <span>{t.footer.copy(year)}</span>
+    </div>
+  </footer>
+</div>
+
+<style>
+  .console-header {
+    border-bottom: 1px solid var(--console-border);
+  }
+
+  .console-header__inner {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .console-header__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--console-heading);
+    flex: 0 0 auto;
+  }
+
+  .console-header__links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-right: auto;
+    font-size: 12.5px;
+  }
+
+  .console-header__links a {
+    text-decoration: none;
+    text-transform: lowercase;
+    color: var(--console-faint);
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+  }
+
+  .console-header__links a::before {
+    content: './';
+    color: var(--console-dim);
+  }
+
+  .console-header__links a[aria-current='page'] {
+    color: var(--console-accent);
+    border-bottom-color: var(--console-accent);
+  }
+
+  .console-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .console-locale {
+    display: inline-flex;
+    border: 1px solid var(--console-border-strong);
+    border-radius: 5px;
+    overflow: hidden;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .console-locale a {
+    padding: 6px 9px;
+    text-decoration: none;
+    color: var(--console-faint);
+  }
+
+  .console-locale a[aria-current='true'] {
+    background: var(--console-accent);
+    color: var(--console-on-accent);
+  }
+
+  .console-skin-picker select {
+    height: 34px;
+    border: 1px solid var(--console-border-strong);
+    border-radius: 5px;
+    background: var(--console-surface);
+    color: var(--console-text);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 0 8px;
+    cursor: pointer;
+  }
+
+  .console-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 5px;
+    border: 1px solid var(--console-border-strong);
+    background: var(--console-surface);
+    color: var(--console-text);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .console-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  .console-icon--sun,
+  .console-icon--moon {
+    display: none;
+  }
+
+  [data-skin='console'][data-mode='light'] .console-icon--moon {
+    display: block;
+  }
+
+  [data-skin='console'][data-mode='dark'] .console-icon--sun {
+    display: block;
+  }
+
+  .console-burger {
+    display: none;
+  }
+
+  .console-burger svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .console-mobile-nav {
+    display: none;
+    flex-direction: column;
+    border-top: 1px solid var(--console-border);
+    padding: 8px var(--console-gutter);
+  }
+
+  .console-mobile-nav a {
+    text-decoration: none;
+    text-transform: lowercase;
+    font-size: 13px;
+    color: var(--console-faint);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--console-border);
+  }
+
+  .console-mobile-nav a::before {
+    content: './';
+    color: var(--console-dim);
+  }
+
+  .console-mobile-nav a:last-child {
+    border-bottom: none;
+  }
+
+  .console-mobile-nav a[aria-current='page'] {
+    color: var(--console-accent);
+  }
+
+  .console-mobile-nav.is-open {
+    display: flex;
+  }
+
+  @media (max-width: 880px) {
+    .console-header__links {
+      display: none;
+    }
+
+    .console-burger {
+      display: inline-flex;
+    }
+  }
+
+  .console-main {
+    flex: 1;
+    padding: 48px 0 110px;
+  }
+
+  .console-footer {
+    border-top: 1px solid var(--console-border);
+  }
+
+  .console-footer__inner {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--console-faint);
+  }
+
+  .console-footer__prompt {
+    color: var(--console-accent);
+    font-weight: 700;
+  }
+</style>
