@@ -120,10 +120,6 @@ html:not([data-skin='swiss']) [data-skin-root='swiss'] {
   text-transform: uppercase;
 }
 
-[data-skin-root='swiss'] .swiss-section__index {
-  color: var(--swiss-accent);
-}
-
 [data-skin-root='swiss'] .swiss-section__link {
   font-size: 12px;
   color: var(--swiss-faint);

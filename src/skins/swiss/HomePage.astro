@@ -48,7 +48,7 @@ const skillGroups = [
 
 <section class="swiss-shell swiss-section">
   <div class="swiss-section__head">
-    <h2 class="swiss-section__heading"><span class="swiss-section__index">01 /</span> {t.home.projectsHeading}</h2>
+    <h2 class="swiss-section__heading">{t.home.projectsHeading}</h2>
     <a href={getRelativeLocaleUrl(locale, 'projects')} class="swiss-section__link">{t.home.projectsViewAll} →</a>
   </div>
   <div class="swiss-grid-3">
@@ -58,7 +58,7 @@ const skillGroups = [
 
 <section class="swiss-shell swiss-section">
   <div class="swiss-section__head">
-    <h2 class="swiss-section__heading"><span class="swiss-section__index">02 /</span> {t.home.skillsHeading}</h2>
+    <h2 class="swiss-section__heading">{t.home.skillsHeading}</h2>
   </div>
   <div class="swiss-skills-grid">
     {
@@ -77,14 +77,14 @@ const skillGroups = [
 <section class="swiss-shell swiss-section">
   <div class="swiss-grid-2">
     <div class="swiss-section__head">
-      <h2 class="swiss-section__heading"><span class="swiss-section__index">03 /</span> {t.home.experienceHeading}</h2>
+      <h2 class="swiss-section__heading">{t.home.experienceHeading}</h2>
       <div class="swiss-filter" data-filter-group data-filter-target="experience-list-swiss" aria-label={t.home.experienceFilterAriaLabel}>
         <button type="button" data-filter-value="all" aria-pressed="true">{t.home.experienceFilterAll}</button>
         <button type="button" data-filter-value="eng" aria-pressed="false">{t.home.experienceFilterEng}</button>
       </div>
     </div>
     <div class="swiss-section__head">
-      <h2 class="swiss-section__heading"><span class="swiss-section__index">04 /</span> {t.home.educationHeading}</h2>
+      <h2 class="swiss-section__heading">{t.home.educationHeading}</h2>
     </div>
   </div>
   <div class="swiss-grid-2">
@@ -101,14 +101,14 @@ const skillGroups = [
   <div class="swiss-grid-2">
     <div>
       <div class="swiss-section__head">
-        <h2 class="swiss-section__heading"><span class="swiss-section__index">05 /</span> {t.home.blogHeading}</h2>
+        <h2 class="swiss-section__heading">{t.home.blogHeading}</h2>
         <a href={getRelativeLocaleUrl(locale, 'blog')} class="swiss-section__link">{t.home.blogAllPosts} →</a>
       </div>
       {recentPosts.map((post) => <PostCard post={post} locale={locale} />)}
     </div>
     <div id="contact">
       <div class="swiss-section__head">
-        <h2 class="swiss-section__heading"><span class="swiss-section__index">06 /</span> {t.home.contactHeading}</h2>
+        <h2 class="swiss-section__heading">{t.home.contactHeading}</h2>
       </div>
       <form
         class="contact-form"
