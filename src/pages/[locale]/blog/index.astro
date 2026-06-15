@@ -33,11 +33,11 @@ for (const post of posts) {
   description="Notes from the kernel mines — deep dives, dev notes, and release logs, cross-linked to the projects they came out of."
   active="blog"
 >
-  <PageHeader color="amber" measure="md" eyebrow={t.blogPage.eyebrow} title={t.blogPage.title} subtitle={t.blogPage.subtitle} />
+  <PageHeader color="accent-3" measure="md" eyebrow={t.blogPage.eyebrow} title={t.blogPage.title} subtitle={t.blogPage.subtitle} />
 
   <TagFilter
     items={posts.map((p) => ({ tags: p.data.tags }))}
-    activeColor="amber"
+    activeColor="accent-3"
     label={t.filter.tagLabel}
     noun={t.filter.postsNoun}
     allLabel={t.filter.all}

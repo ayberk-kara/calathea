@@ -99,7 +99,7 @@ const read = getReadingTime(body ?? '');
     font-family: var(--font-mono);
     font-size: 12px;
     letter-spacing: 1.5px;
-    color: var(--muted);
+    color: var(--text-muted);
   }
 
   .post__tags {
@@ -117,7 +117,7 @@ const read = getReadingTime(body ?? '');
     line-height: 1.08;
     margin: 0 0 var(--space-18);
     letter-spacing: 0.3px;
-    color: var(--ink);
+    color: var(--text);
   }
 
   .post__meta {
@@ -127,7 +127,7 @@ const read = getReadingTime(body ?? '');
     flex-wrap: wrap;
     font-family: var(--font-mono);
     font-size: 12px;
-    color: var(--muted);
+    color: var(--text-muted);
     margin-bottom: var(--space-30);
     padding-bottom: var(--space-22);
     border-bottom: var(--border-width) solid var(--border-strong);
@@ -136,9 +136,9 @@ const read = getReadingTime(body ?? '');
   .post__project {
     margin-left: auto;
     text-decoration: none;
-    color: var(--rust);
+    color: var(--accent-2);
     font-weight: 700;
-    border-bottom: var(--border-width-sm) solid var(--rust);
+    border-bottom: var(--border-width-sm) solid var(--accent-2);
     padding-bottom: var(--space-2);
   }
 
@@ -154,7 +154,7 @@ const read = getReadingTime(body ?? '');
     border: var(--border-width) solid var(--border-strong);
     border-radius: var(--radius-lg);
     padding: var(--space-16) var(--space-18);
-    background: var(--card);
+    background: var(--surface);
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
@@ -169,13 +169,13 @@ const read = getReadingTime(body ?? '');
     font-family: var(--font-mono);
     font-size: 10.5px;
     letter-spacing: 1px;
-    color: var(--muted);
+    color: var(--text-muted);
   }
 
   .post__nav-title {
     font-weight: 700;
     font-size: 15px;
-    color: var(--ink);
+    color: var(--text);
   }
 
   @media (max-width: 880px) {

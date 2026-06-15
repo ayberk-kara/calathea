@@ -14,8 +14,8 @@ import Eyebrow from '../Eyebrow.astro';
 
 <div class="sample">
   <p class="sample__label">EYEBROW</p>
-  <Eyebrow color="rust">DESIGNER OF SYSTEMS, NOT JUST MODELS</Eyebrow>
-  <Eyebrow color="amber" star={false}>DEV NOTES &amp; RELEASES</Eyebrow>
+  <Eyebrow color="accent-2">DESIGNER OF SYSTEMS, NOT JUST MODELS</Eyebrow>
+  <Eyebrow color="accent-3" star={false}>DEV NOTES &amp; RELEASES</Eyebrow>
 </div>
 
 <div class="sample">
@@ -34,7 +34,7 @@ import Eyebrow from '../Eyebrow.astro';
     <TagChip>Python</TagChip>
     <TagChip variant="muted">cuda</TagChip>
     <TagChip variant="muted">optimization</TagChip>
-    <div class="swatch swatch--olive row">
+    <div class="swatch swatch--accent row">
       <TagChip variant="inverse">Rust</TagChip>
       <TagChip variant="inverse">Go</TagChip>
     </div>
@@ -44,9 +44,9 @@ import Eyebrow from '../Eyebrow.astro';
 <div class="sample">
   <p class="sample__label">SECTIONHEADER</p>
   <div class="stack">
-    <SectionHeader color="rust" actionLabel="view all projects" actionHref="#">PROJECTS</SectionHeader>
-    <SectionHeader color="olive">SKILLS</SectionHeader>
-    <SectionHeader color="amber" size="md" actionLabel="all posts" actionHref="#">DEV BLOG &amp; RELEASES</SectionHeader>
+    <SectionHeader color="accent-2" actionLabel="view all projects" actionHref="#">PROJECTS</SectionHeader>
+    <SectionHeader color="accent">SKILLS</SectionHeader>
+    <SectionHeader color="accent-3" size="md" actionLabel="all posts" actionHref="#">DEV BLOG &amp; RELEASES</SectionHeader>
   </div>
 </div>
 
@@ -123,7 +123,7 @@ import Eyebrow from '../Eyebrow.astro';
     font-family: var(--font-mono);
     font-size: 11px;
     letter-spacing: 1.5px;
-    color: var(--muted);
+    color: var(--text-muted);
     margin: 0;
   }
 
@@ -146,8 +146,8 @@ import Eyebrow from '../Eyebrow.astro';
     padding: var(--space-22);
   }
 
-  .swatch--olive {
-    background: var(--olive);
-    color: var(--on-olive);
+  .swatch--accent {
+    background: var(--accent);
+    color: var(--on-accent);
   }
 </style>

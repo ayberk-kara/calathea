@@ -106,7 +106,7 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
 
     {relatedPosts.length > 0 && (
       <div class="project__related">
-        <h2 class="project__heading project__heading--amber">{t.project.relatedNotes}</h2>
+        <h2 class="project__heading project__heading--accent-3">{t.project.relatedNotes}</h2>
         <div class="project__related-list">
           {relatedPosts.map((post) => {
             const pill = getPostPill(post);
@@ -124,8 +124,8 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
     )}
 
     <div class="project__footer">
-      <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__footer-link project__footer-link--rust">{t.project.allProjects}</a>
-      <a href={getRelativeLocaleUrl(locale, 'blog')} class="project__footer-link project__footer-link--amber">{t.project.devBlog}</a>
+      <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__footer-link project__footer-link--accent-2">{t.project.allProjects}</a>
+      <a href={getRelativeLocaleUrl(locale, 'blog')} class="project__footer-link project__footer-link--accent-3">{t.project.devBlog}</a>
     </div>
   </article>
 </BaseLayout>
@@ -142,14 +142,14 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
     font-family: var(--font-mono);
     font-size: 12px;
     letter-spacing: 1.5px;
-    color: var(--muted);
+    color: var(--text-muted);
   }
 
   .project__eyebrow {
     font-family: var(--font-mono);
     font-size: 12.5px;
     letter-spacing: 2px;
-    color: var(--rust);
+    color: var(--accent-2);
     font-weight: 700;
     margin: var(--space-22) 0 var(--space-12);
   }
@@ -161,13 +161,13 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
     line-height: 1.02;
     margin: 0 0 var(--space-18);
     letter-spacing: 0.5px;
-    color: var(--ink);
+    color: var(--text);
   }
 
   .project__summary {
     font-size: 19px;
     line-height: 1.55;
-    color: var(--ink);
+    color: var(--text);
     opacity: 0.9;
     max-width: var(--measure-sm);
     margin: 0 0 var(--space-22);
@@ -196,7 +196,7 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
   .project__meta-item {
     border: var(--border-width) solid var(--border-strong);
     border-radius: var(--radius-lg);
-    background: var(--card);
+    background: var(--surface);
     padding: var(--space-15) var(--space-16);
   }
 
@@ -204,14 +204,14 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
     font-family: var(--font-mono);
     font-size: 10px;
     letter-spacing: 1.5px;
-    color: var(--muted);
+    color: var(--text-muted);
     margin-bottom: var(--space-7);
   }
 
   .project__meta-value {
     font-size: 14.5px;
     font-weight: 700;
-    color: var(--ink);
+    color: var(--text);
     line-height: 1.35;
   }
 
@@ -220,7 +220,7 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
     font-weight: 400;
     font-size: clamp(22px, 2.6vw, 32px);
     margin: var(--space-48) 0 var(--space-16);
-    color: var(--ink);
+    color: var(--text);
     letter-spacing: 0.5px;
   }
 
@@ -238,8 +238,8 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
     margin-top: 0;
   }
 
-  .project__heading--amber {
-    color: var(--amber);
+  .project__heading--accent-3 {
+    color: var(--accent-3);
   }
 
   .project__related {
@@ -257,7 +257,7 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
     border: var(--border-width) solid var(--border-strong);
     border-radius: var(--radius-lg);
     padding: var(--space-14) var(--space-18);
-    background: var(--card);
+    background: var(--surface);
     display: flex;
     align-items: center;
     gap: var(--space-13);
@@ -265,20 +265,20 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
   }
 
   .related-row:hover {
-    border-color: var(--rust);
+    border-color: var(--accent-2);
   }
 
   .related-row__title {
     font-weight: 700;
     font-size: 14.5px;
     flex: 1;
-    color: var(--ink);
+    color: var(--text);
   }
 
   .related-row__read {
     font-family: var(--font-mono);
     font-size: 11.5px;
-    color: var(--muted);
+    color: var(--text-muted);
     white-space: nowrap;
   }
 
@@ -297,17 +297,17 @@ const relatedPosts = localizeAll(await getCollection('posts'), locale)
     font-family: var(--font-mono);
     font-size: 12px;
     letter-spacing: 1px;
-    color: var(--ink);
+    color: var(--text);
     padding-bottom: var(--space-2);
     border-bottom: var(--border-width-sm) solid transparent;
   }
 
-  .project__footer-link--rust {
-    border-bottom-color: var(--rust);
+  .project__footer-link--accent-2 {
+    border-bottom-color: var(--accent-2);
   }
 
-  .project__footer-link--amber {
-    border-bottom-color: var(--amber);
+  .project__footer-link--accent-3 {
+    border-bottom-color: var(--accent-3);
   }
 
   @media (max-width: 880px) {

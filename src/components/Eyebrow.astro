@@ -1,10 +1,10 @@
 ---
 interface Props {
-  color?: 'rust' | 'amber';
+  color?: 'accent-2' | 'accent-3';
   star?: boolean;
 }
 
-const { color = 'rust', star = true } = Astro.props;
+const { color = 'accent-2', star = true } = Astro.props;
 ---
 
 <div class:list={['eyebrow', `eyebrow--${color}`]}>{star && '★ '}<slot /></div>
@@ -17,11 +17,11 @@ const { color = 'rust', star = true } = Astro.props;
     letter-spacing: 2px;
   }
 
-  .eyebrow--rust {
-    color: var(--rust);
+  .eyebrow--accent-2 {
+    color: var(--accent-2);
   }
 
-  .eyebrow--amber {
-    color: var(--amber);
+  .eyebrow--accent-3 {
+    color: var(--accent-3);
   }
 </style>

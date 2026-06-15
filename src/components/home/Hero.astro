@@ -18,7 +18,7 @@ const t = getUI(locale);
   </svg>
 
   <div class="hero__intro">
-    <Eyebrow color="rust">{t.home.heroEyebrow}</Eyebrow>
+    <Eyebrow color="accent-2">{t.home.heroEyebrow}</Eyebrow>
     <h1 class="hero__heading">{t.home.heroGreeting}<br />{t.home.heroName}</h1>
     <p class="hero__lead">
       {t.home.heroLead}
@@ -63,14 +63,14 @@ const t = getUI(locale);
     line-height: 0.96;
     margin: 0 0 var(--space-22);
     letter-spacing: 0.5px;
-    color: var(--ink);
+    color: var(--text);
     filter: url(#ak-rough);
   }
 
   .hero__lead {
     font-size: 17.5px;
     line-height: 1.62;
-    color: var(--ink);
+    color: var(--text);
     opacity: 0.9;
     max-width: 440px;
     margin: 0 0 var(--space-28);
@@ -95,10 +95,10 @@ const t = getUI(locale);
     align-items: center;
     gap: var(--space-8);
     padding: var(--space-18) var(--space-24);
-    border: var(--border-width) solid var(--on-olive);
+    border: var(--border-width) solid var(--on-accent);
     border-radius: var(--radius-lg);
-    background: var(--olive-2);
-    color: var(--on-olive);
+    background: var(--accent-shade);
+    color: var(--on-accent);
     text-decoration: none;
     font-family: var(--font-mono);
     font-size: 12px;
@@ -108,7 +108,7 @@ const t = getUI(locale);
   }
 
   .hero__social-link:hover {
-    background: var(--olive);
+    background: var(--accent);
     transform: translateY(-2px);
   }
 

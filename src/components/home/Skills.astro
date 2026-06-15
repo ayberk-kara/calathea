@@ -10,22 +10,22 @@ const t = getUI(locale);
 ---
 
 <section class="skills" id="skills">
-  <SectionHeader color="olive">{t.home.skillsHeading}</SectionHeader>
+  <SectionHeader color="accent">{t.home.skillsHeading}</SectionHeader>
   <div class="skills__grid">
-    <div class="skills__card skills__card--olive">
+    <div class="skills__card skills__card--accent">
       <div class="skills__label">{t.home.skillsLanguages}</div>
       <div class="skills__pills">
         {skills.languages.map((s) => <TagChip variant="inverse">{s}</TagChip>)}
       </div>
     </div>
-    <div class="skills__card skills__card--amber">
+    <div class="skills__card skills__card--accent-3">
       <div class="skills__label">{t.home.skillsMl}</div>
       <div class="skills__pills">
         {skills.ml.map((s) => <TagChip variant="inverse">{s}</TagChip>)}
       </div>
     </div>
-    <div class="skills__card skills__card--card">
-      <div class="skills__label skills__label--muted">{t.home.skillsInfra}</div>
+    <div class="skills__card skills__card--surface">
+      <div class="skills__label skills__label--text-muted">{t.home.skillsInfra}</div>
       <div class="skills__pills">
         {skills.infra.map((s) => <TagChip>{s}</TagChip>)}
       </div>
@@ -52,19 +52,19 @@ const t = getUI(locale);
     padding: var(--space-22);
   }
 
-  .skills__card--olive {
-    background: var(--olive);
-    color: var(--on-olive);
+  .skills__card--accent {
+    background: var(--accent);
+    color: var(--on-accent);
   }
 
-  .skills__card--amber {
-    background: var(--amber);
-    color: var(--on-amber);
+  .skills__card--accent-3 {
+    background: var(--accent-3);
+    color: var(--on-accent-3);
   }
 
-  .skills__card--card {
-    background: var(--card);
-    color: var(--ink);
+  .skills__card--surface {
+    background: var(--surface);
+    color: var(--text);
   }
 
   .skills__label {
@@ -75,8 +75,8 @@ const t = getUI(locale);
     margin-bottom: var(--space-16);
   }
 
-  .skills__label--muted {
-    color: var(--muted);
+  .skills__label--text-muted {
+    color: var(--text-muted);
     opacity: 1;
   }
 

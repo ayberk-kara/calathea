@@ -24,7 +24,7 @@ const classes = ['card', { 'card--interactive': interactive }, className];
   .card {
     border: var(--border-width) solid var(--border-strong);
     border-radius: var(--radius-xl);
-    background: var(--card);
+    background: var(--surface);
     padding: var(--space-22);
     display: flex;
     flex-direction: column;
@@ -39,6 +39,6 @@ const classes = ['card', { 'card--interactive': interactive }, className];
 
   .card--interactive:hover {
     transform: translateY(-3px);
-    box-shadow: var(--space-7) var(--space-7) 0 var(--olive);
+    box-shadow: var(--space-7) var(--space-7) 0 var(--accent);
   }
 </style>

@@ -16,7 +16,7 @@ const featured = localizeAll(await getCollection('projects'), locale)
 ---
 
 <section class="featured-projects" id="projects">
-  <SectionHeader color="rust" actionLabel={t.home.projectsViewAll} actionHref={getRelativeLocaleUrl(locale, 'projects')}>{t.home.projectsHeading}</SectionHeader>
+  <SectionHeader color="accent-2" actionLabel={t.home.projectsViewAll} actionHref={getRelativeLocaleUrl(locale, 'projects')}>{t.home.projectsHeading}</SectionHeader>
   <div class="featured-projects__grid">
     {featured.map((project) => <ProjectCard project={project} />)}
   </div>

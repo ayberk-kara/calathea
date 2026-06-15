@@ -24,11 +24,11 @@ const projects = localizeAll(await getCollection('projects'), locale).sort((a, b
   description="Inference systems, GPU kernels, search infrastructure, and the small tools that make them usable."
   active="projects"
 >
-  <PageHeader color="rust" eyebrow={t.projectsPage.eyebrow} title={t.projectsPage.title} subtitle={t.projectsPage.subtitle} />
+  <PageHeader color="accent-2" eyebrow={t.projectsPage.eyebrow} title={t.projectsPage.title} subtitle={t.projectsPage.subtitle} />
 
   <TagFilter
     items={projects.map((p) => ({ tags: p.data.tags }))}
-    activeColor="ink"
+    activeColor="text"
     label={t.filter.filterLabel}
     noun={t.filter.projectsNoun}
     allLabel={t.filter.all}

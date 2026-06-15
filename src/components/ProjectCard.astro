@@ -38,15 +38,15 @@ const locale = Astro.currentLocale ?? DEFAULT_LOCALE;
     font-family: var(--font-mono);
     font-size: 11px;
     letter-spacing: 1.5px;
-    color: var(--muted);
+    color: var(--text-muted);
   }
 
   .project-card__badge {
     font-family: var(--font-mono);
     font-size: 9.5px;
     letter-spacing: 1px;
-    background: var(--rust);
-    color: var(--on-rust);
+    background: var(--accent-2);
+    color: var(--on-accent-2);
     border-radius: var(--radius-xs);
     padding: var(--space-2) var(--space-7);
   }
@@ -54,12 +54,12 @@ const locale = Astro.currentLocale ?? DEFAULT_LOCALE;
   .project-card__title {
     font-size: 21px;
     font-weight: 800;
-    color: var(--ink);
+    color: var(--text);
     line-height: 1.15;
   }
 
   .project-card__summary {
-    color: var(--ink);
+    color: var(--text);
     opacity: 0.82;
     font-size: 14.5px;
     line-height: 1.5;

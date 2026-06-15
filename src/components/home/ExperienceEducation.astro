@@ -12,7 +12,7 @@ const t = getUI(locale);
 
 <section class="experience-education" id="experience">
   <div class="experience-education__col">
-    <SectionHeader color="rust">
+    <SectionHeader color="accent-2">
       {t.home.experienceHeading}
       <Fragment slot="action">
         <div class="exp-toggle" data-exp-toggle role="group" aria-label={t.home.experienceFilterAriaLabel}>
@@ -35,7 +35,7 @@ const t = getUI(locale);
   </div>
 
   <div class="experience-education__col">
-    <SectionHeader color="olive">{t.home.educationHeading}</SectionHeader>
+    <SectionHeader color="accent">{t.home.educationHeading}</SectionHeader>
     <div class="experience-education__rows">
       {education.map((entry) => (
         <EducationRow
@@ -86,11 +86,11 @@ const t = getUI(locale);
     font-family: inherit;
     letter-spacing: inherit;
     background: transparent;
-    color: var(--ink);
+    color: var(--text);
   }
 
   .exp-toggle__btn.is-active {
-    background: var(--ink);
+    background: var(--text);
     color: var(--bg);
     font-weight: 700;
   }

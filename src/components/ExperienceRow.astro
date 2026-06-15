@@ -33,7 +33,7 @@ const { title, range, summary, bullets = [], nonEng = false } = Astro.props;
     border-radius: var(--radius-lg);
     padding: var(--space-15) var(--space-20);
     border: var(--border-width) solid var(--border-strong);
-    background: var(--card);
+    background: var(--surface);
   }
 
   .experience-row--non-eng {
@@ -60,21 +60,21 @@ const { title, range, summary, bullets = [], nonEng = false } = Astro.props;
     font-weight: 800;
     font-size: 16.5px;
     line-height: 1.25;
-    color: var(--ink);
+    color: var(--text);
   }
 
   .experience-row__tag {
     font-family: var(--font-mono);
     font-size: 10px;
     letter-spacing: 0.5px;
-    background: var(--amber);
-    color: var(--on-amber);
+    background: var(--accent-3);
+    color: var(--on-accent-3);
     border-radius: var(--radius-xs);
     padding: var(--space-2) var(--space-7);
   }
 
   .experience-row__desc {
-    color: var(--muted);
+    color: var(--text-muted);
     font-size: 14px;
     line-height: 1.45;
     margin: var(--space-7) 0 0;
@@ -83,7 +83,7 @@ const { title, range, summary, bullets = [], nonEng = false } = Astro.props;
   .experience-row__range {
     font-family: var(--font-mono);
     font-size: 11.5px;
-    color: var(--muted);
+    color: var(--text-muted);
     white-space: nowrap;
   }
 
@@ -116,18 +116,18 @@ const { title, range, summary, bullets = [], nonEng = false } = Astro.props;
     padding-left: var(--space-14);
     font-size: 13px;
     line-height: 1.5;
-    color: var(--muted);
+    color: var(--text-muted);
   }
 
   .experience-row__bullets li::before {
     content: '–';
     position: absolute;
     left: 0;
-    color: var(--rust);
+    color: var(--accent-2);
   }
 
   .experience-row:focus-visible {
-    outline: var(--border-width-focus) solid var(--amber);
+    outline: var(--border-width-focus) solid var(--accent-3);
     outline-offset: 2px;
   }
 </style>

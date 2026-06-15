@@ -1,12 +1,12 @@
 ---
 interface Props {
-  color?: 'rust' | 'olive' | 'amber';
+  color?: 'accent' | 'accent-2' | 'accent-3';
   size?: 'lg' | 'md';
   actionLabel?: string;
   actionHref?: string;
 }
 
-const { color = 'rust', size = 'lg', actionLabel, actionHref } = Astro.props;
+const { color = 'accent-2', size = 'lg', actionLabel, actionHref } = Astro.props;
 ---
 
 <div class:list={['section-header', `section-header--${size}`]}>
@@ -47,16 +47,16 @@ const { color = 'rust', size = 'lg', actionLabel, actionHref } = Astro.props;
     font-size: clamp(26px, 3.4vw, 40px);
   }
 
-  .section-header__title--rust {
-    color: var(--rust);
+  .section-header__title--accent-2 {
+    color: var(--accent-2);
   }
 
-  .section-header__title--olive {
-    color: var(--olive);
+  .section-header__title--accent {
+    color: var(--accent);
   }
 
-  .section-header__title--amber {
-    color: var(--amber);
+  .section-header__title--accent-3 {
+    color: var(--accent-3);
   }
 
   .section-header__action {
@@ -64,21 +64,21 @@ const { color = 'rust', size = 'lg', actionLabel, actionHref } = Astro.props;
     font-size: 12.5px;
     letter-spacing: 1px;
     text-decoration: none;
-    color: var(--ink);
+    color: var(--text);
     padding-bottom: var(--space-2);
     border-bottom: var(--border-width-sm) solid transparent;
     white-space: nowrap;
   }
 
-  .section-header__action--rust {
-    border-bottom-color: var(--rust);
+  .section-header__action--accent-2 {
+    border-bottom-color: var(--accent-2);
   }
 
-  .section-header__action--olive {
-    border-bottom-color: var(--olive);
+  .section-header__action--accent {
+    border-bottom-color: var(--accent);
   }
 
-  .section-header__action--amber {
-    border-bottom-color: var(--amber);
+  .section-header__action--accent-3 {
+    border-bottom-color: var(--accent-3);
   }
 </style>

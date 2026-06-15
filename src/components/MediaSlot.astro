@@ -64,8 +64,8 @@ const { kind = 'gallery', ratio, label, src, alt = '', embedUrl } = Astro.props;
     justify-content: center;
     gap: var(--space-14);
     text-align: center;
-    background: var(--field);
-    color: var(--muted);
+    background: var(--surface-alt);
+    color: var(--text-muted);
     padding: var(--space-16);
   }
 
@@ -77,7 +77,7 @@ const { kind = 'gallery', ratio, label, src, alt = '', embedUrl } = Astro.props;
 
   .media-slot--video {
     background: repeating-linear-gradient(135deg, var(--stripe-a) 0 22px, var(--stripe-b) 22px 44px);
-    color: var(--on-olive);
+    color: var(--on-accent);
   }
 
   .media-slot--video .media-slot__label {
@@ -99,9 +99,9 @@ const { kind = 'gallery', ratio, label, src, alt = '', embedUrl } = Astro.props;
     width: var(--space-64);
     height: var(--space-64);
     border-radius: var(--radius-pill);
-    background: var(--rust);
-    color: var(--on-rust);
-    border: var(--border-width) solid var(--card);
+    background: var(--accent-2);
+    color: var(--on-accent-2);
+    border: var(--border-width) solid var(--surface);
     font-size: 22px;
     padding-left: var(--space-5);
   }

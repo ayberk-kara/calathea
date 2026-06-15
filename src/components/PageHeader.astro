@@ -5,11 +5,11 @@ interface Props {
   eyebrow: string;
   title: string;
   subtitle: string;
-  color?: 'rust' | 'amber';
+  color?: 'accent-2' | 'accent-3';
   measure?: 'md' | 'xl';
 }
 
-const { eyebrow, title, subtitle, color = 'rust', measure = 'xl' } = Astro.props;
+const { eyebrow, title, subtitle, color = 'accent-2', measure = 'xl' } = Astro.props;
 ---
 
 <header class:list={['page-header', `page-header--${measure}`]}>
@@ -41,18 +41,18 @@ const { eyebrow, title, subtitle, color = 'rust', measure = 'xl' } = Astro.props
     letter-spacing: 0.5px;
   }
 
-  .page-header__title--rust {
-    color: var(--rust);
+  .page-header__title--accent-2 {
+    color: var(--accent-2);
   }
 
-  .page-header__title--amber {
-    color: var(--amber);
+  .page-header__title--accent-3 {
+    color: var(--accent-3);
   }
 
   .page-header__subtitle {
     font-size: 17px;
     line-height: 1.6;
-    color: var(--ink);
+    color: var(--text);
     opacity: 0.88;
     max-width: var(--measure-sm);
     margin: 0;

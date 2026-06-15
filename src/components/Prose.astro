@@ -13,7 +13,7 @@
   .prose :global(p) {
     font-size: 18px;
     line-height: 1.75;
-    color: var(--ink);
+    color: var(--text);
     opacity: 0.94;
     margin: 0 0 var(--space-20);
   }
@@ -22,7 +22,7 @@
     font-size: 24px;
     font-weight: 800;
     margin: var(--space-36) 0 var(--space-14);
-    color: var(--ink);
+    color: var(--text);
     letter-spacing: -0.2px;
   }
 
@@ -30,7 +30,7 @@
     font-size: 19px;
     font-weight: 800;
     margin: var(--space-28) 0 var(--space-10);
-    color: var(--ink);
+    color: var(--text);
   }
 
   .prose :global(strong) {
@@ -41,7 +41,7 @@
   .prose :global(ol) {
     font-size: 18px;
     line-height: 1.75;
-    color: var(--ink);
+    color: var(--text);
     opacity: 0.94;
     padding-left: var(--space-24);
     margin: 0 0 var(--space-20);
@@ -50,7 +50,7 @@
   .prose :global(code) {
     font-family: var(--font-mono);
     font-size: 0.86em;
-    background: color-mix(in srgb, var(--amber) 16%, var(--card));
+    background: color-mix(in srgb, var(--accent-3) 16%, var(--surface));
     border: var(--border-width-thin) solid var(--border);
     border-radius: var(--radius-sm);
     padding: var(--space-2) var(--space-6);
@@ -75,9 +75,9 @@
   }
 
   .prose :global(a) {
-    color: var(--rust);
+    color: var(--accent-2);
     font-weight: 700;
     text-decoration: none;
-    border-bottom: var(--border-width-sm) solid var(--rust);
+    border-bottom: var(--border-width-sm) solid var(--accent-2);
   }
 </style>
