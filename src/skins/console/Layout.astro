@@ -72,12 +72,11 @@ const year = new Date().getFullYear();
         }
 
         <button class="console-icon-btn" type="button" data-mode-toggle aria-label={t.nav.themeToggle}>
-          <svg class="console-icon console-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="4.5"></circle>
-            <path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3M18.5 5.5l-2 2M7.5 16.5l-2 2M18.5 18.5l-2-2M7.5 7.5l-2-2"></path>
+          <svg class="console-icon console-icon--sun" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="5" y="5" width="14" height="14" rx="2" fill="currentColor"></rect>
           </svg>
-          <svg class="console-icon console-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a7 7 0 0 0 10.7 10.7z"></path>
+          <svg class="console-icon console-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="5" y="5" width="14" height="14" rx="2"></rect>
           </svg>
         </button>
 
