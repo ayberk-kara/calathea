@@ -1,6 +1,7 @@
 @import './tokens.css';
 @import './themes/western.css';
 @import './themes/swiss.css';
+@import './themes/console.css';
 
 *,
 *::before,

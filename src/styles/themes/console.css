@@ -1,0 +1,119 @@
+/*
+  Console theme — a dark terminal palette: green prompts, amber comments, a
+  red status dot. Dark mode follows design_02_console.html closely (it is
+  the only mode the mockup shows). Light mode is derived as a "light
+  terminal" — same role/hue relationships (green/amber/red on a cool
+  off-white), darkened enough to stay readable on a light background.
+*/
+
+[data-theme='console'][data-mode='light'] {
+  /* ---- Surfaces ---- */
+  --bg: #f4f7f5;
+  --surface: #ffffff;
+  --surface-alt: #e9f0ec;
+  --surface-alt-border: #cdd9d3;
+  --border: #d7e0db;
+  --border-strong: #b8c7c0;
+
+  /* ---- Text ---- */
+  --text: #1c2622;
+  --text-muted: #6b7a73;
+
+  /* ---- Accents ---- */
+  --accent: #2e9c44;
+  --accent-shade: #257a36;
+  --on-accent: #f4fbf5;
+  --accent-2: #b9821f;
+  --on-accent-2: #fffaf0;
+  --accent-3: #c23f30;
+  --on-accent-3: #fff5f3;
+
+  /* ---- Status ---- */
+  --success: var(--accent);
+  --danger: var(--accent-3);
+
+  /* ---- Decorative stripes (video placeholders) ---- */
+  --stripe-a: #2e9c44;
+  --stripe-b: #257a36;
+
+  /* ---- Code blocks (Shiki css-variables theme) ---- */
+  --code-bg: #eef3f0;
+  --code-fg: #1c2622;
+  --code-comment: #8a9a91;
+  --code-keyword: #b9821f;
+  --code-type: #2e9c44;
+  --code-number: #c23f30;
+  --code-function: #2f8fa0;
+  --astro-code-foreground: var(--code-fg);
+  --astro-code-background: var(--code-bg);
+  --astro-code-token-constant: var(--code-number);
+  --astro-code-token-string: var(--code-type);
+  --astro-code-token-comment: var(--code-comment);
+  --astro-code-token-keyword: var(--code-keyword);
+  --astro-code-token-parameter: var(--code-fg);
+  --astro-code-token-function: var(--code-function);
+  --astro-code-token-string-expression: var(--code-type);
+  --astro-code-token-punctuation: var(--code-fg);
+  --astro-code-token-link: var(--accent-2);
+
+  /* ---- Typography ---- */
+  --font-display: 'JetBrains Mono', monospace;
+  --font-body: 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+[data-theme='console'][data-mode='dark'] {
+  /* ---- Surfaces ---- */
+  --bg: #0b0f0d;
+  --surface: #0e1411;
+  --surface-alt: #16201b;
+  --surface-alt-border: #2b3a32;
+  --border: #1e2a24;
+  --border-strong: #2b3a32;
+
+  /* ---- Text ---- */
+  --text: #c8d3cd;
+  --text-muted: #92a299;
+
+  /* ---- Accents ---- */
+  --accent: #7ee787;
+  --accent-shade: #4f9d58;
+  --on-accent: #0b0f0d;
+  --accent-2: #e3b341;
+  --on-accent-2: #0b0f0d;
+  --accent-3: #e35b4a;
+  --on-accent-3: #2a0e09;
+
+  /* ---- Status ---- */
+  --success: var(--accent);
+  --danger: var(--accent-3);
+
+  /* ---- Decorative stripes (video placeholders) ---- */
+  --stripe-a: #7ee787;
+  --stripe-b: #4f9d58;
+
+  /* ---- Code blocks (Shiki css-variables theme) ---- */
+  --code-bg: #0e1411;
+  --code-fg: #c8d3cd;
+  --code-comment: #5d6b63;
+  --code-keyword: #e3b341;
+  --code-type: #7ee787;
+  --code-number: #e35b4a;
+  --code-function: #5ec8d8;
+  --astro-code-foreground: var(--code-fg);
+  --astro-code-background: var(--code-bg);
+  --astro-code-token-constant: var(--code-number);
+  --astro-code-token-string: var(--code-type);
+  --astro-code-token-comment: var(--code-comment);
+  --astro-code-token-keyword: var(--code-keyword);
+  --astro-code-token-parameter: var(--code-fg);
+  --astro-code-token-function: var(--code-function);
+  --astro-code-token-string-expression: var(--code-type);
+  --astro-code-token-punctuation: var(--code-fg);
+  --astro-code-token-link: var(--accent-2);
+
+  /* ---- Typography ---- */
+  --font-display: 'JetBrains Mono', monospace;
+  --font-body: 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
+}
