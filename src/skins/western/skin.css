@@ -1,0 +1,313 @@
+@import url('https://fonts.googleapis.com/css2?family=Rye&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+[data-skin='western'][data-mode='light'] {
+  --western-bg: #ede6d3;
+  --western-surface: #fbf8f0;
+  --western-surface-alt: #fbf8f0;
+  --western-surface-alt-border: #c9bfa3;
+  --western-border: #c9bfa3;
+  --western-border-strong: #2a2517;
+  --western-text: #2a2517;
+  --western-muted: #6e674f;
+  --western-accent: #4a5026;
+  --western-accent-shade: #3b4020;
+  --western-on-accent: #f3efe0;
+  --western-accent-2: #b5431f;
+  --western-on-accent-2: #fbf8f0;
+  --western-accent-3: #d9952a;
+  --western-on-accent-3: #2a2517;
+
+  --prose-text: var(--western-text);
+  --prose-heading: var(--western-text);
+  --prose-link: var(--western-accent-2);
+  --prose-accent: var(--western-accent-2);
+  --prose-surface: var(--western-surface-alt);
+  --prose-border: var(--western-border);
+  --prose-font-mono: var(--western-font-mono);
+  --prose-code-bg: #1c1c15;
+  --prose-code-fg: #d8d2bf;
+  --prose-code-comment: #8d876f;
+  --prose-code-keyword: #d9a32c;
+  --prose-code-type: #8aa14e;
+  --prose-code-number: #c2763a;
+  --prose-code-function: #cf8b3e;
+}
+
+[data-skin='western'][data-mode='dark'] {
+  --western-bg: #201b12;
+  --western-surface: #2a2417;
+  --western-surface-alt: #322b1c;
+  --western-surface-alt-border: #544a33;
+  --western-border: #48402c;
+  --western-border-strong: #6e6446;
+  --western-text: #ece4d0;
+  --western-muted: #a89c7b;
+  --western-accent: #8c9a50;
+  --western-accent-shade: #76833f;
+  --western-on-accent: #1a1710;
+  --western-accent-2: #d96a3c;
+  --western-on-accent-2: #fbf8f0;
+  --western-accent-3: #e2a93e;
+  --western-on-accent-3: #231c0f;
+
+  --prose-text: var(--western-text);
+  --prose-heading: var(--western-text);
+  --prose-link: var(--western-accent-2);
+  --prose-accent: var(--western-accent-2);
+  --prose-surface: var(--western-surface-alt);
+  --prose-border: var(--western-border);
+  --prose-font-mono: var(--western-font-mono);
+  --prose-code-bg: #15140e;
+  --prose-code-fg: #d8d2bf;
+  --prose-code-comment: #8d876f;
+  --prose-code-keyword: #d9a32c;
+  --prose-code-type: #8aa14e;
+  --prose-code-number: #c2763a;
+  --prose-code-function: #cf8b3e;
+}
+
+[data-skin='western'] {
+  --western-font-display: 'Rye', serif;
+  --western-font-body: 'Hanken Grotesk', system-ui, sans-serif;
+  --western-font-mono: 'Space Mono', monospace;
+  --western-max-width: 1180px;
+  --western-gutter: 36px;
+
+  --astro-code-foreground: var(--prose-code-fg);
+  --astro-code-background: var(--prose-code-bg);
+  --astro-code-token-constant: var(--prose-code-number);
+  --astro-code-token-string: var(--prose-code-type);
+  --astro-code-token-comment: var(--prose-code-comment);
+  --astro-code-token-keyword: var(--prose-code-keyword);
+  --astro-code-token-parameter: var(--prose-code-fg);
+  --astro-code-token-function: var(--prose-code-function);
+  --astro-code-token-string-expression: var(--prose-code-type);
+  --astro-code-token-punctuation: var(--prose-code-fg);
+  --astro-code-token-link: var(--prose-link);
+}
+
+html:not([data-skin='western']) [data-skin-root='western'] {
+  display: none;
+}
+
+[data-skin-root='western'] {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--western-bg);
+  color: var(--western-text);
+  font-family: var(--western-font-body);
+}
+
+[data-skin-root='western'] a {
+  color: inherit;
+}
+
+[data-skin-root='western'] .western-shell {
+  max-width: var(--western-max-width);
+  margin: 0 auto;
+  padding: 0 var(--western-gutter);
+  width: 100%;
+}
+
+[data-skin-root='western'] .western-section {
+  margin-top: 64px;
+}
+
+[data-skin-root='western'] .western-section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+[data-skin-root='western'] .western-section__title {
+  font-family: var(--western-font-display);
+  font-weight: 400;
+  font-size: clamp(26px, 3.4vw, 40px);
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+[data-skin-root='western'] .western-section__link {
+  font-family: var(--western-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--western-text);
+  text-decoration: none;
+  border-bottom: 2px solid var(--western-accent-2);
+  padding-bottom: 2px;
+  white-space: nowrap;
+}
+
+[data-skin-root='western'] .western-eyebrow {
+  font-family: var(--western-font-mono);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--western-accent-2);
+  margin-bottom: 14px;
+}
+
+[data-skin-root='western'] .western-eyebrow--accent {
+  color: var(--western-accent);
+}
+
+[data-skin-root='western'] .western-eyebrow--accent-3 {
+  color: var(--western-accent-3);
+}
+
+[data-skin-root='western'] .western-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+[data-skin-root='western'] .western-grid-2 {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 40px;
+}
+
+[data-skin-root='western'] .western-card {
+  border: 2.5px solid var(--western-border-strong);
+  border-radius: 15px;
+  background: var(--western-surface);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+[data-skin-root='western'] a.western-card {
+  text-decoration: none;
+  color: var(--western-text);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+[data-skin-root='western'] a.western-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 7px 7px 0 var(--western-accent);
+}
+
+[data-skin-root='western'] .western-tag {
+  display: inline-block;
+  font-family: var(--western-font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--western-on-accent);
+  background: var(--western-accent);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+
+[data-skin-root='western'] .western-chip {
+  display: inline-block;
+  font-family: var(--western-font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--western-muted);
+  border: 1.5px solid var(--western-border);
+  border-radius: 999px;
+  padding: 4px 11px;
+}
+
+[data-skin-root='western'] .western-button {
+  display: inline-block;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 12px 22px;
+  border: 2.5px solid var(--western-border-strong);
+  background: var(--western-surface);
+  color: var(--western-text);
+  cursor: pointer;
+}
+
+[data-skin-root='western'] .western-button--filled {
+  background: var(--western-accent);
+  color: var(--western-on-accent);
+  border-color: var(--western-accent);
+}
+
+[data-skin-root='western'] .western-button--accent {
+  background: var(--western-accent-2);
+  color: var(--western-on-accent-2);
+  border-color: var(--western-accent-2);
+}
+
+[data-skin-root='western'] .western-pill {
+  display: inline-block;
+  font-family: var(--western-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border-radius: 6px;
+  padding: 3px 9px;
+  background: var(--western-accent);
+  color: var(--western-on-accent);
+  white-space: nowrap;
+}
+
+[data-skin-root='western'] .western-pill--accent-2 {
+  background: var(--western-accent-2);
+  color: var(--western-on-accent-2);
+}
+
+[data-skin-root='western'] .western-pill--accent-3 {
+  background: var(--western-accent-3);
+  color: var(--western-on-accent-3);
+}
+
+[data-skin-root='western'] .western-pill--muted {
+  background: var(--western-surface-alt);
+  border: 1.5px solid var(--western-border);
+  color: var(--western-muted);
+}
+
+[data-skin-root='western'] .western-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+[data-skin-root='western'] .western-filter button {
+  font-family: var(--western-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--western-text);
+  background: var(--western-surface);
+  border: 2px solid var(--western-border-strong);
+  border-radius: 999px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+
+[data-skin-root='western'] .western-filter button[aria-pressed='true'] {
+  background: var(--western-accent);
+  color: var(--western-on-accent);
+  border-color: var(--western-accent);
+}
+
+[data-skin-root='western'] .western-filter__status {
+  font-family: var(--western-font-mono);
+  font-size: 11px;
+  color: var(--western-muted);
+  margin-left: auto;
+}
+
+@media (max-width: 880px) {
+  [data-skin-root='western'] .western-grid-3,
+  [data-skin-root='western'] .western-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}

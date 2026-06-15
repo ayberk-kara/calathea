@@ -1,0 +1,298 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { type Locale } from '../../lib/i18n';
+import { getUI } from '../../i18n';
+import { skinList } from '../../config/skin-list';
+
+interface Props {
+  skinId: string;
+  active: 'home' | 'projects' | 'blog' | null;
+  locale: Locale;
+}
+
+const { skinId, active, locale } = Astro.props;
+const t = getUI(locale);
+
+const homeHref = getRelativeLocaleUrl(locale);
+
+const navItems = [
+  { key: 'projects', href: getRelativeLocaleUrl(locale, 'projects'), label: t.nav.projects },
+  { key: 'blog', href: getRelativeLocaleUrl(locale, 'blog'), label: t.nav.blog },
+  { key: 'contact', href: `${homeHref}#contact`, label: t.nav.contact },
+] as const;
+
+const path = Astro.url.pathname.replace(/^\/(en|tr)\/?/, '').replace(/\/$/, '');
+const localeHrefs: Record<Locale, string> = {
+  en: path ? getRelativeLocaleUrl('en', path) : getRelativeLocaleUrl('en'),
+  tr: path ? getRelativeLocaleUrl('tr', path) : getRelativeLocaleUrl('tr'),
+};
+
+const year = new Date().getFullYear();
+---
+
+<div data-skin-root={skinId}>
+  <header class="western-header">
+    <div class="western-shell western-header__inner">
+      <a href={homeHref} class="western-header__logo">AK</a>
+
+      <nav class="western-header__links" aria-label="Primary">
+        {
+          navItems.map((item) => (
+            <a href={item.href} aria-current={active === item.key ? 'page' : undefined}>
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="western-header__actions">
+        <div class="western-locale" role="group" aria-label={t.nav.languageLabel}>
+          <a href={localeHrefs.en} aria-current={locale === 'en' ? 'true' : undefined}>EN</a>
+          <a href={localeHrefs.tr} aria-current={locale === 'tr' ? 'true' : undefined}>TR</a>
+        </div>
+
+        {
+          skinList.length > 1 && (
+            <div class="western-skin-picker">
+              <label class="sr-only" for={`skin-select-${skinId}`}>Skin</label>
+              <select id={`skin-select-${skinId}`} data-skin-select aria-label="Skin">
+                {skinList.map((skin) => (
+                  <option value={skin.id}>{skin.label}</option>
+                ))}
+              </select>
+            </div>
+          )
+        }
+
+        <button class="western-icon-btn" type="button" data-mode-toggle aria-label={t.nav.themeToggle}>
+          <svg class="western-icon western-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.5"></circle>
+            <path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3M18.5 5.5l-2 2M7.5 16.5l-2 2M18.5 18.5l-2-2M7.5 7.5l-2-2"></path>
+          </svg>
+          <svg class="western-icon western-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a7 7 0 0 0 10.7 10.7z"></path>
+          </svg>
+        </button>
+
+        <button
+          class="western-icon-btn western-burger"
+          type="button"
+          data-nav-toggle
+          aria-label={t.nav.menuToggle}
+          aria-expanded="false"
+          aria-controls={`mobile-nav-${skinId}`}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M3.5 6.5h17M3.5 12h17M3.5 17.5h17"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <nav id={`mobile-nav-${skinId}`} class="western-mobile-nav" aria-label="Primary mobile">
+      {
+        navItems.map((item) => (
+          <a href={item.href} aria-current={active === item.key ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </header>
+
+  <main class="western-main">
+    <slot />
+  </main>
+
+  <footer class="western-footer">
+    <div class="western-shell western-footer__inner">
+      <span>{t.footer.copy(year)}</span>
+    </div>
+  </footer>
+</div>
+
+<style>
+  .western-header {
+    border-bottom: 2.5px solid var(--western-border-strong);
+    background: var(--western-bg);
+  }
+
+  .western-header__inner {
+    height: 76px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .western-header__logo {
+    font-family: var(--western-font-display);
+    font-weight: 400;
+    font-size: 26px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    flex: 0 0 auto;
+  }
+
+  .western-header__links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-right: auto;
+    font-family: var(--western-font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .western-header__links a {
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+  }
+
+  .western-header__links a[aria-current='page'] {
+    border-bottom-color: var(--western-accent-2);
+  }
+
+  .western-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .western-locale {
+    display: inline-flex;
+    border: 2px solid var(--western-border-strong);
+    border-radius: 999px;
+    overflow: hidden;
+    font-family: var(--western-font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .western-locale a {
+    padding: 7px 12px;
+    text-decoration: none;
+  }
+
+  .western-locale a[aria-current='true'] {
+    background: var(--western-border-strong);
+    color: var(--western-bg);
+  }
+
+  .western-skin-picker select {
+    height: 38px;
+    border: 2px solid var(--western-border-strong);
+    border-radius: 999px;
+    background: var(--western-surface);
+    color: var(--western-text);
+    font-family: var(--western-font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 0 14px;
+    cursor: pointer;
+  }
+
+  .western-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 2px solid var(--western-border-strong);
+    border-radius: 999px;
+    background: var(--western-surface);
+    color: var(--western-text);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .western-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .western-icon--sun,
+  .western-icon--moon {
+    display: none;
+  }
+
+  [data-skin='western'][data-mode='light'] .western-icon--moon {
+    display: block;
+  }
+
+  [data-skin='western'][data-mode='dark'] .western-icon--sun {
+    display: block;
+  }
+
+  .western-burger {
+    display: none;
+  }
+
+  .western-burger svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .western-mobile-nav {
+    display: none;
+    flex-direction: column;
+    border-top: 2px solid var(--western-border-strong);
+    padding: 8px var(--western-gutter);
+    font-family: var(--western-font-mono);
+  }
+
+  .western-mobile-nav a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 0;
+    border-bottom: 1.5px solid var(--western-border);
+  }
+
+  .western-mobile-nav a:last-child {
+    border-bottom: none;
+  }
+
+  .western-mobile-nav a[aria-current='page'] {
+    color: var(--western-accent-2);
+  }
+
+  .western-mobile-nav.is-open {
+    display: flex;
+  }
+
+  @media (max-width: 880px) {
+    .western-header__links {
+      display: none;
+    }
+
+    .western-burger {
+      display: inline-flex;
+    }
+  }
+
+  .western-main {
+    flex: 1;
+    padding: 60px 0 120px;
+  }
+
+  .western-footer {
+    border-top: 2.5px solid var(--western-border-strong);
+  }
+
+  .western-footer__inner {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    font-family: var(--western-font-mono);
+    font-size: 12px;
+    color: var(--western-muted);
+  }
+</style>
