@@ -19,6 +19,7 @@ export const themes: ThemeDefinition[] = [
   { id: 'western', label: 'Western' },
   { id: 'swiss', label: 'Swiss Grid' },
   { id: 'console', label: 'Console' },
+  { id: 'editorial', label: 'Editorial' },
 ];
 
 export const DEFAULT_THEME = 'western';
