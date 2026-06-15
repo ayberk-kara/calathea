@@ -1,9 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import PageHeader from '../../../components/PageHeader.astro';
-import TagFilter from '../../../components/TagFilter.astro';
-import PostRow from '../../../components/PostRow.astro';
+import { skins } from '../../../config/skins';
 import { LOCALES, getSlug, localize, localizeAll } from '../../../lib/i18n';
 import { getUI } from '../../../i18n';
 
@@ -31,31 +29,12 @@ for (const post of posts) {
 <BaseLayout
   title="Blog — AK"
   description="Notes from the kernel mines — deep dives, dev notes, and release logs, cross-linked to the projects they came out of."
-  active="blog"
 >
-  <PageHeader color="accent-3" measure="md" eyebrow={t.blogPage.eyebrow} title={t.blogPage.title} subtitle={t.blogPage.subtitle} />
-
-  <TagFilter
-    items={posts.map((p) => ({ tags: p.data.tags }))}
-    activeColor="accent-3"
-    label={t.filter.tagLabel}
-    noun={t.filter.postsNoun}
-    allLabel={t.filter.all}
-    showingTemplate={t.filter.showing('{visible}', '{total}', '{noun}')}
-  />
-
-  <section class="post-list">
-    {posts.map((post) => <PostRow post={post} projectTitle={projectTitles.get(post.id)} />)}
-  </section>
-</BaseLayout>
-
-<style>
-  .post-list {
-    max-width: var(--measure-md);
-    margin: 0 auto;
-    padding: var(--space-14) var(--space-36) var(--space-56);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-12);
+  {
+    skins.map(({ id, components: Skin }) => (
+      <Skin.Layout skinId={id} active="blog" locale={locale}>
+        <Skin.BlogIndexPage locale={locale} t={t} posts={posts} projectTitles={projectTitles} />
+      </Skin.Layout>
+    ))
   }
-</style>
+</BaseLayout>

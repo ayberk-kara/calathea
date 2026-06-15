@@ -1,11 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
-import { getRelativeLocaleUrl } from 'astro:i18n';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import TagChip from '../../../components/TagChip.astro';
-import VersionPill from '../../../components/VersionPill.astro';
-import Prose from '../../../components/Prose.astro';
-import { getPostPill, formatPostDate, getReadingTime } from '../../../lib/posts';
+import { skins } from '../../../config/skins';
 import { LOCALES, getSlug, localize, localizeAll } from '../../../lib/i18n';
 import { getUI } from '../../../i18n';
 
@@ -39,153 +35,16 @@ interface Props {
 const { locale } = Astro.params;
 const t = getUI(locale);
 const { post, prev, next, project } = Astro.props;
-const { data, body } = post;
+const { data } = post;
 const { Content } = await render(post);
-
-const pill = getPostPill(post);
-const read = getReadingTime(body ?? '');
 ---
 
-<BaseLayout title={`${data.title} — AK`} description={data.excerpt} active="blog">
-  <article class="post">
-    <a href={getRelativeLocaleUrl(locale, 'blog')} class="post__breadcrumb">{t.post.breadcrumb}</a>
-
-    <div class="post__tags">
-      <VersionPill kind={pill.kind} major={pill.major}>{pill.label}</VersionPill>
-      {data.tags.map((tag) => <TagChip variant="muted">{tag}</TagChip>)}
-    </div>
-
-    <h1 class="post__title">{data.title}</h1>
-
-    <div class="post__meta">
-      <span>{formatPostDate(data.date, 'long')}</span>
-      <span>·</span>
-      <span>{t.post.readingTime(read)}</span>
-      {project && (
-        <a href={getRelativeLocaleUrl(locale, `projects/${getSlug(project.id)}`)} class="post__project">{t.post.backToProject} {project.data.title}</a>
-      )}
-    </div>
-
-    <Prose>
-      <Content />
-    </Prose>
-
-    <div class="post__prevnext">
-      {prev && (
-        <a href={getRelativeLocaleUrl(locale, `blog/${getSlug(prev.id)}`)} class="post__nav-card post__nav-card--prev">
-          <span class="post__nav-label">{t.post.prev}</span>
-          <span class="post__nav-title">{prev.data.title}</span>
-        </a>
-      )}
-      {next && (
-        <a href={getRelativeLocaleUrl(locale, `blog/${getSlug(next.id)}`)} class="post__nav-card post__nav-card--next">
-          <span class="post__nav-label">{t.post.next}</span>
-          <span class="post__nav-title">{next.data.title}</span>
-        </a>
-      )}
-    </div>
-  </article>
+<BaseLayout title={`${data.title} — AK`} description={data.excerpt}>
+  {
+    skins.map(({ id, components: Skin }) => (
+      <Skin.Layout skinId={id} active="blog" locale={locale}>
+        <Skin.PostPage locale={locale} t={t} post={post} Content={Content} project={project} prev={prev} next={next} />
+      </Skin.Layout>
+    ))
+  }
 </BaseLayout>
-
-<style>
-  .post {
-    max-width: var(--measure-sm);
-    margin: 0 auto;
-    padding: var(--space-44) var(--space-32) var(--space-56);
-  }
-
-  .post__breadcrumb {
-    text-decoration: none;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 1.5px;
-    color: var(--text-muted);
-  }
-
-  .post__tags {
-    display: flex;
-    align-items: center;
-    gap: var(--space-9);
-    flex-wrap: wrap;
-    margin: var(--space-24) 0 var(--space-16);
-  }
-
-  .post__title {
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(30px, 4.4vw, 50px);
-    line-height: 1.08;
-    margin: 0 0 var(--space-18);
-    letter-spacing: 0.3px;
-    color: var(--text);
-  }
-
-  .post__meta {
-    display: flex;
-    align-items: center;
-    gap: var(--space-16);
-    flex-wrap: wrap;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: var(--space-30);
-    padding-bottom: var(--space-22);
-    border-bottom: var(--border-width) solid var(--border-strong);
-  }
-
-  .post__project {
-    margin-left: auto;
-    text-decoration: none;
-    color: var(--accent-2);
-    font-weight: 700;
-    border-bottom: var(--border-width-sm) solid var(--accent-2);
-    padding-bottom: var(--space-2);
-  }
-
-  .post__prevnext {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-14);
-    margin-top: var(--space-40);
-  }
-
-  .post__nav-card {
-    text-decoration: none;
-    border: var(--border-width) solid var(--border-strong);
-    border-radius: var(--radius-lg);
-    padding: var(--space-16) var(--space-18);
-    background: var(--surface);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-  }
-
-  .post__nav-card--next {
-    grid-column: 2;
-    text-align: right;
-  }
-
-  .post__nav-label {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 1px;
-    color: var(--text-muted);
-  }
-
-  .post__nav-title {
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--text);
-  }
-
-  @media (max-width: 880px) {
-    .post__prevnext {
-      grid-template-columns: 1fr;
-    }
-
-    .post__nav-card--next {
-      grid-column: 1;
-      text-align: left;
-    }
-  }
-</style>
