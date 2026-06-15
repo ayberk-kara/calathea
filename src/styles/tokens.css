@@ -1,49 +1,12 @@
 /*
-  Design tokens — the single source of truth for color, typography, spacing
-  and radii. Light is the default token set; dark is the same set of names
-  re-pointed under [data-theme="dark"]. Adding a theme later = adding
-  another `html[data-theme="..."]` block with the same variable names.
+  Structural tokens — the theme-agnostic layer. Spacing, type scale measures,
+  radii and border widths are identical across every theme and mode; only
+  color and font tokens vary. Color/font tokens live in one file per theme
+  under src/styles/themes/<name>.css — see THEMES.md for the full contract
+  and the recipe for adding a new theme.
 */
 
 :root {
-  /* ---- Color: surfaces & structure ---- */
-  --bg: #ede6d3;
-  --card: #fbf8f0;
-  --border: #c9bfa3;
-  --border-strong: #2a2517;
-  --field: #fbf8f0;
-  --field-line: #c9bfa3;
-  --code-bg: #1c1c15;
-  --code-fg: #d8d2bf;
-  --code-comment: #8d876f;
-  --code-keyword: #d9a32c;
-  --code-type: #8aa14e;
-  --code-number: #c2763a;
-  --code-function: #cf8b3e;
-  --shadow: rgba(42, 37, 23, 0.14);
-
-  /* ---- Color: accents ---- */
-  --olive: #4a5026;
-  --olive-2: #3b4020;
-  --on-olive: #f3efe0;
-  --rust: #b5431f;
-  --amber: #d9952a;
-  --on-amber: #2a2517;
-  --on-rust: #fbf8f0;
-
-  /* ---- Color: text ---- */
-  --ink: #2a2517;
-  --muted: #6e674f;
-
-  /* ---- Color: decorative stripes (portrait / video placeholders) ---- */
-  --stripe-a: #4a5026;
-  --stripe-b: #3b4020;
-
-  /* ---- Typography ---- */
-  --font-display: 'Rye', serif;
-  --font-body: 'Hanken Grotesk', system-ui, sans-serif;
-  --font-mono: 'Space Mono', monospace;
-
   /* ---- Borders ---- */
   --border-width: 2.5px;
   --border-width-thin: 1.5px;
@@ -100,41 +63,4 @@
   --space-72: 72px;
   --space-80: 80px;
   --space-96: 96px;
-
-  /* ---- Code block syntax highlighting (Shiki css-variables theme) ---- */
-  --astro-code-foreground: var(--code-fg);
-  --astro-code-background: var(--code-bg);
-  --astro-code-token-constant: var(--code-number);
-  --astro-code-token-string: var(--code-type);
-  --astro-code-token-comment: var(--code-comment);
-  --astro-code-token-keyword: var(--code-keyword);
-  --astro-code-token-parameter: var(--code-fg);
-  --astro-code-token-function: var(--code-function);
-  --astro-code-token-string-expression: var(--code-type);
-  --astro-code-token-punctuation: var(--code-fg);
-  --astro-code-token-link: var(--rust);
-}
-
-[data-theme='dark'] {
-  --bg: #201b12;
-  --card: #2a2417;
-  --border: #48402c;
-  --border-strong: #6e6446;
-  --field: #322b1c;
-  --field-line: #544a33;
-  --code-bg: #15140e;
-  --shadow: rgba(0, 0, 0, 0.4);
-
-  --olive: #8c9a50;
-  --olive-2: #76833f;
-  --on-olive: #1a1710;
-  --rust: #d96a3c;
-  --amber: #e2a93e;
-  --on-amber: #231c0f;
-
-  --ink: #ece4d0;
-  --muted: #a89c7b;
-
-  --stripe-a: #76833f;
-  --stripe-b: #5e6a33;
 }
