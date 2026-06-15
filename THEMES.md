@@ -82,9 +82,17 @@ success/danger colors.
 - `--font-body` — body text font
 - `--font-mono` — monospace font (labels, nav, code)
 
-If a theme needs different web fonts than the ones already loaded, add the
-relevant `<link>`/`@font-face` to `src/layouts/BaseLayout.astro` and reference
-the family names here.
+If a theme needs different web fonts than the ones already loaded, add them
+to `src/layouts/BaseLayout.astro` and reference the family names here:
+
+- The **default theme**'s fonts are loaded via a normal render-blocking
+  `<link rel="stylesheet">` (plus the existing `preconnect` hints) — they're
+  needed for first paint, so they should block.
+- Fonts for **every other theme** are loaded by the inline script that
+  appends a Google Fonts `<link>` to `<head>` after first paint (with a
+  `<noscript>` fallback). Add new families to that single combined URL rather
+  than creating another script — one extra `&family=...` segment per theme is
+  enough.
 
 ## Theme-agnostic layer
 
