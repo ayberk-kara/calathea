@@ -38,6 +38,7 @@ export const tr: UIStrings = {
     experienceFilterEng: 'Sadece mühendislik',
     experienceFilterAriaLabel: 'Deneyimi filtrele',
     educationHeading: 'EĞİTİM',
+    educationCoursework: 'İlgili dersler ve projeler',
     projectsHeading: 'PROJELER',
     projectsViewAll: 'tüm projeleri gör',
     blogHeading: 'GELİŞTİRME BLOGU & SÜRÜMLER',

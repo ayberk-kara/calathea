@@ -7,10 +7,11 @@ interface Props {
   summary?: string;
   bullets?: string[];
   coursework?: string[];
+  courseworkLabel?: string;
   highlight: boolean;
 }
 
-const { degree, org, location, range, summary, bullets, coursework, highlight } = Astro.props;
+const { degree, org, location, range, summary, bullets, coursework, courseworkLabel, highlight } = Astro.props;
 const hasDetails = Boolean((bullets && bullets.length > 0) || (coursework && coursework.length > 0));
 ---
 
@@ -32,7 +33,10 @@ const hasDetails = Boolean((bullets && bullets.length > 0) || (coursework && cou
           )}
           {coursework && coursework.length > 0 && (
             <div class="edu-row__coursework">
-              {coursework.map((course) => <span class="console-chip">{course}</span>)}
+              {courseworkLabel && <div class="edu-row__coursework-label">{courseworkLabel}</div>}
+              <ul class="edu-row__bullets">
+                {coursework.map((course) => <li>{course}</li>)}
+              </ul>
             </div>
           )}
         </div>
@@ -118,10 +122,13 @@ const hasDetails = Boolean((bullets && bullets.length > 0) || (coursework && cou
     line-height: 1.6;
   }
 
-  .edu-row__coursework {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+  .edu-row__coursework-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--console-faint);
+    margin-bottom: 6px;
   }
 
   .edu-row--highlight {

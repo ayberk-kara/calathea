@@ -7,10 +7,11 @@ interface Props {
   summary?: string;
   bullets?: string[];
   coursework?: string[];
+  courseworkLabel?: string;
   highlight: boolean;
 }
 
-const { degree, org, location, range, summary, bullets, coursework, highlight } = Astro.props;
+const { degree, org, location, range, summary, bullets, coursework, courseworkLabel, highlight } = Astro.props;
 const hasDetails = Boolean((bullets && bullets.length > 0) || (coursework && coursework.length > 0));
 ---
 
@@ -32,7 +33,10 @@ const hasDetails = Boolean((bullets && bullets.length > 0) || (coursework && cou
           )}
           {coursework && coursework.length > 0 && (
             <div class="edu-row__coursework">
-              {coursework.map((course) => <span class="western-chip">{course}</span>)}
+              {courseworkLabel && <div class="edu-row__coursework-label">{courseworkLabel}</div>}
+              <ul class="edu-row__bullets">
+                {coursework.map((course) => <li>{course}</li>)}
+              </ul>
             </div>
           )}
         </div>
@@ -121,10 +125,14 @@ const hasDetails = Boolean((bullets && bullets.length > 0) || (coursework && cou
     color: var(--western-muted);
   }
 
-  .edu-row__coursework {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+  .edu-row__coursework-label {
+    font-family: var(--western-font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--western-muted);
+    margin-bottom: 6px;
   }
 
   .edu-row--highlight {
@@ -136,7 +144,8 @@ const hasDetails = Boolean((bullets && bullets.length > 0) || (coursework && cou
   .edu-row--highlight .edu-row__org,
   .edu-row--highlight .edu-row__summary,
   .edu-row--highlight .edu-row__range,
-  .edu-row--highlight .edu-row__bullets {
+  .edu-row--highlight .edu-row__bullets,
+  .edu-row--highlight .edu-row__coursework-label {
     color: var(--western-on-accent);
   }
 </style>

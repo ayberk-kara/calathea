@@ -102,7 +102,7 @@ const skillGroups = [
       {experience.map((entry) => <ExperienceRow {...entry} />)}
     </div>
     <div class="console-row-list">
-      {education.map((entry) => <EducationRow {...entry} />)}
+      {education.map((entry) => <EducationRow {...entry} courseworkLabel={t.home.educationCoursework} />)}
     </div>
   </div>
 </section>
