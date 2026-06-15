@@ -78,7 +78,7 @@ const skillGroups = [
   <div class="swiss-grid-2">
     <div class="swiss-section__head">
       <h2 class="swiss-section__heading"><span class="swiss-section__index">03 /</span> {t.home.experienceHeading}</h2>
-      <div class="swiss-filter" data-filter-group data-filter-target="experience-list" aria-label={t.home.experienceFilterAriaLabel}>
+      <div class="swiss-filter" data-filter-group data-filter-target="experience-list-swiss" aria-label={t.home.experienceFilterAriaLabel}>
         <button type="button" data-filter-value="all" aria-pressed="true">{t.home.experienceFilterAll}</button>
         <button type="button" data-filter-value="eng" aria-pressed="false">{t.home.experienceFilterEng}</button>
       </div>
@@ -88,7 +88,7 @@ const skillGroups = [
     </div>
   </div>
   <div class="swiss-grid-2">
-    <div id="experience-list" data-filter-list>
+    <div id="experience-list-swiss" data-filter-list>
       {experience.map((entry) => <ExperienceRow {...entry} />)}
     </div>
     <div>

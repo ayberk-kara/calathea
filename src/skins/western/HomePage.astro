@@ -78,7 +78,7 @@ const skillGroups = [
   <div class="western-grid-2">
     <div class="western-section__head">
       <h2 class="western-section__title">{t.home.experienceHeading}</h2>
-      <div class="western-filter" data-filter-group data-filter-target="experience-list" aria-label={t.home.experienceFilterAriaLabel}>
+      <div class="western-filter" data-filter-group data-filter-target="experience-list-western" aria-label={t.home.experienceFilterAriaLabel}>
         <button type="button" data-filter-value="all" aria-pressed="true">{t.home.experienceFilterAll}</button>
         <button type="button" data-filter-value="eng" aria-pressed="false">{t.home.experienceFilterEng}</button>
       </div>
@@ -88,7 +88,7 @@ const skillGroups = [
     </div>
   </div>
   <div class="western-grid-2">
-    <div id="experience-list" data-filter-list class="row-list">
+    <div id="experience-list-western" data-filter-list class="row-list">
       {experience.map((entry) => <ExperienceRow {...entry} />)}
     </div>
     <div class="row-list">

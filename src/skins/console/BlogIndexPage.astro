@@ -27,13 +27,13 @@ const statusTemplate = t.filter.showing('{visible}', '{total}', t.filter.postsNo
 </header>
 
 <div class="console-shell console-section">
-  <div class="console-filter" data-filter-group data-filter-target="posts-list" aria-label={t.filter.tagLabel}>
+  <div class="console-filter" data-filter-group data-filter-target="posts-list-console" aria-label={t.filter.tagLabel}>
     <button type="button" data-filter-value="all" aria-pressed="true">{t.filter.all}</button>
     {tags.map((tag) => <button type="button" data-filter-value={tag} aria-pressed="false">{tag}</button>)}
-    <span class="console-filter__status" data-filter-status data-filter-for="posts-list" data-filter-template={statusTemplate}></span>
+    <span class="console-filter__status" data-filter-status data-filter-for="posts-list-console" data-filter-template={statusTemplate}></span>
   </div>
 
-  <div class="console-feed" id="posts-list" data-filter-list>
+  <div class="console-feed" id="posts-list-console" data-filter-list>
     {posts.map((post) => <PostCard post={post} locale={locale} projectTitle={projectTitles.get(post.id)} />)}
   </div>
 </div>

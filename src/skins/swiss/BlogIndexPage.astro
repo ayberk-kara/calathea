@@ -24,13 +24,13 @@ const statusTemplate = t.filter.showing('{visible}', '{total}', t.filter.postsNo
 </header>
 
 <div class="swiss-shell swiss-section">
-  <div class="swiss-filter" data-filter-group data-filter-target="posts-list" aria-label={t.filter.tagLabel}>
+  <div class="swiss-filter" data-filter-group data-filter-target="posts-list-swiss" aria-label={t.filter.tagLabel}>
     <button type="button" data-filter-value="all" aria-pressed="true">{t.filter.all}</button>
     {tags.map((tag) => <button type="button" data-filter-value={tag} aria-pressed="false">{tag}</button>)}
-    <span class="swiss-filter__status" data-filter-status data-filter-for="posts-list" data-filter-template={statusTemplate}></span>
+    <span class="swiss-filter__status" data-filter-status data-filter-for="posts-list-swiss" data-filter-template={statusTemplate}></span>
   </div>
 
-  <div class="post-list" id="posts-list" data-filter-list>
+  <div class="post-list" id="posts-list-swiss" data-filter-list>
     {posts.map((post) => <PostCard post={post} locale={locale} projectTitle={projectTitles.get(post.id)} />)}
   </div>
 </div>

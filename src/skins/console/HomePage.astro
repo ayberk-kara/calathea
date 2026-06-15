@@ -85,7 +85,7 @@ const skillGroups = [
         <span class="console-prompt__path">~/experience</span><span class="console-prompt__sep">$</span>
         <span class="console-prompt__cmd">git log</span>
       </div>
-      <div class="console-filter" data-filter-group data-filter-target="experience-list" aria-label={t.home.experienceFilterAriaLabel}>
+      <div class="console-filter" data-filter-group data-filter-target="experience-list-console" aria-label={t.home.experienceFilterAriaLabel}>
         <button type="button" data-filter-value="all" aria-pressed="true">{t.home.experienceFilterAll}</button>
         <button type="button" data-filter-value="eng" aria-pressed="false">{t.home.experienceFilterEng}</button>
       </div>
@@ -98,7 +98,7 @@ const skillGroups = [
     </div>
   </div>
   <div class="console-grid-2">
-    <div id="experience-list" data-filter-list class="console-row-list">
+    <div id="experience-list-console" data-filter-list class="console-row-list">
       {experience.map((entry) => <ExperienceRow {...entry} />)}
     </div>
     <div class="console-row-list">

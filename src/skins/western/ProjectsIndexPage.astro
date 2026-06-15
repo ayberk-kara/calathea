@@ -23,13 +23,13 @@ const statusTemplate = t.filter.showing('{visible}', '{total}', t.filter.project
 </header>
 
 <div class="western-shell western-section">
-  <div class="western-filter" data-filter-group data-filter-target="projects-list" aria-label={t.filter.filterLabel}>
+  <div class="western-filter" data-filter-group data-filter-target="projects-list-western" aria-label={t.filter.filterLabel}>
     <button type="button" data-filter-value="all" aria-pressed="true">{t.filter.all}</button>
     {tags.map((tag) => <button type="button" data-filter-value={tag} aria-pressed="false">{tag}</button>)}
-    <span class="western-filter__status" data-filter-status data-filter-for="projects-list" data-filter-template={statusTemplate}></span>
+    <span class="western-filter__status" data-filter-status data-filter-for="projects-list-western" data-filter-template={statusTemplate}></span>
   </div>
 
-  <div class="western-grid-3" id="projects-list" data-filter-list>
+  <div class="western-grid-3" id="projects-list-western" data-filter-list>
     {projects.map((project) => <ProjectCard project={project} locale={locale} />)}
   </div>
 </div>
