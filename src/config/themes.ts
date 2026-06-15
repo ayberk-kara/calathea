@@ -17,6 +17,7 @@ export interface ThemeDefinition {
 
 export const themes: ThemeDefinition[] = [
   { id: 'western', label: 'Western' },
+  { id: 'swiss', label: 'Swiss Grid' },
 ];
 
 export const DEFAULT_THEME = 'western';
