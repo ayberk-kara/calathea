@@ -8,6 +8,7 @@ export interface SkinMeta {
 export const skinList: SkinMeta[] = [
   { id: 'swiss', label: 'Swiss Grid' },
   { id: 'western', label: 'Western' },
+  { id: 'console', label: 'Console' },
 ];
 
 export const DEFAULT_SKIN: string = 'swiss';

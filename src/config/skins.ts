@@ -22,6 +22,18 @@ import WesternPostCard from '../skins/western/PostCard.astro';
 import WesternExperienceRow from '../skins/western/ExperienceRow.astro';
 import WesternEducationRow from '../skins/western/EducationRow.astro';
 import '../skins/western/skin.css';
+import ConsoleLayout from '../skins/console/Layout.astro';
+import ConsoleHomePage from '../skins/console/HomePage.astro';
+import ConsoleProjectsIndexPage from '../skins/console/ProjectsIndexPage.astro';
+import ConsoleProjectDetailPage from '../skins/console/ProjectDetailPage.astro';
+import ConsoleBlogIndexPage from '../skins/console/BlogIndexPage.astro';
+import ConsolePostPage from '../skins/console/PostPage.astro';
+import ConsoleNotFoundPage from '../skins/console/NotFoundPage.astro';
+import ConsoleProjectCard from '../skins/console/ProjectCard.astro';
+import ConsolePostCard from '../skins/console/PostCard.astro';
+import ConsoleExperienceRow from '../skins/console/ExperienceRow.astro';
+import ConsoleEducationRow from '../skins/console/EducationRow.astro';
+import '../skins/console/skin.css';
 import { skinList, DEFAULT_SKIN } from './skin-list';
 
 const swiss = {
@@ -52,6 +64,20 @@ const western = {
   EducationRow: WesternEducationRow,
 };
 
+const consoleSkin = {
+  Layout: ConsoleLayout,
+  HomePage: ConsoleHomePage,
+  ProjectsIndexPage: ConsoleProjectsIndexPage,
+  ProjectDetailPage: ConsoleProjectDetailPage,
+  BlogIndexPage: ConsoleBlogIndexPage,
+  PostPage: ConsolePostPage,
+  NotFoundPage: ConsoleNotFoundPage,
+  ProjectCard: ConsoleProjectCard,
+  PostCard: ConsolePostCard,
+  ExperienceRow: ConsoleExperienceRow,
+  EducationRow: ConsoleEducationRow,
+};
+
 export type SkinComponents = typeof swiss;
 
 export interface SkinDefinition {
@@ -63,6 +89,7 @@ export interface SkinDefinition {
 const componentsById: Record<string, SkinComponents> = {
   swiss,
   western,
+  console: consoleSkin,
 };
 
 export const skins: SkinDefinition[] = skinList.map((meta) => ({
