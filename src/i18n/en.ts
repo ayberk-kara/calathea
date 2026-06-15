@@ -5,6 +5,7 @@ export interface UIStrings {
     contact: string;
     languageLabel: string;
     themeToggle: string;
+    themePicker: string;
     menuToggle: string;
   };
   footer: {
@@ -93,7 +94,8 @@ export const en: UIStrings = {
     blog: 'Blog',
     contact: 'Contact',
     languageLabel: 'Language',
-    themeToggle: 'Toggle color theme',
+    themeToggle: 'Toggle light/dark mode',
+    themePicker: 'Color theme',
     menuToggle: 'Toggle menu',
   },
   footer: {

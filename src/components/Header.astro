@@ -2,6 +2,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { DEFAULT_LOCALE, type Locale } from '../lib/i18n';
 import { getUI } from '../i18n';
+import { themes } from '../config/themes';
 
 interface Props {
   active?: 'home' | 'projects' | 'blog';
@@ -46,6 +47,15 @@ const localeHrefs: Record<Locale, string> = {
       <div class="locale-pill" role="group" aria-label={t.nav.languageLabel}>
         <a href={localeHrefs.en} class="locale-pill__option" aria-current={locale === 'en' ? 'true' : undefined}>EN</a>
         <a href={localeHrefs.tr} class="locale-pill__option" aria-current={locale === 'tr' ? 'true' : undefined}>TR</a>
+      </div>
+
+      <div class="theme-picker">
+        <label class="sr-only" for="theme-select">{t.nav.themePicker}</label>
+        <select id="theme-select" class="theme-picker__select" aria-label={t.nav.themePicker}>
+          {themes.map((theme) => (
+            <option value={theme.id}>{theme.label}</option>
+          ))}
+        </select>
       </div>
 
       <button id="theme-toggle" class="icon-btn" type="button" aria-label={t.nav.themeToggle}>
@@ -103,7 +113,7 @@ const localeHrefs: Record<Locale, string> = {
     font-size: 26px;
     line-height: 1;
     letter-spacing: 0.5px;
-    color: var(--ink);
+    color: var(--text);
     text-decoration: none;
     flex: 0 0 auto;
   }
@@ -121,14 +131,14 @@ const localeHrefs: Record<Locale, string> = {
     letter-spacing: 1.5px;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--ink);
+    color: var(--text);
     padding-bottom: var(--space-2);
     border-bottom: var(--border-width-thin) solid transparent;
   }
 
   .nav-link[aria-current='page'] {
-    color: var(--rust);
-    border-bottom-color: var(--rust);
+    color: var(--accent-2);
+    border-bottom-color: var(--accent-2);
   }
 
   .site-header__actions {
@@ -151,13 +161,26 @@ const localeHrefs: Record<Locale, string> = {
   .locale-pill__option {
     padding: var(--space-6) var(--space-12);
     text-decoration: none;
-    color: var(--ink);
+    color: var(--text);
   }
 
   .locale-pill__option[aria-current='true'] {
-    background: var(--ink);
+    background: var(--text);
     color: var(--bg);
     font-weight: 700;
+  }
+
+  .theme-picker__select {
+    height: var(--space-40);
+    border: var(--border-width) solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.5px;
+    padding: 0 var(--space-12);
+    cursor: pointer;
   }
 
   .icon-btn {
@@ -168,8 +191,8 @@ const localeHrefs: Record<Locale, string> = {
     height: var(--space-40);
     border: var(--border-width) solid var(--border-strong);
     border-radius: var(--radius-pill);
-    background: var(--card);
-    color: var(--ink);
+    background: var(--surface);
+    color: var(--text);
     cursor: pointer;
     padding: 0;
   }
@@ -184,11 +207,11 @@ const localeHrefs: Record<Locale, string> = {
     display: none;
   }
 
-  html[data-theme='light'] .icon--moon {
+  html[data-mode='light'] .icon--moon {
     display: block;
   }
 
-  html[data-theme='dark'] .icon--sun {
+  html[data-mode='dark'] .icon--sun {
     display: block;
   }
 
@@ -214,7 +237,7 @@ const localeHrefs: Record<Locale, string> = {
     letter-spacing: 1.5px;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--ink);
+    color: var(--text);
     padding: var(--space-12) 0;
     border-bottom: var(--border-width-thin) solid var(--border);
   }
@@ -224,7 +247,7 @@ const localeHrefs: Record<Locale, string> = {
   }
 
   .mobile-nav__link[aria-current='page'] {
-    color: var(--rust);
+    color: var(--accent-2);
   }
 
   .site-header.is-open .mobile-nav {
@@ -244,18 +267,35 @@ const localeHrefs: Record<Locale, string> = {
 
 <script>
   const THEME_KEY = 'theme';
+  const MODE_KEY = 'mode';
   const root = document.documentElement;
-  const toggle = document.getElementById('theme-toggle');
+  const modeToggle = document.getElementById('theme-toggle');
 
-  toggle?.addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
+  modeToggle?.addEventListener('click', () => {
+    const next = root.getAttribute('data-mode') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-mode', next);
     try {
-      localStorage.setItem(THEME_KEY, next);
+      localStorage.setItem(MODE_KEY, next);
     } catch (e) {
       /* localStorage unavailable */
     }
   });
+
+  const themeSelect = document.getElementById('theme-select');
+
+  if (themeSelect instanceof HTMLSelectElement) {
+    themeSelect.value = root.getAttribute('data-theme') ?? themeSelect.value;
+
+    themeSelect.addEventListener('change', () => {
+      const next = themeSelect.value;
+      root.setAttribute('data-theme', next);
+      try {
+        localStorage.setItem(THEME_KEY, next);
+      } catch (e) {
+        /* localStorage unavailable */
+      }
+    });
+  }
 
   const header = document.querySelector('.site-header');
   const burger = document.getElementById('nav-burger');

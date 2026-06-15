@@ -6,7 +6,8 @@ export const tr: UIStrings = {
     blog: 'Blog',
     contact: 'İletişim',
     languageLabel: 'Dil',
-    themeToggle: 'Renk temasını değiştir',
+    themeToggle: 'Aydınlık/karanlık modu değiştir',
+    themePicker: 'Renk teması',
     menuToggle: 'Menüyü aç/kapat',
   },
   footer: {
