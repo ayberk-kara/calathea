@@ -1,3 +1,5 @@
+import { skinList } from '../config/skin-list';
+
 const root = document.documentElement;
 
 document.querySelectorAll<HTMLButtonElement>('[data-mode-toggle]').forEach((button) => {
@@ -18,8 +20,13 @@ document.querySelectorAll<HTMLSelectElement>('[data-skin-select]').forEach((sele
 
   select.addEventListener('change', () => {
     root.setAttribute('data-skin', select.value);
+
+    const mode = skinList.find((skin) => skin.id === select.value)?.defaultMode ?? 'light';
+    root.setAttribute('data-mode', mode);
+
     try {
       localStorage.setItem('skin', select.value);
+      localStorage.setItem('mode', mode);
     } catch {
       /* localStorage unavailable */
     }
