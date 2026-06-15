@@ -311,3 +311,13 @@ html:not([data-skin='western']) [data-skin-root='western'] {
     grid-template-columns: 1fr;
   }
 }
+
+[data-skin-root='western'] .western-icon--sun,
+[data-skin-root='western'] .western-icon--moon {
+  display: none;
+}
+
+[data-skin='western'][data-mode='light'] [data-skin-root='western'] .western-icon--moon,
+[data-skin='western'][data-mode='dark'] [data-skin-root='western'] .western-icon--sun {
+  display: block;
+}

@@ -387,3 +387,13 @@ html:not([data-skin='console']) [data-skin-root='console'] {
     grid-template-columns: 1fr;
   }
 }
+
+[data-skin-root='console'] .console-icon--sun,
+[data-skin-root='console'] .console-icon--moon {
+  display: none;
+}
+
+[data-skin='console'][data-mode='light'] [data-skin-root='console'] .console-icon--moon,
+[data-skin='console'][data-mode='dark'] [data-skin-root='console'] .console-icon--sun {
+  display: block;
+}

@@ -235,3 +235,13 @@ html:not([data-skin='swiss']) [data-skin-root='swiss'] {
     grid-template-columns: 1fr;
   }
 }
+
+[data-skin-root='swiss'] .swiss-icon--sun,
+[data-skin-root='swiss'] .swiss-icon--moon {
+  display: none;
+}
+
+[data-skin='swiss'][data-mode='light'] [data-skin-root='swiss'] .swiss-icon--moon,
+[data-skin='swiss'][data-mode='dark'] [data-skin-root='swiss'] .swiss-icon--sun {
+  display: block;
+}
