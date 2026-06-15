@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../lib/i18n';
+import type { UIStrings } from '../../i18n';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+  locale: Locale;
+  t: UIStrings;
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { locale, t, projects } = Astro.props;
+
+const tags = [...new Set(projects.flatMap((project) => project.data.tags))].sort();
+const statusTemplate = t.filter.showing('{visible}', '{total}', t.filter.projectsNoun);
+---
+
+<header class="swiss-shell page-header">
+  <div class="swiss-eyebrow">{t.projectsPage.eyebrow}</div>
+  <h1 class="page-header__title">{t.projectsPage.title}</h1>
+  <p class="page-header__subtitle">{t.projectsPage.subtitle}</p>
+</header>
+
+<div class="swiss-shell swiss-section">
+  <div class="swiss-filter" data-filter-group data-filter-target="projects-list" aria-label={t.filter.filterLabel}>
+    <button type="button" data-filter-value="all" aria-pressed="true">{t.filter.all}</button>
+    {tags.map((tag) => <button type="button" data-filter-value={tag} aria-pressed="false">{tag}</button>)}
+    <span class="swiss-filter__status" data-filter-status data-filter-for="projects-list" data-filter-template={statusTemplate}></span>
+  </div>
+
+  <div class="swiss-grid-3" id="projects-list" data-filter-list>
+    {projects.map((project) => <ProjectCard project={project} locale={locale} />)}
+  </div>
+</div>
+
+<style>
+  .page-header {
+    border-bottom: 2px solid var(--swiss-border-strong);
+    padding-bottom: 40px;
+  }
+
+  .page-header__title {
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 0.95;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 0 0 16px;
+  }
+
+  .page-header__subtitle {
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--swiss-muted);
+    margin: 0;
+    max-width: 640px;
+  }
+</style>

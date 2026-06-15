@@ -1,0 +1,65 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../lib/i18n';
+import type { UIStrings } from '../../i18n';
+import PostCard from './PostCard.astro';
+
+interface Props {
+  locale: Locale;
+  t: UIStrings;
+  posts: CollectionEntry<'posts'>[];
+  projectTitles: Map<string, string>;
+}
+
+const { locale, t, posts, projectTitles } = Astro.props;
+
+const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
+const statusTemplate = t.filter.showing('{visible}', '{total}', t.filter.postsNoun);
+---
+
+<header class="swiss-shell page-header">
+  <div class="swiss-eyebrow">{t.blogPage.eyebrow}</div>
+  <h1 class="page-header__title">{t.blogPage.title}</h1>
+  <p class="page-header__subtitle">{t.blogPage.subtitle}</p>
+</header>
+
+<div class="swiss-shell swiss-section">
+  <div class="swiss-filter" data-filter-group data-filter-target="posts-list" aria-label={t.filter.tagLabel}>
+    <button type="button" data-filter-value="all" aria-pressed="true">{t.filter.all}</button>
+    {tags.map((tag) => <button type="button" data-filter-value={tag} aria-pressed="false">{tag}</button>)}
+    <span class="swiss-filter__status" data-filter-status data-filter-for="posts-list" data-filter-template={statusTemplate}></span>
+  </div>
+
+  <div class="post-list" id="posts-list" data-filter-list>
+    {posts.map((post) => <PostCard post={post} locale={locale} projectTitle={projectTitles.get(post.id)} />)}
+  </div>
+</div>
+
+<style>
+  .page-header {
+    border-bottom: 2px solid var(--swiss-border-strong);
+    padding-bottom: 40px;
+  }
+
+  .page-header__title {
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 0.95;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 0 0 16px;
+  }
+
+  .page-header__subtitle {
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--swiss-muted);
+    margin: 0;
+    max-width: 640px;
+  }
+
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    max-width: 760px;
+  }
+</style>

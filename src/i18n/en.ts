@@ -86,6 +86,12 @@ export interface UIStrings {
     prev: string;
     next: string;
   };
+  notFound: {
+    eyebrow: string;
+    title: string;
+    message: string;
+    cta: string;
+  };
 }
 
 export const en: UIStrings = {
@@ -178,5 +184,11 @@ export const en: UIStrings = {
     readingTime: (minutes) => `${minutes} min read`,
     prev: '← PREVIOUS',
     next: 'NEXT →',
+  },
+  notFound: {
+    eyebrow: 'ERROR',
+    title: '404 / PAGE NOT FOUND',
+    message: "The page you're looking for doesn't exist or has moved.",
+    cta: '← back home',
   },
 };

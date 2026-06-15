@@ -1,0 +1,174 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { CollectionEntry } from 'astro:content';
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import type { Locale } from '../../lib/i18n';
+import type { UIStrings } from '../../i18n';
+import { getSlug } from '../../lib/i18n';
+import { getPostPill, formatPostDate, getReadingTime } from '../../lib/posts';
+import Prose from '../../components/Prose.astro';
+
+interface Props {
+  locale: Locale;
+  t: UIStrings;
+  post: CollectionEntry<'posts'>;
+  Content: AstroComponentFactory;
+  project?: CollectionEntry<'projects'>;
+  prev?: CollectionEntry<'posts'>;
+  next?: CollectionEntry<'posts'>;
+}
+
+const { locale, t, post, Content, project, prev, next } = Astro.props;
+const { data, body } = post;
+const pill = getPostPill(post);
+const read = getReadingTime(body ?? '');
+---
+
+<article class="swiss-shell post">
+  <a href={getRelativeLocaleUrl(locale, 'blog')} class="post__breadcrumb">{t.post.breadcrumb}</a>
+
+  <div class="post__tags">
+    <span class="post__pill">{pill.label}</span>
+    {data.tags.map((tag) => <span class="swiss-chip">{tag}</span>)}
+  </div>
+
+  <h1 class="post__title">{data.title}</h1>
+
+  <div class="post__meta">
+    <span>{formatPostDate(data.date, 'long')}</span>
+    <span>·</span>
+    <span>{t.post.readingTime(read)}</span>
+    {
+      project && (
+        <a href={getRelativeLocaleUrl(locale, `projects/${getSlug(project.id)}`)} class="post__project">
+          {t.post.backToProject} {project.data.title}
+        </a>
+      )
+    }
+  </div>
+
+  <Prose>
+    <Content />
+  </Prose>
+
+  <div class="post__prevnext">
+    {
+      prev && (
+        <a href={getRelativeLocaleUrl(locale, `blog/${getSlug(prev.id)}`)} class="post__nav-card post__nav-card--prev">
+          <span class="post__nav-label">{t.post.prev}</span>
+          <span class="post__nav-title">{prev.data.title}</span>
+        </a>
+      )
+    }
+    {
+      next && (
+        <a href={getRelativeLocaleUrl(locale, `blog/${getSlug(next.id)}`)} class="post__nav-card post__nav-card--next">
+          <span class="post__nav-label">{t.post.next}</span>
+          <span class="post__nav-title">{next.data.title}</span>
+        </a>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .post {
+    max-width: 720px;
+    padding-bottom: 56px;
+  }
+
+  .post__breadcrumb {
+    text-decoration: none;
+    font-family: var(--swiss-font-mono);
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--swiss-faint);
+  }
+
+  .post__tags {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 22px 0 16px;
+  }
+
+  .post__pill {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--swiss-on-accent);
+    background: var(--swiss-border-strong);
+    padding: 3px 7px;
+  }
+
+  .post__title {
+    font-size: clamp(30px, 4.4vw, 50px);
+    line-height: 1.08;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0 0 18px;
+  }
+
+  .post__meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-family: var(--swiss-font-mono);
+    font-size: 12px;
+    color: var(--swiss-faint);
+    margin-bottom: 30px;
+    padding-bottom: 22px;
+    border-bottom: 2px solid var(--swiss-border-strong);
+  }
+
+  .post__project {
+    margin-left: auto;
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--swiss-accent);
+    border-bottom: 2px solid var(--swiss-accent);
+    padding-bottom: 2px;
+  }
+
+  .post__prevnext {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--swiss-border);
+    border: 1px solid var(--swiss-border);
+    margin-top: 40px;
+  }
+
+  .post__nav-card {
+    text-decoration: none;
+    background: var(--swiss-bg);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .post__nav-card--next {
+    text-align: right;
+  }
+
+  .post__nav-label {
+    font-family: var(--swiss-font-mono);
+    font-size: 10.5px;
+    letter-spacing: 1px;
+    color: var(--swiss-faint);
+  }
+
+  .post__nav-title {
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  @media (max-width: 880px) {
+    .post__prevnext {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

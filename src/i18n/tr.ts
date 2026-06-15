@@ -91,4 +91,10 @@ export const tr: UIStrings = {
     prev: '← ÖNCEKİ',
     next: 'SONRAKİ →',
   },
+  notFound: {
+    eyebrow: 'HATA',
+    title: '404 / SAYFA BULUNAMADI',
+    message: 'Aradığınız sayfa mevcut değil veya taşınmış.',
+    cta: '← ana sayfaya dön',
+  },
 };
