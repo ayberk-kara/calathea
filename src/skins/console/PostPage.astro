@@ -1,0 +1,154 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { CollectionEntry } from 'astro:content';
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import type { Locale } from '../../lib/i18n';
+import type { UIStrings } from '../../i18n';
+import { getSlug } from '../../lib/i18n';
+import { getPostPill, formatPostDate, getReadingTime } from '../../lib/posts';
+import Prose from '../../components/Prose.astro';
+
+interface Props {
+  locale: Locale;
+  t: UIStrings;
+  post: CollectionEntry<'posts'>;
+  Content: AstroComponentFactory;
+  project?: CollectionEntry<'projects'>;
+  prev?: CollectionEntry<'posts'>;
+  next?: CollectionEntry<'posts'>;
+}
+
+const { locale, t, post, Content, project, prev, next } = Astro.props;
+const { data, body } = post;
+const pill = getPostPill(post);
+const read = getReadingTime(body ?? '');
+
+const pillVariant: Record<string, string> = {
+  release: pill.major ? 'console-pill--accent' : '',
+  docs: 'console-pill--muted',
+  'deep-dive': '',
+  note: 'console-pill--muted',
+};
+---
+
+<article class="console-shell post">
+  <a href={getRelativeLocaleUrl(locale, 'blog')} class="console-section__link">{t.post.breadcrumb}</a>
+
+  <div class="console-prompt console-prompt--lg">
+    <span class="console-prompt__path">~/blog</span><span class="console-prompt__sep">$</span>
+    <span class="console-prompt__cmd">cat {getSlug(post.id)}.md</span>
+  </div>
+
+  <div class="post__tags">
+    <span class:list={['console-pill', pillVariant[pill.kind]]}>{pill.label}</span>
+    {data.tags.map((tag) => <span class="console-hashtag">#{tag}</span>)}
+  </div>
+
+  <h1 class="post__title">{data.title}</h1>
+
+  <div class="post__meta">
+    <span>{formatPostDate(data.date, 'long')}</span>
+    <span>·</span>
+    <span>{t.post.readingTime(read)}</span>
+    {
+      project && (
+        <a href={getRelativeLocaleUrl(locale, `projects/${getSlug(project.id)}`)} class="post__project">
+          {t.post.backToProject} {project.data.title}
+        </a>
+      )
+    }
+  </div>
+
+  <Prose>
+    <Content />
+  </Prose>
+
+  <div class="post__prevnext">
+    {
+      prev && (
+        <a href={getRelativeLocaleUrl(locale, `blog/${getSlug(prev.id)}`)} class="console-card post__nav-card post__nav-card--prev">
+          <span class="console-label">{t.post.prev}</span>
+          <span class="post__nav-title">{prev.data.title}</span>
+        </a>
+      )
+    }
+    {
+      next && (
+        <a href={getRelativeLocaleUrl(locale, `blog/${getSlug(next.id)}`)} class="console-card post__nav-card post__nav-card--next">
+          <span class="console-label">{t.post.next}</span>
+          <span class="post__nav-title">{next.data.title}</span>
+        </a>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .post {
+    max-width: 700px;
+    padding-bottom: 40px;
+  }
+
+  .post__tags {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 22px 0 14px;
+  }
+
+  .post__title {
+    margin: 0 0 16px;
+    font-size: clamp(26px, 4.4vw, 40px);
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--console-heading);
+  }
+
+  .post__meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--console-faint);
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--console-border);
+  }
+
+  .post__project {
+    margin-left: auto;
+    text-decoration: none;
+    color: var(--console-accent);
+  }
+
+  .post__prevnext {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 40px;
+  }
+
+  .post__nav-card {
+    gap: 6px;
+  }
+
+  .post__nav-card--next {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .post__nav-title {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--console-text);
+  }
+
+  @media (max-width: 880px) {
+    .post__prevnext {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

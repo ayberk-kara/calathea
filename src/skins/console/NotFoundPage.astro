@@ -1,0 +1,56 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Locale } from '../../lib/i18n';
+import type { UIStrings } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  t: UIStrings;
+}
+
+const { locale, t } = Astro.props;
+---
+
+<section class="console-shell not-found">
+  <div class="console-prompt console-prompt--lg">
+    <span class="console-prompt__path">~</span><span class="console-prompt__sep">$</span>
+    <span class="console-prompt__cmd">cd ./page-not-found</span>
+  </div>
+  <div class="not-found__error">{t.notFound.eyebrow}</div>
+  <h1 class="not-found__title">{t.notFound.title}</h1>
+  <p class="not-found__message">{t.notFound.message}</p>
+  <a href={getRelativeLocaleUrl(locale)} class="console-button console-button--filled">$ {t.notFound.cta}</a>
+</section>
+
+<style>
+  .not-found {
+    padding-bottom: 56px;
+  }
+
+  .not-found__error {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--console-accent-3);
+    margin-bottom: 14px;
+  }
+
+  .not-found__title {
+    font-size: clamp(32px, 5.5vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--console-heading);
+    text-transform: lowercase;
+    margin: 0 0 16px;
+  }
+
+  .not-found__message {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--console-muted);
+    margin: 0 0 24px;
+    max-width: 480px;
+  }
+</style>

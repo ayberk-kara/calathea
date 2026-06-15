@@ -1,0 +1,62 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../lib/i18n';
+import type { UIStrings } from '../../i18n';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+  locale: Locale;
+  t: UIStrings;
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { locale, t, projects } = Astro.props;
+
+const tags = [...new Set(projects.flatMap((project) => project.data.tags))].sort();
+const statusTemplate = t.filter.showing('{visible}', '{total}', t.filter.projectsNoun);
+---
+
+<header class="console-shell page-header">
+  <div class="console-prompt">
+    <span class="console-prompt__path">~/projects</span><span class="console-prompt__sep">$</span>
+    <span class="console-prompt__cmd">ls -la --all</span>
+  </div>
+  <h1 class="page-header__title">{t.projectsPage.title}</h1>
+  <p class="page-header__subtitle">{t.projectsPage.subtitle}</p>
+</header>
+
+<div class="console-shell console-section">
+  <div class="console-filter" data-filter-group data-filter-target="projects-list" aria-label={t.filter.filterLabel}>
+    <button type="button" data-filter-value="all" aria-pressed="true">{t.filter.all}</button>
+    {tags.map((tag) => <button type="button" data-filter-value={tag} aria-pressed="false">{tag}</button>)}
+    <span class="console-filter__status" data-filter-status data-filter-for="projects-list" data-filter-template={statusTemplate}></span>
+  </div>
+
+  <div class="console-row-list" id="projects-list" data-filter-list>
+    {projects.map((project) => <ProjectCard project={project} locale={locale} />)}
+  </div>
+</div>
+
+<style>
+  .page-header {
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--console-border);
+  }
+
+  .page-header__title {
+    margin: 8px 0 12px;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--console-heading);
+    text-transform: lowercase;
+  }
+
+  .page-header__subtitle {
+    margin: 0;
+    max-width: 640px;
+    color: var(--console-muted);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+</style>

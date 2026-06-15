@@ -1,0 +1,187 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { CollectionEntry } from 'astro:content';
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import type { Locale } from '../../lib/i18n';
+import type { UIStrings } from '../../i18n';
+import { getSlug } from '../../lib/i18n';
+import Prose from '../../components/Prose.astro';
+import PostCard from './PostCard.astro';
+
+interface Props {
+  locale: Locale;
+  t: UIStrings;
+  project: CollectionEntry<'projects'>;
+  Content: AstroComponentFactory;
+  relatedPosts: CollectionEntry<'posts'>[];
+}
+
+const { locale, t, project, Content, relatedPosts } = Astro.props;
+const { data } = project;
+---
+
+<article class="console-shell project">
+  <a href={getRelativeLocaleUrl(locale, 'projects')} class="console-section__link">{t.project.breadcrumb}</a>
+
+  <div class="console-prompt console-prompt--lg">
+    <span class="console-prompt__path">~/projects</span><span class="console-prompt__sep">$</span>
+    <span class="console-prompt__cmd">cat {getSlug(project.id)}.md</span>
+  </div>
+
+  <div class="project__head">
+    <span class="project__index">{data.index}</span>
+    <span class="console-chip">{data.type}</span>
+  </div>
+  <h1 class="project__title">{data.title}</h1>
+  <p class="project__summary">{data.summary}</p>
+
+  <div class="project__stack">
+    {data.stack.map((tech) => <span class="console-hashtag">#{tech}</span>)}
+  </div>
+
+  <div class="project__links">
+    {data.liveDemo && (
+      <a href={data.liveDemo} target="_blank" rel="noopener" class="console-button console-button--filled">$ {t.project.liveDemo}</a>
+    )}
+    {data.repo && (
+      <a href={data.repo} target="_blank" rel="noopener" class="console-button console-button--outline">$ {t.project.repo}</a>
+    )}
+  </div>
+
+  {
+    data.role && (
+      <div class="project__meta">
+        <div class="console-card project__meta-item">
+          <div class="console-label">{t.project.role}</div>
+          <div class="project__meta-value">{data.role}</div>
+        </div>
+        <div class="console-card project__meta-item">
+          <div class="console-label">{t.project.timeline}</div>
+          <div class="project__meta-value">{data.timeline}</div>
+        </div>
+        <div class="console-card project__meta-item">
+          <div class="console-label">{t.project.stack}</div>
+          <div class="project__meta-value">{data.stack.slice(0, 3).join(' · ')}</div>
+        </div>
+        <div class="console-card project__meta-item">
+          <div class="console-label">{t.project.status}</div>
+          <div class="project__meta-value">{data.status}</div>
+        </div>
+      </div>
+    )
+  }
+
+  <div class="project__body">
+    <div class="console-comment">// {t.project.writeup}</div>
+    <Prose>
+      <Content />
+    </Prose>
+  </div>
+
+  {
+    relatedPosts.length > 0 && (
+      <div class="project__related">
+        <div class="console-comment">// {t.project.relatedNotes}</div>
+        <div class="console-feed">
+          {relatedPosts.map((post) => <PostCard post={post} locale={locale} />)}
+        </div>
+      </div>
+    )
+  }
+
+  <div class="project__footer">
+    <a href={getRelativeLocaleUrl(locale, 'projects')} class="console-section__link">{t.project.allProjects}</a>
+    <a href={getRelativeLocaleUrl(locale, 'blog')} class="console-section__link">{t.project.devBlog}</a>
+  </div>
+</article>
+
+<style>
+  .project {
+    max-width: 760px;
+    padding-bottom: 40px;
+  }
+
+  .project__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .project__index {
+    color: var(--console-accent-2);
+    font-size: 12px;
+  }
+
+  .project__title {
+    margin: 14px 0 12px;
+    font-size: clamp(28px, 5vw, 44px);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--console-heading);
+  }
+
+  .project__summary {
+    margin: 0 0 20px;
+    max-width: 620px;
+    color: var(--console-muted);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .project__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+
+  .project__links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .project__meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 40px 0 0;
+  }
+
+  .project__meta-item {
+    gap: 6px;
+  }
+
+  .project__meta-value {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--console-text);
+    line-height: 1.35;
+  }
+
+  .project__body {
+    margin-top: 48px;
+  }
+
+  .project__related {
+    margin-top: 48px;
+  }
+
+  .project__footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--console-border);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  @media (max-width: 880px) {
+    .project__meta {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
