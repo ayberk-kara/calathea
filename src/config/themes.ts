@@ -21,6 +21,7 @@ export const themes: ThemeDefinition[] = [
   { id: 'console', label: 'Console' },
   { id: 'editorial', label: 'Editorial' },
   { id: 'brutalist', label: 'Brutalist' },
+  { id: 'bauhaus', label: 'Bauhaus' },
 ];
 
 export const DEFAULT_THEME = 'western';
