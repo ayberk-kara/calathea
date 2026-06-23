@@ -46,10 +46,10 @@ export const experience: ExperienceEntry[] = [
     org: 'Cinder House, Four Seasons Hotel St. Louis (MO, USA)',
     range: 'Jun 2023 — Sep 2023',
     summary:
-      'Covered food runner, barback, banquet, and pool service shifts at an elite restaurant, often working 100-hour weeks.',
+      'Covered food runner, barback, banquet server, and pool server responsibilities in a luxury hotel environment, consistently adapting to operational needs while maintaining high service standards during workloads of up to 100 hours per week.',
     bullets: [
-      'Undertook food runner, barback, banquet server, and pool server roles, demonstrating adaptability and teamwork in a fast-paced elite restaurant.',
-      'Developed strong teamwork skills, English speaking proficiency, and the ability to work under intense pressure over an average of 100 hours per week.',
+      'Undertook food runner, barback, banquet server, and pool server roles, demonstrating adaptability and teamwork in a fast-paced elite Hotel setting.',
+      'Developed strong teamwork skills, English speaking proficiency, multitasking skills, and the ability to work under intense pressure up to 100 hours per week.',
     ],
     eng: false,
   },
