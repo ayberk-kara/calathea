@@ -107,7 +107,7 @@ export const experience: ExperienceEntry[] = [
 
 export const education: EducationEntry[] = [
   {
-    degree: 'Master of Engineering in Artificial Intelligence',
+    degree: 'Master of Engineering',
     org: 'University of California, Los Angeles',
     range: 'Sep 2026 — Jun 2027',
     highlight: false,
