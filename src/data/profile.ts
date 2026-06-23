@@ -54,6 +54,17 @@ export const experience: ExperienceEntry[] = [
     eng: false,
   },
   {
+    title: 'Food & Beverage Attendant',
+    org: '21c Hotels (St. Louis, MO, USA)',
+    range: 'Jul 2023 — Oct 2023',
+    summary:
+      'Picked up part-time busser, food runner, and barback shifts at 21c Hotels, keeping the restaurant and bar running smoothly during busy service.',
+    bullets: [
+      'Worked part-time across busser, food runner, and barback roles, helping the restaurant and bar stay on top of a fast-paced hospitality environment.',
+    ],
+    eng: false,
+  },
+  {
     title: 'Backend Developer Intern',
     org: 'OdakGIS (Ankara, Turkiye)',
     range: 'Jun 2022 — Sep 2022',
