@@ -34,6 +34,7 @@ export interface UIStrings {
     experienceFilterAll: string;
     experienceFilterEng: string;
     experienceFilterAriaLabel: string;
+    experienceNonEngLabel: string;
     educationHeading: string;
     educationCoursework: string;
     projectsHeading: string;
@@ -132,6 +133,7 @@ export const en: UIStrings = {
     experienceFilterAll: 'All',
     experienceFilterEng: 'Engineering only',
     experienceFilterAriaLabel: 'Filter experience',
+    experienceNonEngLabel: 'Non-engineering',
     educationHeading: 'EDUCATION',
     educationCoursework: 'Relevant coursework & projects',
     projectsHeading: 'PROJECTS',
