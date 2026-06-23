@@ -65,6 +65,17 @@ export const experience: ExperienceEntry[] = [
     eng: false,
   },
   {
+    title: 'Linen Attendant',
+    org: 'Marriott St. Louis Grand (St. Louis, MO, USA)',
+    range: 'Jul 2023 — Oct 2023',
+    summary:
+      'Worked part-time as a Linen Attendant at the Marriott St. Louis Grand, keeping linen supply and turnover running smoothly across the hotel.',
+    bullets: [
+      'Handled sorting, counting, and restocking linen across the hotel, helping housekeeping operations run on schedule during busy periods.',
+    ],
+    eng: false,
+  },
+  {
     title: 'Backend Developer Intern',
     org: 'OdakGIS (Ankara, Turkiye)',
     range: 'Jun 2022 — Sep 2022',
