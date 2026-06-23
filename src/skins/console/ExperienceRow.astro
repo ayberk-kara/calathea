@@ -89,18 +89,6 @@ const { title, org, range, summary, bullets, eng, nonEngLabel } = Astro.props;
     font-style: italic;
   }
 
-  .exp-row[data-eng='false'] {
-    border-left-color: var(--console-dim);
-  }
-
-  .exp-row[data-eng='false'] .exp-row__dot {
-    background: var(--console-dim);
-  }
-
-  .exp-row[data-eng='false'] .exp-row__org {
-    color: var(--console-muted);
-  }
-
   .exp-row__summary {
     margin: 6px 0 0;
     color: var(--console-muted);
