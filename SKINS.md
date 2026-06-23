@@ -233,6 +233,16 @@ plus `all`.
 Posts to `https://api.web3forms.com/submit` with `PUBLIC_WEB3FORMS_KEY` from the env, exactly as
 the old `BlogContact.astro` script did, just rehomed to `querySelectorAll`.
 
+### `src/behavior/lightbox.ts` — click-to-zoom images
+
+- `[data-lightbox]` — any `<img>`. Click (or `Enter`/`Space` when focused) opens it full size in a
+  full-viewport overlay; click outside the image, the close button, or `Escape` closes it. Used by
+  the shared `Figure`/`Diagram` MDX components (`src/components/`).
+- The overlay (`.lightbox-overlay`) is a single element the script creates once and reuses; its
+  styling lives in `src/styles/global.css`, not a skin, since it's transient chrome rather than
+  page presentation. The image is shown at its native resolution, scaled down to fit the viewport
+  but never upscaled past its source size.
+
 ### `src/behavior/site-controls.ts` — mode, skin, mobile nav
 
 - `[data-mode-toggle]` — button; flips `html[data-mode]` between `light`/`dark`, persists to
@@ -252,11 +262,20 @@ script, graceful fallback already handled by `localize()`.
 
 ## Prose token contract
 
-`src/components/Prose.astro` and `src/components/Callout.astro` stay outside `src/skins/` because
-MDX content imports `Callout` directly (`src/content/**/*.mdx`). Since `<Content />` is rendered
-once per visible skin block, both components are styled entirely from CSS custom properties that
-**every skin must define**, scoped under `[data-skin='<id>'][data-mode='light']` and
-`[data-skin='<id>'][data-mode='dark']`:
+`src/components/Prose.astro`, `Callout.astro`, `Figure.astro`, and `Diagram.astro` stay outside
+`src/skins/` because MDX content imports them directly (`src/content/**/*.mdx`). Since
+`<Content />` is rendered once per visible skin block, all four are styled entirely from CSS
+custom properties that **every skin must define**, scoped under
+`[data-skin='<id>'][data-mode='light']` and `[data-skin='<id>'][data-mode='dark']`:
+
+`Figure`/`Diagram` (`{ src: ImageMetadata; alt: string; caption?: string }`) wrap an
+`astro:assets` `<Image>` for automatic optimization. Their styling — including the `figure`/
+`diagram__frame`/`figcaption` rules — lives in `Prose.astro`'s `<style>` block, not their own:
+component `<style>` blocks on components only ever instantiated dynamically from inside rendered
+MDX content don't make it into the build's CSS bundle (an Astro/Vite limitation), so anything
+they need styled must be defined in a component that's statically imported somewhere, like
+`Prose`. Their `<Image>` carries `data-lightbox` to opt into the click-to-zoom behavior (see
+`src/behavior/lightbox.ts` below).
 
 | Token | Used for |
 |---|---|

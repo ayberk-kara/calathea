@@ -14,7 +14,7 @@ const { src, alt, caption } = Astro.props;
 {/* Styled in Prose.astro, not here — scoped styles on components only rendered through MDX content don't make it into the build's CSS bundle. */}
 <figure class="diagram">
   <div class="diagram__frame">
-    <Image src={src} alt={alt} />
+    <Image src={src} alt={alt} data-lightbox tabindex="0" role="button" aria-label={`View full size: ${alt}`} />
   </div>
   {caption && <figcaption>{caption}</figcaption>}
 </figure>
