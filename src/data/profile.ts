@@ -44,7 +44,7 @@ export const experience: ExperienceEntry[] = [
   {
     title: 'Food & Beverage Attendant',
     org: 'Cinder House, Four Seasons Hotel St. Louis (MO, USA)',
-    range: 'Jun 2023 — Sep 2023',
+    range: 'Jun 2023 — Oct 2023',
     summary:
       'Covered food runner, barback, banquet server, and pool server responsibilities in a luxury hotel environment, consistently adapting to operational needs while maintaining high service standards during workloads of up to 100 hours per week.',
     bullets: [
