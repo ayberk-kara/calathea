@@ -157,8 +157,18 @@ interface Props {
 
 #### `ExperienceRow`
 ```ts
-interface Props extends ExperienceEntry {} // title, org, range, summary?, bullets?, eng
+interface Props extends ExperienceEntry {
+  nonEngLabel?: string; // i18n string for the non-eng badge, e.g. t.home.experienceNonEngLabel
+}
+// title, org, range, summary?, bullets?, eng
 ```
+
+The row's root element must carry `data-eng={eng}` (in addition to the existing
+`data-filter-tags`) so a skin's CSS can select `[data-eng='false']` and give non-engineering
+rows a deliberate, on-brand visual treatment (muted surface, different accent/border, a small
+badge using `nonEngLabel`, etc.) — distinct from eng rows but still professional, in both light
+and dark mode. `eng` is content data (set per entry in `src/data/profile.ts`), never inferred
+from title/org strings.
 
 #### `EducationRow`
 ```ts
