@@ -28,11 +28,13 @@ const { src, alt, caption } = Astro.props;
     border: 1.5px solid var(--prose-border);
     border-radius: 10px;
     padding: 18px;
+    text-align: center;
   }
 
   .diagram__frame :global(img) {
-    width: 100%;
-    display: block;
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
   }
 
   .diagram figcaption {

@@ -22,8 +22,10 @@ const { src, alt, caption } = Astro.props;
   }
 
   .figure :global(img) {
-    width: 100%;
     display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
     border: 1.5px solid var(--prose-border);
     border-radius: 8px;
   }
