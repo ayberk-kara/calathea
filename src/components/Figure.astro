@@ -11,31 +11,8 @@ interface Props {
 const { src, alt, caption } = Astro.props;
 ---
 
+{/* Styled in Prose.astro, not here — scoped styles on components only rendered through MDX content don't make it into the build's CSS bundle. */}
 <figure class="figure">
   <Image src={src} alt={alt} />
   {caption && <figcaption>{caption}</figcaption>}
 </figure>
-
-<style>
-  .figure {
-    margin: 28px 0;
-  }
-
-  .figure :global(img) {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    margin: 0 auto;
-    border: 1.5px solid var(--prose-border);
-    border-radius: 8px;
-  }
-
-  .figure figcaption {
-    margin-top: 8px;
-    font-family: var(--prose-font-mono);
-    font-size: 13px;
-    color: var(--prose-text);
-    opacity: 0.65;
-    text-align: center;
-  }
-</style>
