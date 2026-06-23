@@ -84,9 +84,13 @@ const { title, org, range, summary, bullets, eng, nonEngLabel } = Astro.props;
   }
 
   .exp-row__badge {
-    color: var(--console-faint);
+    color: var(--console-on-accent-2);
+    background: var(--console-accent-2);
     font-size: 11px;
     font-style: italic;
+    border-radius: 4px;
+    padding: 1px 7px;
+    white-space: nowrap;
   }
 
   .exp-row__summary {
