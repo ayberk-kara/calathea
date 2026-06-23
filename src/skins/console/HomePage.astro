@@ -99,7 +99,7 @@ const skillGroups = [
   </div>
   <div class="console-grid-2">
     <div id="experience-list-console" data-filter-list class="console-row-list">
-      {experience.map((entry) => <ExperienceRow {...entry} />)}
+      {experience.map((entry) => <ExperienceRow {...entry} nonEngLabel={t.home.experienceNonEngLabel} />)}
     </div>
     <div class="console-row-list">
       {education.map((entry) => <EducationRow {...entry} courseworkLabel={t.home.educationCoursework} />)}

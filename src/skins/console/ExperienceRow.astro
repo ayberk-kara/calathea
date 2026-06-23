@@ -6,16 +6,20 @@ interface Props {
   summary?: string;
   bullets?: string[];
   eng: boolean;
+  nonEngLabel?: string;
 }
 
-const { title, org, range, summary, bullets, eng } = Astro.props;
+const { title, org, range, summary, bullets, eng, nonEngLabel } = Astro.props;
 ---
 
-<div class="exp-row" data-expand data-filter-item data-filter-tags={eng ? 'eng' : ''} tabindex="0">
+<div class="exp-row" data-expand data-filter-item data-filter-tags={eng ? 'eng' : ''} data-eng={eng} tabindex="0">
   <span class="exp-row__dot"></span>
   <div class="exp-row__range">{range}</div>
   <h3 class="exp-row__title">{title}</h3>
-  <div class="exp-row__org">{org}</div>
+  <div class="exp-row__org-row">
+    <div class="exp-row__org">{org}</div>
+    {!eng && nonEngLabel && <span class="exp-row__badge">// {nonEngLabel.toLowerCase()}</span>}
+  </div>
   {summary && <p class="exp-row__summary">{summary}</p>}
   {
     bullets && bullets.length > 0 && (
@@ -67,9 +71,34 @@ const { title, org, range, summary, bullets, eng } = Astro.props;
     font-weight: 700;
   }
 
+  .exp-row__org-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
   .exp-row__org {
     color: var(--console-accent);
     font-size: 12px;
+  }
+
+  .exp-row__badge {
+    color: var(--console-faint);
+    font-size: 11px;
+    font-style: italic;
+  }
+
+  .exp-row[data-eng='false'] {
+    border-left-color: var(--console-dim);
+  }
+
+  .exp-row[data-eng='false'] .exp-row__dot {
+    background: var(--console-dim);
+  }
+
+  .exp-row[data-eng='false'] .exp-row__org {
+    color: var(--console-muted);
   }
 
   .exp-row__summary {
