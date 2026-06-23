@@ -107,13 +107,13 @@ export const experience: ExperienceEntry[] = [
 
 export const education: EducationEntry[] = [
   {
-    degree: 'M.Eng. in Artificial Intelligence',
+    degree: 'Master of Engineering in Artificial Intelligence',
     org: 'University of California, Los Angeles',
     range: 'Sep 2026 — Jun 2027',
     highlight: false,
   },
   {
-    degree: 'B.S. Computer Science',
+    degree: 'Bachelor of Science in Computer Science',
     org: 'Sabancı University',
     location: 'Istanbul',
     range: 'Sep 2021 — Jun 2025',
