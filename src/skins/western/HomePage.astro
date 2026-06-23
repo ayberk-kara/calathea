@@ -89,7 +89,7 @@ const skillGroups = [
   </div>
   <div class="western-grid-2">
     <div id="experience-list-western" data-filter-list class="row-list">
-      {experience.map((entry) => <ExperienceRow {...entry} />)}
+      {experience.map((entry) => <ExperienceRow {...entry} nonEngLabel={t.home.experienceNonEngLabel} />)}
     </div>
     <div class="row-list">
       {education.map((entry) => <EducationRow {...entry} courseworkLabel={t.home.educationCoursework} />)}
