@@ -79,7 +79,6 @@ export const tr: UIStrings = {
     walkthrough: 'Genel bakış',
     screenshots: 'Ekran görüntüleri',
     architecture: 'Mimari',
-    writeup: 'Yazı',
     relatedNotes: 'İlgili geliştirme notları',
     liveDemo: 'Canlı demo ↗',
     repo: 'GitHub deposu →',

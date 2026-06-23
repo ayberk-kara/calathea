@@ -74,7 +74,6 @@ export interface UIStrings {
     walkthrough: string;
     screenshots: string;
     architecture: string;
-    writeup: string;
     relatedNotes: string;
     liveDemo: string;
     repo: string;
@@ -175,7 +174,6 @@ export const en: UIStrings = {
     walkthrough: 'Walkthrough',
     screenshots: 'Screenshots',
     architecture: 'Architecture',
-    writeup: 'The writeup',
     relatedNotes: 'Related dev notes',
     liveDemo: 'Live demo ↗',
     repo: 'GitHub repo →',
