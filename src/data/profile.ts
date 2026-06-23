@@ -76,6 +76,19 @@ export const experience: ExperienceEntry[] = [
     eng: false,
   },
   {
+    title: 'Research Assistant',
+    org: 'PURE — Program for Undergraduate Research',
+    range: 'Sep 2022 — Feb 2023',
+    summary:
+      'Ran an NLP study on employee survey data to surface what drives organizational trust and engagement.',
+    bullets: [
+      'Conducted an academic research study using NLP to process and evaluate 1,120 open-ended employee survey responses from 60 organizations.',
+      'Used sentiment analysis, BERTopic-based topic modeling, and exploratory clustering techniques.',
+      'Identified key drivers of organizational trust and workforce engagement.',
+    ],
+    eng: true,
+  },
+  {
     title: 'Backend Developer Intern',
     org: 'OdakGIS (Ankara, Turkiye)',
     range: 'Jun 2022 — Sep 2022',
@@ -87,19 +100,6 @@ export const experience: ExperienceEntry[] = [
       'Participated in designing and optimizing database schema for improved performance and scalability.',
       'Collaborated closely with frontend developers to integrate backend functionalities into the user interface.',
       'Contributed to code reviews, provided feedback and suggestions for code optimization and maintainability.',
-    ],
-    eng: true,
-  },
-  {
-    title: 'Research Assistant',
-    org: 'PURE — Program for Undergraduate Research',
-    range: 'Sep 2022 — Feb 2023',
-    summary:
-      'Ran an NLP study on employee survey data to surface what drives organizational trust and engagement.',
-    bullets: [
-      'Conducted an academic research study using NLP to process and evaluate 1,120 open-ended employee survey responses from 60 organizations.',
-      'Used sentiment analysis, BERTopic-based topic modeling, and exploratory clustering techniques.',
-      'Identified key drivers of organizational trust and workforce engagement.',
     ],
     eng: true,
   },
