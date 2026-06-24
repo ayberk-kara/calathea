@@ -16,7 +16,7 @@ const t = getUI(locale);
 const projects = localizeAll(await getCollection('projects'), locale).sort((a, b) =>
   a.data.index.localeCompare(b.data.index),
 );
-const featuredProjects = projects.filter((project) => project.data.featured);
+const featuredProjects = projects;
 
 const recentPosts = localizeAll(await getCollection('posts'), locale)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
