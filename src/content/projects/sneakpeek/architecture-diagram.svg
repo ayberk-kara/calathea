@@ -66,87 +66,87 @@
   <text x="1432" y="632" fill="#10a37f">completion</text>
 </g>
 
-<rect x="630" y="30" width="300" height="76" rx="10" fill="#fff" stroke="#dbe2ea" stroke-width="1"/>
+<rect x="630" y="30" width="300" height="76" rx="10" fill="#fff" stroke="#c3cdd9" stroke-width="2"/>
 <rect x="630" y="30" width="300" height="3" rx="1.5" fill="#2563eb"/>
 <text x="648" y="55.6" font-family="'Space Grotesk', system-ui, sans-serif" font-size="16" font-weight="600" fill="#0f172a">Next.js Client</text>
 <text x="648" y="76.5" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" font-weight="400" fill="#64748b">browser SPA · :3000</text>
-<rect x="340" y="190" width="880" height="150" rx="10" fill="#fff" stroke="#dbe2ea" stroke-width="1"/>
+<rect x="340" y="190" width="880" height="150" rx="10" fill="#fff" stroke="#c3cdd9" stroke-width="2"/>
 <rect x="340" y="190" width="880" height="3" rx="1.5" fill="#6d28d9"/>
 <text x="358" y="217.3" font-family="'Space Grotesk', system-ui, sans-serif" font-size="18" font-weight="400" fill="#0f172a">
 <tspan font-family="'Space Grotesk', system-ui, sans-serif" font-weight="700" fill="#0f172a" dx="0">API Gateway</tspan><tspan font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-weight="400" fill="#6d28d9" dx="12">  NestJS · REST :9000 /api · JWT · AuthGuard / RolesGuard</tspan>
 </text>
-<rect x="358.0" y="256" width="51.0" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="1"/>
+<rect x="358.0" y="256" width="51.0" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="2"/>
 <text x="367.0" y="268.5" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" fill="#475569">/auth</text>
-<rect x="416.0" y="256" width="77.4" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="1"/>
+<rect x="416.0" y="256" width="77.4" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="2"/>
 <text x="425.0" y="268.5" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" fill="#475569">/products</text>
-<rect x="500.4" y="256" width="57.6" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="1"/>
+<rect x="500.4" y="256" width="57.6" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="2"/>
 <text x="509.4" y="268.5" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" fill="#475569">/order</text>
-<rect x="565.0" y="256" width="51.0" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="1"/>
+<rect x="565.0" y="256" width="51.0" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="2"/>
 <text x="574.0" y="268.5" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" fill="#475569">/cart</text>
-<rect x="623.0" y="256" width="77.4" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="1"/>
+<rect x="623.0" y="256" width="77.4" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="2"/>
 <text x="632.0" y="268.5" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" fill="#475569">/wishlist</text>
-<rect x="707.4" y="256" width="103.8" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="1"/>
+<rect x="707.4" y="256" width="103.8" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="2"/>
 <text x="716.4" y="268.5" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" fill="#475569">/notification</text>
-<rect x="818.2" y="256" width="70.8" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="1"/>
+<rect x="818.2" y="256" width="70.8" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="2"/>
 <text x="827.2" y="268.5" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" fill="#475569">/chatbot</text>
-<rect x="896.0" y="256" width="70.8" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="1"/>
+<rect x="896.0" y="256" width="70.8" height="19" rx="5" fill="#f4f1fb" stroke="#e6e0f6" stroke-width="2"/>
 <text x="905.0" y="268.5" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" fill="#475569">/gateway</text>
-<rect x="40" y="474" width="200" height="110" rx="10" fill="#fff" stroke="#dbe2ea" stroke-width="1"/>
+<rect x="40" y="474" width="200" height="110" rx="10" fill="#fff" stroke="#c3cdd9" stroke-width="2"/>
 <rect x="40" y="474" width="200" height="3" rx="1.5" fill="#0d9488"/>
 <text x="58" y="498.8" font-family="'Space Grotesk', system-ui, sans-serif" font-size="15" font-weight="600" fill="#0f172a">user-service</text>
 <text x="58" y="519.4" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" font-weight="400" fill="#0d9488">gRPC :50051</text>
 <text x="58" y="538.1" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="10.5" font-weight="400" fill="#94a3b8">auth · users · wishlist lookups</text>
-<rect x="280" y="474" width="210" height="110" rx="10" fill="#fff" stroke="#dbe2ea" stroke-width="1"/>
+<rect x="280" y="474" width="210" height="110" rx="10" fill="#fff" stroke="#c3cdd9" stroke-width="2"/>
 <rect x="280" y="474" width="210" height="3" rx="1.5" fill="#0d9488"/>
 <text x="298" y="498.8" font-family="'Space Grotesk', system-ui, sans-serif" font-size="15" font-weight="600" fill="#0f172a">notification-service</text>
 <text x="298" y="519.4" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" font-weight="400" fill="#0d9488">gRPC + Kafka consumer</text>
 <text x="298" y="538.1" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="10.5" font-weight="400" fill="#94a3b8">invoices · emails · PDF</text>
-<rect x="540" y="474" width="200" height="110" rx="10" fill="#fff" stroke="#dbe2ea" stroke-width="1"/>
+<rect x="540" y="474" width="200" height="110" rx="10" fill="#fff" stroke="#c3cdd9" stroke-width="2"/>
 <rect x="540" y="474" width="200" height="3" rx="1.5" fill="#0d9488"/>
 <text x="558" y="498.8" font-family="'Space Grotesk', system-ui, sans-serif" font-size="15" font-weight="600" fill="#0f172a">order-service</text>
 <text x="558" y="519.4" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" font-weight="400" fill="#0d9488">gRPC :50053</text>
 <text x="558" y="538.1" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="10.5" font-weight="400" fill="#94a3b8">orders · refunds · Kafka producer</text>
-<rect x="800" y="474" width="200" height="110" rx="10" fill="#fff" stroke="#dbe2ea" stroke-width="1"/>
+<rect x="800" y="474" width="200" height="110" rx="10" fill="#fff" stroke="#c3cdd9" stroke-width="2"/>
 <rect x="800" y="474" width="200" height="3" rx="1.5" fill="#0d9488"/>
 <text x="818" y="498.8" font-family="'Space Grotesk', system-ui, sans-serif" font-size="15" font-weight="600" fill="#0f172a">product-service</text>
 <text x="818" y="519.4" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" font-weight="400" fill="#0d9488">gRPC :50052</text>
 <text x="818" y="538.1" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="10.5" font-weight="400" fill="#94a3b8">products · pricing · Kafka pub/sub</text>
-<rect x="1060" y="474" width="200" height="110" rx="10" fill="#fff" stroke="#dbe2ea" stroke-width="1"/>
+<rect x="1060" y="474" width="200" height="110" rx="10" fill="#fff" stroke="#c3cdd9" stroke-width="2"/>
 <rect x="1060" y="474" width="200" height="3" rx="1.5" fill="#0d9488"/>
 <text x="1078" y="498.8" font-family="'Space Grotesk', system-ui, sans-serif" font-size="15" font-weight="600" fill="#0f172a">cart-service</text>
 <text x="1078" y="519.4" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" font-weight="400" fill="#0d9488">gRPC :50054</text>
 <text x="1078" y="538.1" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="10.5" font-weight="400" fill="#94a3b8">Cart · Cart_Items</text>
-<rect x="1320" y="474" width="200" height="110" rx="10" fill="#fff" stroke="#dbe2ea" stroke-width="1"/>
+<rect x="1320" y="474" width="200" height="110" rx="10" fill="#fff" stroke="#c3cdd9" stroke-width="2"/>
 <rect x="1320" y="474" width="200" height="3" rx="1.5" fill="#0891b2"/>
 <text x="1338" y="498.8" font-family="'Space Grotesk', system-ui, sans-serif" font-size="15" font-weight="600" fill="#0f172a">chatbot-service</text>
 <text x="1338" y="519.4" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" font-weight="400" fill="#0891b2">HTTP :50055</text>
 <text x="1338" y="538.1" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="10.5" font-weight="400" fill="#94a3b8">OpenAI · catalog match</text>
-<rect x="560" y="730" width="420" height="96" rx="10" fill="#fff7ec" stroke="#f5d9a8" stroke-width="1"/>
+<rect x="560" y="730" width="420" height="96" rx="10" fill="#fff7ec" stroke="#f5d9a8" stroke-width="2"/>
 <rect x="560" y="730" width="420" height="3" rx="1.5" fill="#ea8c00"/>
 <text x="578" y="755.6" font-family="'Space Grotesk', system-ui, sans-serif" font-size="16" font-weight="400" fill="#0f172a">
 <tspan font-family="'Space Grotesk', system-ui, sans-serif" font-weight="700" fill="#7c4a03" dx="0">Kafka Broker</tspan><tspan font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-weight="400" fill="#b45309" dx="10">  :9092 · Zookeeper :2181</tspan>
 </text>
 <text x="578" y="776.1" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="10.5" font-weight="400" fill="#a16207">invoice-created · refund-approved · order-cancelled · order-refund-rejected · wishlist-* · product-discounted</text>
-<rect x="650" y="910" width="240" height="92" rx="10" fill="#fff" stroke="#dbe2ea" stroke-width="1"/>
+<rect x="650" y="910" width="240" height="92" rx="10" fill="#fff" stroke="#c3cdd9" stroke-width="2"/>
 <rect x="650" y="910" width="240" height="3" rx="1.5" fill="#ea8c00"/>
 <text x="668" y="934.8" font-family="'Space Grotesk', system-ui, sans-serif" font-size="15" font-weight="600" fill="#0f172a">payment-service</text>
 <text x="668" y="955.4" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" font-weight="400" fill="#b45309">Kafka consumer</text>
 <text x="668" y="974.1" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="10.5" font-weight="400" fill="#94a3b8">payment-approved → invoice</text>
-<rect x="40" y="730" width="220" height="84" rx="10" fill="#fff" stroke="#f1c6d2" stroke-width="1"/>
+<rect x="40" y="730" width="220" height="84" rx="10" fill="#fff" stroke="#f1c6d2" stroke-width="2"/>
 <rect x="40" y="730" width="220" height="3" rx="1.5" fill="#e11d48"/>
 <text x="58" y="754.8" font-family="'Space Grotesk', system-ui, sans-serif" font-size="15" font-weight="600" fill="#0f172a">SMTP</text>
 <text x="58" y="775.4" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" font-weight="400" fill="#e11d48">Gmail · outbound email</text>
-<rect x="1300" y="670" width="220" height="80" rx="10" fill="#fff" stroke="#c2e8db" stroke-width="1"/>
+<rect x="1300" y="670" width="220" height="80" rx="10" fill="#fff" stroke="#c2e8db" stroke-width="2"/>
 <rect x="1300" y="670" width="220" height="3" rx="1.5" fill="#10a37f"/>
 <text x="1318" y="694.8" font-family="'Space Grotesk', system-ui, sans-serif" font-size="15" font-weight="600" fill="#0f172a">OpenAI</text>
 <text x="1318" y="714.9" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="10.5" font-weight="400" fill="#10a37f">LLM recommendations</text>
-<rect x="200" y="1090" width="300" height="100" rx="10" fill="#fff" stroke="#c9e6d2" stroke-width="1"/>
+<rect x="200" y="1090" width="300" height="100" rx="10" fill="#fff" stroke="#c9e6d2" stroke-width="2"/>
 <rect x="200" y="1090" width="300" height="3" rx="1.5" fill="#16a34a"/>
 <text x="218" y="1115.6" font-family="'Space Grotesk', system-ui, sans-serif" font-size="16" font-weight="400" fill="#0f172a">
 <tspan font-family="'Space Grotesk', system-ui, sans-serif" font-weight="700" fill="#0f172a" dx="0">MongoDB</tspan><tspan font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-weight="400" fill="#16a34a" dx="10">  one container</tspan>
 </text>
 <text x="218" y="1136.5" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="11" font-weight="400" fill="#64748b">users · orders · refunds · invoices</text>
-<rect x="820" y="1090" width="300" height="100" rx="10" fill="#fff" stroke="#c3dcf0" stroke-width="1"/>
+<rect x="820" y="1090" width="300" height="100" rx="10" fill="#fff" stroke="#c3dcf0" stroke-width="2"/>
 <rect x="820" y="1090" width="300" height="3" rx="1.5" fill="#0284c7"/>
 <text x="838" y="1115.6" font-family="'Space Grotesk', system-ui, sans-serif" font-size="16" font-weight="400" fill="#0f172a">
 <tspan font-family="'Space Grotesk', system-ui, sans-serif" font-weight="700" fill="#0f172a" dx="0">MySQL</tspan><tspan font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-weight="400" fill="#0284c7" dx="10">  db railway</tspan>
