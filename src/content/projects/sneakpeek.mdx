@@ -1,0 +1,82 @@
+---
+title: 'SneakPeek: A Microservice E-Commerce Platform'
+index: '03'
+type: 'SYSTEMS'
+summary: 'A full-featured online sneaker store built by a team of six over seven Scrum sprints, with a NestJS microservice backend, gRPC service mesh, and Kafka event backbone.'
+stack: ['NestJS', 'gRPC', 'Next.js 13', 'Apache Kafka', 'MySQL', 'MongoDB', 'Docker', 'OpenAI']
+tags: ['sneakpeek', 'systems-design', 'backend', 'infra']
+featured: true
+repo: 'https://github.com/ayberk-kara/E-commerce_project'
+lang: 'en'
+---
+
+import Figure from '../../components/Figure.astro';
+import Diagram from '../../components/Diagram.astro';
+import architectureDiagram from './sneakpeek/architecture-diagram.png';
+import storefront from './sneakpeek/storefront.png';
+import catalog from './sneakpeek/catalog.png';
+import productDetail from './sneakpeek/product-detail.png';
+import cart from './sneakpeek/cart.png';
+import chatbot from './sneakpeek/chatbot.png';
+import invoice from './sneakpeek/invoice.png';
+import invoiceEmail from './sneakpeek/invoice-email.png';
+import refundEmail from './sneakpeek/refund-email.png';
+import jiraSprint from './sneakpeek/jira-sprint.png';
+
+SneakPeek is a full-featured online sneaker store built over a 14-week software engineering course, developed by a team of six across seven Scrum sprints. The project was deliberately open ended: the requirements were handed to us the way a real client would describe them, a complete e-commerce system with a set of needed features, while the tech stack, the architecture, and the design were entirely ours to decide. The stack and structure described here were the result of long team conversations before any code was written. The brief itself called for a product catalog with stock tracking, guest carts that survive login, checkout with mock payment, PDF invoicing, ratings and moderated comments, wishlists with discount notifications, multiple staff roles, and a full order lifecycle through to refunds. The team split three frontend and three backend, and my work sat entirely on the backend, across the gRPC service mesh, the chatbot service, and the notification service.
+
+## Architecture
+
+<Diagram src={architectureDiagram} alt="System architecture diagram showing the Next.js client, NestJS API gateway, gRPC microservices, Kafka broker, and MySQL/MongoDB databases" caption="The full system: a Next.js client, a NestJS API gateway, seven gRPC microservices, a Kafka broker, and two databases" />
+
+The architecture was designed by the whole team, and working through it together, debating service boundaries and where the data should live, was one of the more rewarding parts of the project. The system is a set of NestJS microservices behind a single API gateway. A Next.js 13 client talks to the gateway over REST; the gateway fans out to the services over gRPC. Seven services divide the domain: user, product, cart, order, payment, chatbot, and notification. Structured catalog data, products, sizes, pricing, reviews, and cart, lives in MySQL, while user, order, and refund data lives in MongoDB. Apache Kafka sits at the center as the event backbone, carrying topics like `invoice-created`, `order-approved`, `refund-approved`, and `product-discounted` between services. Everything is containerized with Docker and orchestrated through Docker Compose.
+
+## What the platform does
+
+<Figure src={storefront} alt="SneakPeek storefront landing page featuring an Air Jordan sneaker" caption="The SneakPeek storefront" />
+
+Customers browse a catalog organized by category, with live stock counts, and can search by name or description and sort by price or popularity. Out-of-stock items stay searchable but cannot be added to the cart.
+
+<Figure src={catalog} alt="Women's catalog page with tag, color, price, and sort filters across 13 products" caption="Catalog browsing with filtering and sorting" />
+
+<Figure src={productDetail} alt="Product detail page for a Nike Air Jordan 1 showing size selection, rating, add to cart, and wishlist" caption="A product page with size selection, ratings, and wishlist support" />
+
+A cart works without logging in and is preserved once the customer signs in to check out.
+
+<Figure src={cart} alt="Cart page showing a Nike Air Jordan 1 with quantity controls and an order summary" caption="The cart, with a running order summary" />
+
+Behind the storefront, the system implements three roles with strictly separated privileges. Product managers handle stock, categories, deliveries, and comment moderation; sales managers set prices, apply discounts, and view revenue and profit reporting. Orders move through processing, in-transit, and delivered, and customers can cancel while an order is still processing or request a refund within 30 days of delivery, including discount-aware refunds for items bought during a campaign.
+
+## My work
+
+My responsibility was the gRPC layer that connects the services, plus two services in full. A large share of that work was API design: defining the contracts each service exposes and the request and response shapes the rest of the system depends on.
+
+**The gRPC service mesh.** Each service exposes its functionality over gRPC rather than REST, defined in protobuf service definitions. Designing these meant writing the `.proto` contracts, the service methods, their request and response messages, and the streaming semantics, that act as the typed boundary between services. For the chatbot and notification services I owned these contracts end to end. The chatbot service, for example, exposes an RPC that takes a query message and returns a structured list of product matches; the notification service defines the messages it consumes and the acknowledgements it returns. Because protobuf generates typed stubs on both sides, the gateway and the services share one source of truth for every call, which removes a whole class of integration bugs and makes a method's inputs and outputs unambiguous. Getting these contracts right, including the message and streaming patterns for cross-service communication, was what let seven independent services behave like one coherent system while staying decoupled.
+
+Beyond the internal gRPC surface, these services are reached from the outside through REST endpoints on the NestJS gateway, which translates an incoming HTTP request into the corresponding gRPC call. The chatbot is exposed under `/chatbot`, and the notification-related routes under `/notification`, with the gateway's guards (`AuthGuard`, `RolesGuard`) enforcing authentication and role separation before any request reaches a service.
+
+**The chatbot service.** SneakPeek includes an AI shopping assistant that takes a natural-language request and returns matching products from the live catalog.
+
+<Figure src={chatbot} alt="The SneakPeek chatbot assistant matching a request for red shoes to two products from the catalog" caption="The chatbot matching a free-text request to real catalog products" />
+
+The flow works like this: the client sends a free-text query such as "red" to the gateway, which forwards it over gRPC to the chatbot service. The service pulls the current catalog (proxied as a `GET /api/products` call back through the gateway) and passes both the query and the real product list to OpenAI, which returns the best matches. The response comes back as specific in-stock items with their prices rather than a generic answer. The interesting design problem was grounding the model in the actual catalog so its recommendations were always real products rather than plausible-sounding inventions; the API was shaped around feeding live inventory into the prompt and parsing the model's output back into structured product references.
+
+**The notification service.** This service is a Kafka consumer that turns events into outbound communication, and it is where the streaming architecture pays off.
+
+<Figure src={invoice} alt="A generated PDF invoice for a SneakPeek order" caption="A generated PDF invoice" />
+
+Rather than exposing request/response endpoints for others to call, this service mainly subscribes to Kafka topics and reacts. When an order is paid, an `invoice-created` event flows through Kafka; the notification service consumes it, generates a PDF invoice, and emails it to the customer over SMTP.
+
+<Figure src={invoiceEmail} alt="An email from SneakPeek with the invoice PDF attached" caption="The invoice delivered to the customer as an email attachment" />
+
+The same event-driven pattern drives discount alerts to wishlist owners (`product-discounted`) and refund confirmations (`refund-approved`).
+
+<Figure src={refundEmail} alt="A Refund Approved email referencing a specific order ID" caption="A refund confirmation, triggered by a refund-approved event" />
+
+Because these run off Kafka topics rather than direct calls, the service that approves a refund or sets a discount never has to know that an email needs to go out, it just emits an event, and the notification service reacts. Designing the service this way, around the events it consumes rather than endpoints it serves, is the main reason this part of the system stays clean as features pile up.
+
+## Takeaways
+
+<Figure src={jiraSprint} alt="A Jira notification congratulating Team 6 on completing Sprint 1, 7 of 14 work items" caption="Closing out one of the seven Scrum sprints in Jira" />
+
+The most valuable part of this project was not any single technology but the experience of building as a team. Across seven sprints in Jira, the group learned to plan work, divide it cleanly, and integrate continuously, and most of what I took away was about that process rather than the languages involved. Coordinating a microservice architecture across six people meant our service boundaries had to be agreed and respected, which made the gRPC contracts as much a communication tool between developers as a technical one. Working this way taught me the day-to-day reality of agile development, Scrum ceremonies, shared version control and code review, CI/CD, and the discipline a microservice system demands when more than one person is building it at once. It was a genuinely good introduction to how software actually gets made in a team, and the closest thing in the program to a real engineering environment.
