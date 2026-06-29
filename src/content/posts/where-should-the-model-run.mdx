@@ -3,12 +3,13 @@ title: "Where Should the Model Run? Notes on Edge vs. Cloud Inference"
 date: 2025-05-17
 tags: ["edge-computing", "machine-learning", "systems-design", "deep-dive"]
 excerpt: "Building the same people-counting system two ways, and what it taught me about where inference belongs."
+project: "iot-people-counting"
 lang: "en"
 ---
 
 Every system that turns sensor data into a decision has to answer one question early: where does the model actually run? You can send the raw data somewhere powerful and let a server do the thinking, or you can push the model down onto the device producing the data and send only the conclusion. It sounds like an implementation detail. It isn't. That single choice quietly decides your network cost, your bottleneck, your failure modes, and even what a word like "latency" means.
 
-I ran into this concretely while building a people-counting system two ways for an Internet of Things course, once with a server doing the heavy detection and once with the device doing it. The project was small, homework-scale hardware and short runs, so it doesn't prove anything about systems at real scale. But building both halves made the shape of the tradeoff tangible in a way that reading about it never quite does, and the shape generalizes even when the numbers don't.
+I ran into this concretely while building a [people-counting system](/projects/iot-people-counting) two ways for an Internet of Things course, once with a server doing the heavy detection and once with the device doing it. The project was small, homework-scale hardware and short runs, so it doesn't prove anything about systems at real scale. But building both halves made the shape of the tradeoff tangible in a way that reading about it never quite does, and the shape generalizes even when the numbers don't.
 
 ## The two pulls
 
