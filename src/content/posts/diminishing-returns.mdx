@@ -1,0 +1,22 @@
+---
+title: "Diminishing Returns: What an IMDB Sentiment Benchmark Actually Costs"
+date: 2025-06-10
+tags: ["machine-learning", "nlp", "deep-dive"]
+excerpt: "Seven models on a standard sentiment benchmark, and what the results table quietly says about the cost of accuracy."
+lang: "en"
+---
+
+import Figure from '../../components/Figure.astro';
+import modelAccuracy from './diminishing-returns/model-accuracy.png';
+
+Sentiment classification on the IMDB movie-review dataset is a standard machine-learning exercise: 50,000 reviews, balanced between positive and negative, predict the label. As a four-person course project we threw a wide range of models at it, from classical bag-of-words classifiers to fine-tuned transformers and an ensemble. My own part was the exploratory analysis, the RoBERTa model, and the evaluation curves. The build was routine. The results table is where it gets interesting, because of what it quietly says about cost.
+
+<Figure src={modelAccuracy} alt="Bar chart of test accuracy: classical models near 88-91%, transformers 94-95%, ensemble 95.4%" caption="Test accuracy across the three tiers. A clear jump from classical to transformer, then a plateau." />
+
+Here is the whole story in three numbers. A Linear SVM on TF-IDF features, a model that trains in seconds on a CPU, scored **90.6%**. The best single transformer, DeBERTa-v3, a large model that needs a GPU to fine-tune, scored **94.95%**. A three-transformer soft-voting ensemble, running three of those models instead of one, scored **95.43%**.
+
+Look at what each step buys. Moving from the classical model to a transformer costs orders of magnitude more compute and gains about four points. Moving from a single transformer to an ensemble triples the inference cost and gains **half a point**. The accuracy climbs, but the return on each additional unit of compute collapses as you go.
+
+That is the part worth sitting with. On a clean, balanced, friendly benchmark like this one, simple methods get you most of the way there. The bag-of-words SVM already captures the easy 90%, reviews with obvious positive or negative wording, and everything fancier is competing over the hard residual: sarcasm, irony, mixed signals. One misclassified review from the ensemble was a glowing-sounding negative review dripping with sarcasm ("how very brilliant... you deserve a medal"). No amount of ensembling reliably fixes that, because the difficulty is linguistic, not computational.
+
+None of this argues against transformers. Four points of accuracy is a lot when the application needs it, and on harder, messier, real-world data the gap between classical and transformer methods tends to widen, not shrink. The point is narrower and more practical: accuracy is not free, and the price per point rises steeply. The interesting engineering question is rarely "which model scores highest." It is "what accuracy does this task actually need, and what is the cheapest thing that reaches it." On IMDB, the honest answer is that a model you can train in seconds gets you most of the way, and the last few points cost far more than they look.
