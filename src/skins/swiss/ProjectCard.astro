@@ -14,7 +14,10 @@ const href = getRelativeLocaleUrl(locale, `projects/${getSlug(project.id)}`);
 ---
 
 <a href={href} class="project-card" data-filter-item data-filter-tags={data.tags.join(' ')}>
-  <div class="project-card__meta">{data.index} · {data.type}{data.duration && ` · ${data.duration}`}</div>
+  <div class="project-card__meta-block">
+    <div class="project-card__meta">{data.index} · {data.type}</div>
+    {data.duration && <div class="project-card__duration">{data.duration}</div>}
+  </div>
   <h3 class="project-card__title">{data.title}</h3>
   <p class="project-card__summary">{data.summary}</p>
   <div class="project-card__stack">
@@ -35,11 +38,23 @@ const href = getRelativeLocaleUrl(locale, `projects/${getSlug(project.id)}`);
     color: var(--swiss-text);
   }
 
+  .project-card__meta-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
   .project-card__meta {
     font-size: 11px;
     letter-spacing: 0.16em;
     color: var(--swiss-accent);
     font-weight: 700;
+  }
+
+  .project-card__duration {
+    font-family: var(--swiss-font-mono);
+    font-size: 11px;
+    color: var(--swiss-faint);
   }
 
   .project-card__title {

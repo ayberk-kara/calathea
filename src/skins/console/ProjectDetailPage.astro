@@ -31,8 +31,8 @@ const { data } = project;
   <div class="project__head">
     <span class="project__index">{data.index}</span>
     <span class="console-chip">{data.type}</span>
-    {data.duration && <span class="project__duration">{data.duration}</span>}
   </div>
+  {data.duration && <div class="project__duration">{data.duration}</div>}
   <h1 class="project__title">{data.title}</h1>
   <p class="project__summary">{data.summary}</p>
 
@@ -93,6 +93,7 @@ const { data } = project;
   .project__duration {
     color: var(--console-faint);
     font-size: 12px;
+    margin-top: 6px;
   }
 
   .project__title {
