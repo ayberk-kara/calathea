@@ -27,8 +27,9 @@ const { project } = Astro.props;
 const { data } = project;
 const { Content } = await render(project);
 
+const projectSlug = getSlug(project.id);
 const relatedPosts = localizeAll(await getCollection('posts'), locale)
-  .filter((post) => post.data.project?.id === project.id || post.data.tags.some((tag) => data.tags.includes(tag)))
+  .filter((post) => post.data.project?.id === project.id || post.data.tags.includes(projectSlug))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 5);
 ---
