@@ -31,6 +31,7 @@ const { data } = project;
   <div class="project__head">
     <span class="project__index">{data.index}</span>
     <span class="console-chip">{data.type}</span>
+    {data.duration && <span class="project__duration">{data.duration}</span>}
   </div>
   <h1 class="project__title">{data.title}</h1>
   <p class="project__summary">{data.summary}</p>
@@ -47,29 +48,6 @@ const { data } = project;
       <a href={data.repo} target="_blank" rel="noopener" class="console-button console-button--outline">$ {t.project.repo}</a>
     )}
   </div>
-
-  {
-    data.role && (
-      <div class="project__meta">
-        <div class="console-card project__meta-item">
-          <div class="console-label">{t.project.role}</div>
-          <div class="project__meta-value">{data.role}</div>
-        </div>
-        <div class="console-card project__meta-item">
-          <div class="console-label">{t.project.timeline}</div>
-          <div class="project__meta-value">{data.timeline}</div>
-        </div>
-        <div class="console-card project__meta-item">
-          <div class="console-label">{t.project.stack}</div>
-          <div class="project__meta-value">{data.stack.slice(0, 3).join(' · ')}</div>
-        </div>
-        <div class="console-card project__meta-item">
-          <div class="console-label">{t.project.status}</div>
-          <div class="project__meta-value">{data.status}</div>
-        </div>
-      </div>
-    )
-  }
 
   <div class="project__body">
     <Prose>
@@ -112,6 +90,11 @@ const { data } = project;
     font-size: 12px;
   }
 
+  .project__duration {
+    color: var(--console-faint);
+    font-size: 12px;
+  }
+
   .project__title {
     margin: 14px 0 12px;
     font-size: clamp(28px, 5vw, 44px);
@@ -143,24 +126,6 @@ const { data } = project;
     margin-bottom: 32px;
   }
 
-  .project__meta {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin: 40px 0 0;
-  }
-
-  .project__meta-item {
-    gap: 6px;
-  }
-
-  .project__meta-value {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--console-text);
-    line-height: 1.35;
-  }
-
   .project__body {
     margin-top: 48px;
   }
@@ -179,9 +144,4 @@ const { data } = project;
     gap: 14px;
   }
 
-  @media (max-width: 880px) {
-    .project__meta {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
 </style>

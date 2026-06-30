@@ -67,10 +67,6 @@ export interface UIStrings {
   };
   project: {
     breadcrumb: string;
-    role: string;
-    timeline: string;
-    stack: string;
-    status: string;
     walkthrough: string;
     screenshots: string;
     architecture: string;
@@ -167,10 +163,6 @@ export const en: UIStrings = {
   },
   project: {
     breadcrumb: '← PROJECTS',
-    role: 'ROLE',
-    timeline: 'TIMELINE',
-    stack: 'STACK',
-    status: 'STATUS',
     walkthrough: 'Walkthrough',
     screenshots: 'Screenshots',
     architecture: 'Architecture',

@@ -22,7 +22,7 @@ const { data } = project;
 <article class="western-shell project">
   <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__breadcrumb">{t.project.breadcrumb}</a>
 
-  <div class="western-eyebrow western-eyebrow--accent">{data.index} · {data.type}</div>
+  <div class="western-eyebrow western-eyebrow--accent">{data.index} · {data.type}{data.duration && ` · ${data.duration}`}</div>
   <h1 class="project__title">{data.title}</h1>
   <p class="project__summary">{data.summary}</p>
 
@@ -38,29 +38,6 @@ const { data } = project;
       <a href={data.repo} target="_blank" rel="noopener" class="western-button">{t.project.repo}</a>
     )}
   </div>
-
-  {
-    data.role && (
-      <div class="project__meta">
-        <div class="western-card project__meta-item">
-          <div class="project__meta-label">{t.project.role}</div>
-          <div class="project__meta-value">{data.role}</div>
-        </div>
-        <div class="western-card project__meta-item">
-          <div class="project__meta-label">{t.project.timeline}</div>
-          <div class="project__meta-value">{data.timeline}</div>
-        </div>
-        <div class="western-card project__meta-item">
-          <div class="project__meta-label">{t.project.stack}</div>
-          <div class="project__meta-value">{data.stack.slice(0, 3).join(' · ')}</div>
-        </div>
-        <div class="western-card project__meta-item">
-          <div class="project__meta-label">{t.project.status}</div>
-          <div class="project__meta-value">{data.status}</div>
-        </div>
-      </div>
-    )
-  }
 
   <div class="project__body">
     <Prose>
@@ -130,31 +107,6 @@ const { data } = project;
     margin-bottom: 32px;
   }
 
-  .project__meta {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin: 40px 0 4px;
-  }
-
-  .project__meta-item {
-    padding: 15px 16px;
-    gap: 7px;
-  }
-
-  .project__meta-label {
-    font-family: var(--western-font-mono);
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    color: var(--western-accent-2);
-  }
-
-  .project__meta-value {
-    font-size: 14.5px;
-    font-weight: 700;
-    line-height: 1.35;
-  }
-
   .project__heading {
     font-family: var(--western-font-display);
     font-weight: 400;
@@ -191,9 +143,4 @@ const { data } = project;
     padding-bottom: 2px;
   }
 
-  @media (max-width: 880px) {
-    .project__meta {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
 </style>

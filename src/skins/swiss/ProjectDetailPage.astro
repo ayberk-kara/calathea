@@ -22,7 +22,7 @@ const { data } = project;
 <article class="swiss-shell project">
   <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__breadcrumb">{t.project.breadcrumb}</a>
 
-  <div class="swiss-eyebrow">{data.index} · {data.type}</div>
+  <div class="swiss-eyebrow">{data.index} · {data.type}{data.duration && ` · ${data.duration}`}</div>
   <h1 class="project__title">{data.title}</h1>
   <p class="project__summary">{data.summary}</p>
 
@@ -38,29 +38,6 @@ const { data } = project;
       <a href={data.repo} target="_blank" rel="noopener" class="swiss-button">{t.project.repo}</a>
     )}
   </div>
-
-  {
-    data.role && (
-      <div class="project__meta">
-        <div class="project__meta-item">
-          <div class="project__meta-label">{t.project.role}</div>
-          <div class="project__meta-value">{data.role}</div>
-        </div>
-        <div class="project__meta-item">
-          <div class="project__meta-label">{t.project.timeline}</div>
-          <div class="project__meta-value">{data.timeline}</div>
-        </div>
-        <div class="project__meta-item">
-          <div class="project__meta-label">{t.project.stack}</div>
-          <div class="project__meta-value">{data.stack.slice(0, 3).join(' · ')}</div>
-        </div>
-        <div class="project__meta-item">
-          <div class="project__meta-label">{t.project.status}</div>
-          <div class="project__meta-value">{data.status}</div>
-        </div>
-      </div>
-    )
-  }
 
   <div class="project__body">
     <Prose>
@@ -129,34 +106,6 @@ const { data } = project;
     margin-bottom: 32px;
   }
 
-  .project__meta {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--swiss-border);
-    border: 1px solid var(--swiss-border);
-    margin: 40px 0 4px;
-  }
-
-  .project__meta-item {
-    background: var(--swiss-bg);
-    padding: 15px 16px;
-  }
-
-  .project__meta-label {
-    font-family: var(--swiss-font-mono);
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    color: var(--swiss-faint);
-    margin-bottom: 7px;
-  }
-
-  .project__meta-value {
-    font-size: 14.5px;
-    font-weight: 700;
-    line-height: 1.35;
-  }
-
   .project__heading {
     font-size: 13px;
     font-weight: 800;
@@ -191,9 +140,4 @@ const { data } = project;
     padding-bottom: 2px;
   }
 
-  @media (max-width: 880px) {
-    .project__meta {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
 </style>

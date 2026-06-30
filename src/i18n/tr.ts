@@ -72,10 +72,6 @@ export const tr: UIStrings = {
   },
   project: {
     breadcrumb: '← PROJELER',
-    role: 'ROL',
-    timeline: 'ZAMAN ÇİZELGESİ',
-    stack: 'YIĞIN',
-    status: 'DURUM',
     walkthrough: 'Genel bakış',
     screenshots: 'Ekran görüntüleri',
     architecture: 'Mimari',
