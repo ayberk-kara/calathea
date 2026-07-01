@@ -119,7 +119,3 @@ Durability was checked with an overnight run. The board streamed continuously fo
 ## Scope and next steps
 
 The grid currently uses a fixed compile-time scaling rather than adapting to signal amplitude, evaluation leaned more on synthetic than live data, and power draw over long sessions was not yet profiled. Each of these is a clear next step rather than an open question: adaptive grid scaling, a broader live dataset, and a power characterization pass. The longer-term direction is on-device rhythm analysis, where the existing low-latency pipeline already provides the data path that such a model would consume.
-
-## What this project demonstrates
-
-The platform is a complete biosignal instrument rather than a visualization built on top of someone else's data. One person took it from electrode to pixel: an instrumentation-grade analog front end with active noise cancellation, firmware that drives a 24-bit converter and streams over native USB, a verification path built into the hardware, a transport decision made for reliability over appearance, real-time signal conditioning, and a custom renderer that sustains clinical frame rates on a phone. The breadth, the depth at the analog and firmware layers, and the engineering judgment running through each decision are the substance of the project.
