@@ -1,0 +1,59 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../lib/i18n';
+import type { UIStrings } from '../../i18n';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+  locale: Locale;
+  t: UIStrings;
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { locale, t, projects } = Astro.props;
+
+const tags = [...new Set(projects.flatMap((project) => project.data.tags))].sort();
+const statusTemplate = t.filter.showing('{visible}', '{total}', t.filter.projectsNoun);
+---
+
+<header class="western-shell page-header">
+  <div class="western-eyebrow western-eyebrow--accent">{t.projectsPage.eyebrow}</div>
+  <h1 class="page-header__title">{t.projectsPage.title}</h1>
+  <p class="page-header__subtitle">{t.projectsPage.subtitle}</p>
+</header>
+
+<div class="western-shell western-section">
+  <div class="western-filter" data-filter-group data-filter-target="projects-list-western" aria-label={t.filter.filterLabel}>
+    <button type="button" data-filter-value="all" aria-pressed="true">{t.filter.all}</button>
+    {tags.map((tag) => <button type="button" data-filter-value={tag} aria-pressed="false">{tag}</button>)}
+    <span class="western-filter__status" data-filter-status data-filter-for="projects-list-western" data-filter-template={statusTemplate}></span>
+  </div>
+
+  <div class="western-grid-3" id="projects-list-western" data-filter-list>
+    {projects.map((project) => <ProjectCard project={project} locale={locale} />)}
+  </div>
+</div>
+
+<style>
+  .page-header {
+    border-bottom: 2.5px solid var(--western-border-strong);
+    padding-bottom: 40px;
+  }
+
+  .page-header__title {
+    font-family: var(--western-font-display);
+    font-weight: 400;
+    font-size: clamp(40px, 6vw, 68px);
+    line-height: 1.05;
+    letter-spacing: 0.5px;
+    margin: 0 0 16px;
+  }
+
+  .page-header__subtitle {
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--western-muted);
+    margin: 0;
+    max-width: 640px;
+  }
+</style>

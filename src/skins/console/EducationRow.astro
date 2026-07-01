@@ -1,0 +1,138 @@
+---
+interface Props {
+  degree: string;
+  org: string;
+  location?: string;
+  range: string;
+  summary?: string;
+  bullets?: string[];
+  coursework?: string[];
+  courseworkLabel?: string;
+  highlight: boolean;
+}
+
+const { degree, org, location, range, summary, bullets, coursework, courseworkLabel, highlight } = Astro.props;
+const hasDetails = Boolean((bullets && bullets.length > 0) || (coursework && coursework.length > 0));
+---
+
+<div class:list={['console-card', 'edu-row', { 'edu-row--highlight': highlight }]} data-expand tabindex="0">
+  <div class="edu-row__head">
+    <h3 class="edu-row__title">{degree}</h3>
+    <span class="edu-row__range">{range}</span>
+  </div>
+  <div class="edu-row__org">{org}{location && ` · ${location}`}</div>
+  {summary && <p class="edu-row__summary">{summary}</p>}
+  {
+    hasDetails && (
+      <div class="edu-row__details" data-expand-region>
+        <div class="edu-row__details-inner">
+          {bullets && bullets.length > 0 && (
+            <ul class="edu-row__bullets">
+              {bullets.map((bullet) => <li>{bullet}</li>)}
+            </ul>
+          )}
+          {coursework && coursework.length > 0 && (
+            <div class="edu-row__coursework">
+              {courseworkLabel && <div class="edu-row__coursework-label">{courseworkLabel}</div>}
+              <ul class="edu-row__bullets">
+                {coursework.map((course) => <li>{course}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .edu-row {
+    cursor: pointer;
+  }
+
+  .edu-row:focus-visible {
+    outline: 1px solid var(--console-accent);
+    outline-offset: 4px;
+  }
+
+  .edu-row__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .edu-row__title {
+    margin: 0;
+    color: var(--console-heading);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .edu-row__range {
+    color: var(--console-accent-2);
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .edu-row__org {
+    color: var(--console-muted);
+    font-size: 12px;
+  }
+
+  .edu-row__summary {
+    margin: 0;
+    color: var(--console-faint);
+    font-size: 11.5px;
+    line-height: 1.6;
+  }
+
+  .edu-row__details {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+  }
+
+  .edu-row:hover .edu-row__details,
+  .edu-row:focus-within .edu-row__details,
+  .edu-row[data-expanded='true'] .edu-row__details {
+    grid-template-rows: 1fr;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .edu-row__details {
+      transition: grid-template-rows 0.25s ease;
+    }
+  }
+
+  .edu-row__details-inner {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .edu-row__bullets {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--console-muted);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .edu-row__coursework-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--console-faint);
+    margin-bottom: 6px;
+  }
+
+  .edu-row--highlight {
+    border-color: var(--console-accent);
+    background: var(--console-surface-alt);
+  }
+</style>

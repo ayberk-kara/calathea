@@ -1,0 +1,65 @@
+---
+title: 'Real-Time IoT People Counting: Two Architectures for the Same Problem'
+index: '02'
+type: 'SYSTEMS'
+summary: 'An IoT people-counting pipeline implemented two opposite ways, server-side inference versus on-device edge inference, to measure the compute-versus-bandwidth tradeoff.'
+stack: ['Python', 'Raspberry Pi', 'YOLOv5', 'YOLOv3-tiny', 'Flask', 'FastAPI', 'OpenCV', 'PyTorch']
+tags: ['iot-people-counting', 'edge-computing', 'systems-design', 'machine-learning', 'iot', 'real-time']
+date: 2025-09-01
+duration: 'Sep 2024 – Jan 2025'
+featured: true
+repo: 'https://github.com/ayberk-kara/IoT-People-Counting'
+lang: 'en'
+---
+
+import Figure from '../../components/Figure.astro';
+import Diagram from '../../components/Diagram.astro';
+import architectureDiagram from './iot-people-counting/iot-people-counting-architecture.png';
+import detectionFrame from './iot-people-counting/detection-frame.png';
+import comparisonTable from './iot-people-counting/iot-comparison.png';
+
+This project counts the number of people in a room in real time, using a Raspberry Pi camera and an object-detection model. What makes it worth writing about is not the counting itself but the structure: the same problem is solved two opposite ways, and the two designs are measured against each other. It was built for an Internet of Things course in Fall 2025.
+
+The central question is where the computation should happen. A camera produces frames; a model turns frames into a person count; something has to run that model. Put the model on a server and the camera only has to stream video. Put the model on the device and only a tiny number needs to travel. Each choice moves the bottleneck somewhere different and changes the network cost entirely. The project implements both and makes the tradeoff concrete.
+
+<Diagram src={architectureDiagram} alt="Two-panel architecture diagram comparing server-side inference and edge inference for the people-counting pipeline" caption="The two architectures side by side: Part 1 moves pixels to the compute, Part 2 moves the compute to the pixels" />
+
+## Part 1 — Server-side inference
+
+The first design keeps the device simple: a "dumb camera, smart server" arrangement. The Raspberry Pi captures JPEG-encoded video at 640×480 using Picamera2 and streams frames to a remote server, doing no analysis of its own. A server then runs the heavy model and returns the count.
+
+On the device side, the interesting part is how frames are throttled. The camera streams continuously, but a custom streaming-output callback, running on the encoder's own thread, only forwards a frame if enough time has passed since the last one, so the upload rate is decoupled from the camera's capture rate. Each forwarded frame is uploaded as multipart form data, and its filename is set to the Unix timestamp of capture. That embedded timestamp is the mechanism used later to measure latency, which carries an explicit assumption worth stating plainly: it is only meaningful if the Pi and server clocks are reasonably synchronized, since nothing in the system enforces that synchronization.
+
+The server runs YOLOv5s, loaded through torch.hub and placed on CUDA when a GPU is available and CPU otherwise. For each uploaded frame it runs inference, counts the detections belonging to the COCO person class, and stores the latest count in memory for retrieval over a separate endpoint. Because inference is heavy and the server is single-process and blocking, it guards itself with a busy flag: while one frame is being processed, further uploads are rejected with a 503 rather than allowed to queue up and overlap. It is a deliberately coarse mechanism, and it suits a design where only one heavy request should ever be in flight at a time.
+
+The defining characteristic of this architecture is that the bottleneck is server inference compute, and every frame crosses the network in full. The accompanying notes document roughly 100 ms of inference time per frame on CPU, which caps effective throughput at around 10 FPS. Bandwidth cost scales with frame size times frame rate, because the raw image travels every single time.
+
+## Part 2 — Edge inference
+
+The second design inverts the first: a "smart camera, dumb server" arrangement. Now the device runs the model itself and sends only the result.
+
+Here the device runs YOLOv3-tiny locally through OpenCV's DNN module, a much lighter model chosen precisely because it has to run on constrained edge hardware. Rather than relying on a high-level wrapper, the detection post-processing is done by hand: the frame is turned into a normalized blob, passed forward through the network, filtered by a confidence threshold and the person class, and then cleaned up with non-maximum suppression to remove overlapping boxes before the remaining detections are counted. The device also annotates frames live with bounding boxes and the running count, which makes it possible to watch the detection working directly on the device.
+
+<Figure src={detectionFrame} alt="A captured frame from the edge pipeline with a live overlay showing the people count and per-frame latency" caption="A live detection frame from the edge pipeline, with the people count and per-frame latency drawn directly on the image" />
+
+Crucially, the image never leaves the device. Once the count is computed locally, only a small JSON payload of the count and a timestamp is sent to the server. That changes what the server needs to be. Instead of a blocking inference host, it is a lightweight async ingest service built on FastAPI and Uvicorn, validating the incoming shape with Pydantic and guarding its shared state, the latest count and the latency records, with an async lock per resource. This is a more correct concurrency model than Part 1's single busy flag, and it is the right one here, because the workload has shifted from one slow heavy request to many small frequent updates that can safely interleave, including from multiple devices at once.
+
+The bottleneck has moved with the compute. It is now the edge device's CPU running the model, while the network load has become negligible: a few bytes of JSON in place of a full JPEG per sample.
+
+## Why the latency metrics differ
+
+A detail that captures the whole project is that the two parts measure latency differently, on purpose, because the bottleneck each one cares about is different.
+
+Part 1 needs to know how long the entire round trip takes, capture, upload, and heavy server inference together, so it measures from the capture timestamp to the moment the server produces a result. That number mixes in inference time and depends on the clocks being synced, so the cleaner figure to trust there is the server-side processing time on its own. Part 2 already has the count by the time it stamps its message, since inference finished on the device, so the only thing left to measure is how long the small payload takes to arrive. Its server therefore computes latency as pure transmission and queuing delay. Same word, "latency," two genuinely different quantities, each chosen to match where the cost actually lives in that design.
+
+## The comparison
+
+Laid side by side, the two designs trade the same axes against each other in opposite directions.
+
+<Figure src={comparisonTable} alt="A table comparing the two architectures across model, inference location, framework, concurrency control, network payload, latency metric, concurrency safety, and bottleneck" caption="The two architectures across every axis that matters" />
+
+A small standalone polling utility rounds out the project: a minimal client that requests the current count every 100 ms and prints it, working unchanged against either architecture since both expose the same count endpoint. It is a quick way to observe live results without building any interface.
+
+## Takeaways
+
+The point of building both halves was to feel the edge-versus-cloud inference tradeoff rather than just read about it. Moving the model from the server to the device is not a single decision; it pulls the bottleneck, the network cost, the right concurrency model, and even the meaning of a latency measurement along with it. Seeing that one choice ripple through every layer of the system, and matching each design's server framework and instrumentation to its actual constraints rather than reusing one pattern for both, was the real substance of the project, and the part most relevant to building ML systems that have to run somewhere real.

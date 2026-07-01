@@ -7,5 +7,20 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [mdx(), sitemap()]
+  integrations: [mdx(), sitemap()],
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'tr'],
+    routing: {
+      prefixDefaultLocale: true,
+    },
+  },
+  redirects: {
+    '/': '/en',
+  },
+  markdown: {
+    shikiConfig: {
+      theme: 'css-variables',
+    },
+  },
 });

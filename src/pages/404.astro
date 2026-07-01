@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { skins } from '../config/skins';
+import { DEFAULT_LOCALE } from '../lib/i18n';
+import { getUI } from '../i18n';
+
+const locale = DEFAULT_LOCALE;
+const t = getUI(locale);
+---
+
+<BaseLayout title="404 — AK" description="Page not found.">
+  {
+    skins.map(({ id, components: Skin }) => (
+      <Skin.Layout skinId={id} active={null} locale={locale}>
+        <Skin.NotFoundPage locale={locale} t={t} />
+      </Skin.Layout>
+    ))
+  }
+</BaseLayout>

@@ -1,0 +1,45 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { skins } from '../../../config/skins';
+import { LOCALES, getSlug, localize, localizeAll } from '../../../lib/i18n';
+import { getUI } from '../../../i18n';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  const slugs = [...new Set(projects.map((project) => getSlug(project.id)))];
+
+  return LOCALES.flatMap((locale) =>
+    slugs.map((slug) => ({
+      params: { locale, id: slug },
+      props: { project: localize(projects, slug, locale) },
+    })),
+  );
+}
+
+interface Props {
+  project: Awaited<ReturnType<typeof getCollection<'projects'>>>[number];
+}
+
+const { locale } = Astro.params;
+const t = getUI(locale);
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+
+const projectSlug = getSlug(project.id);
+const relatedPosts = localizeAll(await getCollection('posts'), locale)
+  .filter((post) => post.data.project?.id === project.id || post.data.tags.includes(projectSlug))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 5);
+---
+
+<BaseLayout title={`${data.title} — AK`} description={data.summary}>
+  {
+    skins.map(({ id, components: Skin }) => (
+      <Skin.Layout skinId={id} active="projects" locale={locale}>
+        <Skin.ProjectDetailPage locale={locale} t={t} project={project} Content={Content} relatedPosts={relatedPosts} />
+      </Skin.Layout>
+    ))
+  }
+</BaseLayout>

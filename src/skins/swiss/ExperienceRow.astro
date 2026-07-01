@@ -1,0 +1,132 @@
+---
+interface Props {
+  title: string;
+  org: string;
+  range: string;
+  summary?: string;
+  bullets?: string[];
+  eng: boolean;
+  nonEngLabel?: string;
+}
+
+const { title, org, range, summary, bullets, eng, nonEngLabel } = Astro.props;
+---
+
+<div class="exp-row" data-expand data-filter-item data-filter-tags={eng ? 'eng' : ''} data-eng={eng} tabindex="0">
+  <div class="exp-row__head">
+    <h3 class="exp-row__title">{title}</h3>
+    <span class="exp-row__range">{range}</span>
+  </div>
+  <div class="exp-row__org-row">
+    <div class="exp-row__org">{org}</div>
+    {!eng && nonEngLabel && <span class="exp-row__badge">{nonEngLabel}</span>}
+  </div>
+  {summary && <p class="exp-row__summary">{summary}</p>}
+  {
+    bullets && bullets.length > 0 && (
+      <div class="exp-row__details" data-expand-region>
+        <ul class="exp-row__bullets">
+          {bullets.map((bullet) => <li>{bullet}</li>)}
+        </ul>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .exp-row {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--swiss-border);
+    cursor: pointer;
+  }
+
+  .exp-row:focus-visible {
+    outline: 1.5px solid var(--swiss-accent);
+    outline-offset: 4px;
+  }
+
+  .exp-row__head {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: baseline;
+  }
+
+  .exp-row__title {
+    margin: 0;
+    font-size: 15.5px;
+    font-weight: 700;
+  }
+
+  .exp-row__range {
+    font-size: 11px;
+    color: var(--swiss-faint);
+    font-weight: 600;
+    white-space: nowrap;
+    font-family: var(--swiss-font-mono);
+  }
+
+  .exp-row__org-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin: 3px 0 8px;
+  }
+
+  .exp-row__org {
+    font-size: 13px;
+    color: var(--swiss-accent);
+    font-weight: 600;
+  }
+
+  .exp-row__badge {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--swiss-on-accent);
+    background: var(--swiss-accent);
+    border-radius: 2px;
+    padding: 2px 7px;
+    white-space: nowrap;
+  }
+
+  .exp-row__summary {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--swiss-muted);
+  }
+
+  .exp-row__details {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+  }
+
+  .exp-row:hover .exp-row__details,
+  .exp-row:focus-within .exp-row__details,
+  .exp-row[data-expanded='true'] .exp-row__details {
+    grid-template-rows: 1fr;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .exp-row__details {
+      transition: grid-template-rows 0.25s ease;
+    }
+  }
+
+  .exp-row__bullets {
+    min-height: 0;
+    overflow: hidden;
+    margin: 10px 0 0;
+    padding-left: 20px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--swiss-muted);
+  }
+
+  .exp-row__bullets li + li {
+    margin-top: 4px;
+  }
+</style>

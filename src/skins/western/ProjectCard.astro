@@ -1,0 +1,72 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { CollectionEntry } from 'astro:content';
+import { getSlug, type Locale } from '../../lib/i18n';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const { data } = project;
+const href = getRelativeLocaleUrl(locale, `projects/${getSlug(project.id)}`);
+---
+
+<a href={href} class="western-card project-card" data-filter-item data-filter-tags={data.tags.join(' ')}>
+  <div class="project-card__meta-block">
+    <div class="project-card__meta">{data.index} · {data.type}</div>
+    {data.duration && <div class="project-card__duration">{data.duration}</div>}
+  </div>
+  <h3 class="project-card__title">{data.title}</h3>
+  <p class="project-card__summary">{data.summary}</p>
+  <div class="project-card__stack">
+    {data.stack.map((tech) => <span class="western-chip">{tech}</span>)}
+  </div>
+</a>
+
+<style>
+  .project-card__meta-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .project-card__meta {
+    font-family: var(--western-font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--western-accent-2);
+  }
+
+  .project-card__duration {
+    font-family: var(--western-font-mono);
+    font-size: 11px;
+    color: var(--western-muted);
+  }
+
+  .project-card__title {
+    margin: 0;
+    font-family: var(--western-font-display);
+    font-weight: 400;
+    font-size: 21px;
+    letter-spacing: 0.4px;
+    line-height: 1.2;
+  }
+
+  .project-card__summary {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--western-muted);
+    flex: 1;
+  }
+
+  .project-card__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+</style>

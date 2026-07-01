@@ -1,0 +1,134 @@
+---
+interface Props {
+  title: string;
+  org: string;
+  range: string;
+  summary?: string;
+  bullets?: string[];
+  eng: boolean;
+  nonEngLabel?: string;
+}
+
+const { title, org, range, summary, bullets, eng, nonEngLabel } = Astro.props;
+---
+
+<div class="exp-row" data-expand data-filter-item data-filter-tags={eng ? 'eng' : ''} data-eng={eng} tabindex="0">
+  <span class="exp-row__dot"></span>
+  <div class="exp-row__range">{range}</div>
+  <h3 class="exp-row__title">{title}</h3>
+  <div class="exp-row__org-row">
+    <div class="exp-row__org">{org}</div>
+    {!eng && nonEngLabel && <span class="exp-row__badge">// {nonEngLabel.toLowerCase()}</span>}
+  </div>
+  {summary && <p class="exp-row__summary">{summary}</p>}
+  {
+    bullets && bullets.length > 0 && (
+      <div class="exp-row__details" data-expand-region>
+        <ul class="exp-row__bullets">
+          {bullets.map((bullet) => <li>{bullet}</li>)}
+        </ul>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .exp-row {
+    position: relative;
+    border-left: 2px solid var(--console-border-strong);
+    padding: 0 0 22px 18px;
+    cursor: pointer;
+  }
+
+  .exp-row:last-child {
+    padding-bottom: 0;
+  }
+
+  .exp-row:focus-visible {
+    outline: 1px solid var(--console-accent);
+    outline-offset: 4px;
+  }
+
+  .exp-row__dot {
+    position: absolute;
+    left: -5px;
+    top: 3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--console-accent);
+  }
+
+  .exp-row__range {
+    color: var(--console-accent-2);
+    font-size: 11px;
+  }
+
+  .exp-row__title {
+    margin: 3px 0;
+    color: var(--console-heading);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .exp-row__org-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .exp-row__org {
+    color: var(--console-accent);
+    font-size: 12px;
+  }
+
+  .exp-row__badge {
+    color: var(--console-on-accent-2);
+    background: var(--console-accent-2);
+    font-size: 11px;
+    font-style: italic;
+    border-radius: 4px;
+    padding: 1px 7px;
+    white-space: nowrap;
+  }
+
+  .exp-row__summary {
+    margin: 6px 0 0;
+    color: var(--console-muted);
+    font-size: 12px;
+    line-height: 1.65;
+  }
+
+  .exp-row__details {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+  }
+
+  .exp-row:hover .exp-row__details,
+  .exp-row:focus-within .exp-row__details,
+  .exp-row[data-expanded='true'] .exp-row__details {
+    grid-template-rows: 1fr;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .exp-row__details {
+      transition: grid-template-rows 0.25s ease;
+    }
+  }
+
+  .exp-row__bullets {
+    min-height: 0;
+    overflow: hidden;
+    margin: 8px 0 0;
+    padding-left: 18px;
+    color: var(--console-muted);
+    font-size: 12px;
+    line-height: 1.65;
+  }
+
+  .exp-row__bullets li + li {
+    margin-top: 4px;
+  }
+</style>

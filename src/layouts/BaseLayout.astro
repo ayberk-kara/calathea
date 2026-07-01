@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+import { DEFAULT_LOCALE } from '../lib/i18n';
+import { skins, DEFAULT_SKIN } from '../config/skins';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const locale = Astro.currentLocale ?? DEFAULT_LOCALE;
+const skinIds = skins.map((skin) => skin.id);
+---
+
+<!doctype html>
+<html lang={locale} data-skin={DEFAULT_SKIN} data-mode="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+
+    <script is:inline define:vars={{ defaultSkin: DEFAULT_SKIN, skinIds }}>
+      (function () {
+        try {
+          var storedSkin = localStorage.getItem('skin');
+          var storedMode = localStorage.getItem('mode');
+          var skin = storedSkin && skinIds.includes(storedSkin) ? storedSkin : defaultSkin;
+          var mode = storedMode || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-skin', skin);
+          document.documentElement.setAttribute('data-mode', mode);
+        } catch (e) {
+          /* localStorage / matchMedia unavailable */
+        }
+      })();
+    </script>
+
+    <script>
+      import '../behavior/expand';
+      import '../behavior/filter';
+      import '../behavior/contact-form';
+      import '../behavior/site-controls';
+      import '../behavior/lightbox';
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

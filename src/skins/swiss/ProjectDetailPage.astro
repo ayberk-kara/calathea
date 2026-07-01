@@ -1,0 +1,151 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { CollectionEntry } from 'astro:content';
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import type { Locale } from '../../lib/i18n';
+import type { UIStrings } from '../../i18n';
+import Prose from '../../components/Prose.astro';
+import PostCard from './PostCard.astro';
+
+interface Props {
+  locale: Locale;
+  t: UIStrings;
+  project: CollectionEntry<'projects'>;
+  Content: AstroComponentFactory;
+  relatedPosts: CollectionEntry<'posts'>[];
+}
+
+const { locale, t, project, Content, relatedPosts } = Astro.props;
+const { data } = project;
+---
+
+<article class="swiss-shell project">
+  <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__breadcrumb">{t.project.breadcrumb}</a>
+
+  <div class="swiss-eyebrow">{data.index} · {data.type}</div>
+  {data.duration && <div class="project__duration">{data.duration}</div>}
+  <h1 class="project__title">{data.title}</h1>
+  <p class="project__summary">{data.summary}</p>
+
+  <div class="project__stack">
+    {data.stack.map((tech) => <span class="swiss-chip">{tech}</span>)}
+  </div>
+
+  <div class="project__links">
+    {data.liveDemo && (
+      <a href={data.liveDemo} target="_blank" rel="noopener" class="swiss-button swiss-button--accent">{t.project.liveDemo}</a>
+    )}
+    {data.repo && (
+      <a href={data.repo} target="_blank" rel="noopener" class="swiss-button">{t.project.repo}</a>
+    )}
+  </div>
+
+  <div class="project__body">
+    <Prose>
+      <Content />
+    </Prose>
+  </div>
+
+  {
+    relatedPosts.length > 0 && (
+      <div class="project__related">
+        <h2 class="project__heading">{t.project.relatedNotes}</h2>
+        <div class="project__related-list">
+          {relatedPosts.map((post) => <PostCard post={post} locale={locale} />)}
+        </div>
+      </div>
+    )
+  }
+
+  <div class="project__footer">
+    <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__footer-link">{t.project.allProjects}</a>
+    <a href={getRelativeLocaleUrl(locale, 'blog')} class="project__footer-link">{t.project.devBlog}</a>
+  </div>
+</article>
+
+<style>
+  .project {
+    max-width: 800px;
+    padding-bottom: 56px;
+  }
+
+  .project__breadcrumb {
+    text-decoration: none;
+    font-family: var(--swiss-font-mono);
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--swiss-faint);
+  }
+
+  .project__duration {
+    font-family: var(--swiss-font-mono);
+    font-size: 12px;
+    color: var(--swiss-faint);
+    margin-top: 6px;
+  }
+
+  .project__title {
+    font-size: clamp(34px, 5vw, 64px);
+    line-height: 1.02;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 14px 0 18px;
+  }
+
+  .project__summary {
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--swiss-muted);
+    max-width: 640px;
+    margin: 0 0 22px;
+  }
+
+  .project__stack {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .project__links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .project__heading {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin: 48px 0 24px;
+    border-bottom: 1px solid var(--swiss-border);
+    padding-bottom: 12px;
+  }
+
+  .project__related-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project__footer {
+    margin-top: 56px;
+    padding-top: 22px;
+    border-top: 2px solid var(--swiss-border-strong);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .project__footer-link {
+    text-decoration: none;
+    font-family: var(--swiss-font-mono);
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--swiss-accent);
+    padding-bottom: 2px;
+  }
+
+</style>

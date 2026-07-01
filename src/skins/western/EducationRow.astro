@@ -1,0 +1,151 @@
+---
+interface Props {
+  degree: string;
+  org: string;
+  location?: string;
+  range: string;
+  summary?: string;
+  bullets?: string[];
+  coursework?: string[];
+  courseworkLabel?: string;
+  highlight: boolean;
+}
+
+const { degree, org, location, range, summary, bullets, coursework, courseworkLabel, highlight } = Astro.props;
+const hasDetails = Boolean((bullets && bullets.length > 0) || (coursework && coursework.length > 0));
+---
+
+<div class:list={['western-card', 'edu-row', { 'edu-row--highlight': highlight }]} data-expand tabindex="0">
+  <div class="edu-row__head">
+    <h3 class="edu-row__title">{degree}</h3>
+    <span class="edu-row__range">{range}</span>
+  </div>
+  <div class="edu-row__org">{org}{location && ` · ${location}`}</div>
+  {summary && <p class="edu-row__summary">{summary}</p>}
+  {
+    hasDetails && (
+      <div class="edu-row__details" data-expand-region>
+        <div class="edu-row__details-inner">
+          {bullets && bullets.length > 0 && (
+            <ul class="edu-row__bullets">
+              {bullets.map((bullet) => <li>{bullet}</li>)}
+            </ul>
+          )}
+          {coursework && coursework.length > 0 && (
+            <div class="edu-row__coursework">
+              {courseworkLabel && <div class="edu-row__coursework-label">{courseworkLabel}</div>}
+              <ul class="edu-row__bullets">
+                {coursework.map((course) => <li>{course}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .edu-row {
+    cursor: pointer;
+  }
+
+  .edu-row:focus-visible {
+    outline: 2px solid var(--western-accent-2);
+    outline-offset: 4px;
+  }
+
+  .edu-row__head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .edu-row__title {
+    margin: 0;
+    font-family: var(--western-font-display);
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.3px;
+  }
+
+  .edu-row__range {
+    font-family: var(--western-font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--western-muted);
+    white-space: nowrap;
+  }
+
+  .edu-row__org {
+    font-size: 13px;
+    color: var(--western-muted);
+  }
+
+  .edu-row__summary {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--western-muted);
+  }
+
+  .edu-row__details {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+  }
+
+  .edu-row:hover .edu-row__details,
+  .edu-row:focus-within .edu-row__details,
+  .edu-row[data-expanded='true'] .edu-row__details {
+    grid-template-rows: 1fr;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .edu-row__details {
+      transition: grid-template-rows 0.25s ease;
+    }
+  }
+
+  .edu-row__details-inner {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .edu-row__bullets {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--western-muted);
+  }
+
+  .edu-row__coursework-label {
+    font-family: var(--western-font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--western-muted);
+    margin-bottom: 6px;
+  }
+
+  .edu-row--highlight {
+    background: var(--western-accent);
+    border-color: var(--western-accent-shade);
+    color: var(--western-on-accent);
+  }
+
+  .edu-row--highlight .edu-row__org,
+  .edu-row--highlight .edu-row__summary,
+  .edu-row--highlight .edu-row__range,
+  .edu-row--highlight .edu-row__bullets,
+  .edu-row--highlight .edu-row__coursework-label {
+    color: var(--western-on-accent);
+  }
+</style>

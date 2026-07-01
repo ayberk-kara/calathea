@@ -1,0 +1,124 @@
+---
+---
+
+<div class="prose">
+  <slot />
+</div>
+
+<style>
+  .prose {
+    max-width: 720px;
+  }
+
+  .prose :global(p) {
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--prose-text);
+    opacity: 0.94;
+    margin: 0 0 20px;
+  }
+
+  .prose :global(h2) {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 36px 0 14px;
+    color: var(--prose-heading);
+    letter-spacing: -0.2px;
+  }
+
+  .prose :global(h3) {
+    font-size: 19px;
+    font-weight: 800;
+    margin: 28px 0 10px;
+    color: var(--prose-heading);
+  }
+
+  .prose :global(strong) {
+    font-weight: 800;
+    color: var(--prose-heading);
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--prose-text);
+    opacity: 0.94;
+    padding-left: 24px;
+    margin: 0 0 20px;
+  }
+
+  .prose :global(code) {
+    font-family: var(--prose-font-mono);
+    font-size: 0.86em;
+    background: color-mix(in srgb, var(--prose-accent) 16%, var(--prose-surface));
+    border: 1.5px solid var(--prose-border);
+    border-radius: 6px;
+    padding: 2px 6px;
+  }
+
+  .prose :global(pre) {
+    font-family: var(--prose-font-mono);
+    font-size: 13.5px;
+    line-height: 1.7;
+    border: 2.5px solid var(--prose-border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    overflow: auto;
+    margin: 0 0 22px;
+  }
+
+  .prose :global(pre code) {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 1em;
+  }
+
+  .prose :global(a) {
+    color: var(--prose-link);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 2px solid var(--prose-link);
+  }
+
+  .prose :global(.figure),
+  .prose :global(.diagram) {
+    margin: 28px 0;
+  }
+
+  .prose :global(.figure img) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border: 1.5px solid var(--prose-border);
+    border-radius: 8px;
+    cursor: zoom-in;
+  }
+
+  .prose :global(.diagram__frame) {
+    background: var(--prose-surface);
+    border: 1.5px solid var(--prose-border);
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+  }
+
+  .prose :global(.diagram__frame img) {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    cursor: zoom-in;
+  }
+
+  .prose :global(.figure figcaption),
+  .prose :global(.diagram figcaption) {
+    margin-top: 8px;
+    font-family: var(--prose-font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--prose-heading);
+    text-align: center;
+  }
+</style>

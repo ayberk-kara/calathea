@@ -1,0 +1,69 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { CollectionEntry } from 'astro:content';
+import { getSlug, type Locale } from '../../lib/i18n';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const { data } = project;
+const href = getRelativeLocaleUrl(locale, `projects/${getSlug(project.id)}`);
+---
+
+<a href={href} class="console-card project-card" data-filter-item data-filter-tags={data.tags.join(' ')}>
+  <div class="project-card__head">
+    <span class="project-card__index">{data.index}</span>
+    <h3 class="project-card__title">{data.title}</h3>
+    <span class="console-chip">{data.type}</span>
+  </div>
+  {data.duration && <div class="project-card__duration">{data.duration}</div>}
+  <p class="project-card__summary">{data.summary}</p>
+  <div class="project-card__stack">
+    {data.stack.map((tech) => <span class="console-hashtag">#{tech}</span>)}
+  </div>
+</a>
+
+<style>
+  .project-card__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .project-card__index {
+    color: var(--console-accent-2);
+    font-size: 12px;
+  }
+
+  .project-card__duration {
+    color: var(--console-faint);
+    font-size: 11.5px;
+  }
+
+  .project-card__title {
+    margin: 0;
+    color: var(--console-heading);
+    font-size: 16px;
+    font-weight: 700;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .project-card__summary {
+    margin: 0;
+    color: var(--console-muted);
+    font-size: 12.5px;
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .project-card__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+</style>

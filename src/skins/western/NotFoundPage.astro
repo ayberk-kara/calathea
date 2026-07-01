@@ -1,0 +1,42 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Locale } from '../../lib/i18n';
+import type { UIStrings } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  t: UIStrings;
+}
+
+const { locale, t } = Astro.props;
+---
+
+<section class="western-shell not-found">
+  <div class="western-eyebrow">{t.notFound.eyebrow}</div>
+  <h1 class="not-found__title">{t.notFound.title}</h1>
+  <p class="not-found__message">{t.notFound.message}</p>
+  <a href={getRelativeLocaleUrl(locale)} class="western-button western-button--filled">{t.notFound.cta}</a>
+</section>
+
+<style>
+  .not-found {
+    padding-bottom: 56px;
+  }
+
+  .not-found__title {
+    font-family: var(--western-font-display);
+    font-weight: 400;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1.05;
+    letter-spacing: 0.5px;
+    margin: 0 0 16px;
+  }
+
+  .not-found__message {
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--western-muted);
+    margin: 0 0 24px;
+    max-width: 480px;
+  }
+</style>

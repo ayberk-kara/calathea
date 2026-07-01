@@ -1,0 +1,40 @@
+---
+title: "Where Should the Model Run? Notes on Edge vs. Cloud Inference"
+date: 2025-05-17
+tags: ["edge-computing", "machine-learning", "systems-design", "deep-dive"]
+excerpt: "Building the same people-counting system two ways, and what it taught me about where inference belongs."
+project: "iot-people-counting"
+lang: "en"
+---
+
+Every system that turns sensor data into a decision has to answer one question early: where does the model actually run? You can send the raw data somewhere powerful and let a server do the thinking, or you can push the model down onto the device producing the data and send only the conclusion. It sounds like an implementation detail. It isn't. That single choice quietly decides your network cost, your bottleneck, your failure modes, and even what a word like "latency" means.
+
+I ran into this concretely while building a [people-counting system](/projects/iot-people-counting) two ways for an Internet of Things course, once with a server doing the heavy detection and once with the device doing it. The project was small, homework-scale hardware and short runs, so it doesn't prove anything about systems at real scale. But building both halves made the shape of the tradeoff tangible in a way that reading about it never quite does, and the shape generalizes even when the numbers don't.
+
+## The two pulls
+
+The case for cloud inference is simplicity at the edge. Devices stay cheap and dumb; they capture and transmit, nothing more. The model lives in one place you control, where you can give it a real GPU, update it without touching a single device, and run something large and accurate. The cost is that the raw data, every frame, every sample, has to travel. Bandwidth scales with how much you capture, and the round trip to the server and back sits in the critical path of every result.
+
+The case for edge inference is the mirror image. The data never leaves the device, so you send a tiny conclusion instead of a heavy stream, network load nearly vanishes, and there's no dependence on a server being reachable at the moment a decision is needed. Keeping the data local is also a real privacy posture, not a marketing one, an image that is never transmitted cannot be intercepted or stored elsewhere. The cost is that the device now has to be capable enough to run the model, which usually means a smaller, lighter model and the hardware to support it, multiplied across every device you deploy.
+
+So the axes trade against each other directly: device complexity against network cost, model power against deployment footprint, central control against local autonomy.
+
+## What surprised me
+
+The thing I didn't expect was how far the consequences reached. Moving the model wasn't one decision, it dragged everything else with it. The server in the cloud-inference version had to handle one heavy request at a time and was right to guard itself crudely against overlap. The server in the edge version was fielding many small, frequent messages and needed a genuinely concurrent design to do it well. Same nominal job, "receive data, expose a count," but two different correct architectures, because the traffic shape was different.
+
+Even the instrumentation diverged. In the cloud version, the number worth measuring was the whole round trip including inference, because that's where the time went. In the edge version, inference was already done before anything was sent, so the only thing left to measure was transmission delay. Both were called "latency." They measured different things. The bottleneck you care about quietly redefines your metrics.
+
+## Where I'd lean
+
+If I had to state a default, I'd lean toward pushing inference to the edge for anything that runs continuously, reacts in real time, or touches sensitive data, and reserve server-side inference for when the model is genuinely too large to run on-device or needs to be updated constantly. The reason isn't that edge is universally better; it's that "stream all your raw data to a server forever" tends to age badly, on bandwidth, on cost, and on privacy, in exactly the systems that succeed and have to scale up. Starting from "what can the device decide for itself?" usually leads somewhere more durable.
+
+That's a lean, not a rule. Plenty of real systems are hybrid, a light model on the device to filter, a heavy one in the cloud for the hard cases, and the boundary moves as hardware gets cheaper and models get smaller. But having built the same thing both ways, even at toy scale, I trust the question more than any fixed answer: not "edge or cloud," but where, for *this* workload, the compute most belongs.
+
+## Where this is heading
+
+If I had to make a prediction, it's that the balance keeps tilting toward the edge, and not as a stylistic preference but as a requirement. The clearest case is an autonomous car. A vehicle deciding whether to brake cannot afford a round trip to a data center, and it cannot afford to stop working because a connection dropped. The decision has to happen on board, in milliseconds, whether or not the network is there. Anything that controls something physical in real time inherits that same constraint, drones, industrial robots, medical devices, and for those systems the cloud simply cannot sit in the critical path.
+
+The same pressure is building from the other direction, on ordinary consumer devices. The hardware in phones, cameras, and home devices keeps getting more capable, with dedicated neural accelerators now shipping in mainstream consumer chips, and models keep getting smaller and more efficient. Work that genuinely required a server a few years ago increasingly fits in your pocket. As that capability becomes ordinary, sending raw data away to be processed starts to look like the wasteful option rather than the obvious one, slower, more expensive, and worse for privacy than just doing the work where the data already is.
+
+Put those together, the things that can't tolerate the cloud and the things that no longer need it, and the trajectory feels less like a trend and more like an inevitability. The cloud will keep doing what only the cloud can: training the large models, handling the genuinely heavy cases, holding the central view. But the moment of inference, the actual decision, increasingly belongs close to where the data is born. The interesting question for the next decade isn't whether computation moves to the edge. It's how much of it does, and how quickly the rest follows.

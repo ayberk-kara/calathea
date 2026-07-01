@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { skins } from '../../config/skins';
+import { LOCALES, localizeAll } from '../../lib/i18n';
+import { getUI } from '../../i18n';
+import { experience, education, skills } from '../../data/profile';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+const t = getUI(locale);
+
+const projects = localizeAll(await getCollection('projects'), locale).sort((a, b) =>
+  a.data.index.localeCompare(b.data.index),
+);
+const featuredProjects = projects;
+
+const recentPosts = localizeAll(await getCollection('posts'), locale)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 5);
+---
+
+<BaseLayout title="AK — ML & Systems Engineer" description="Portfolio and dev blog of AK.">
+  {
+    skins.map(({ id, components: Skin }) => (
+      <Skin.Layout skinId={id} active="home" locale={locale}>
+        <Skin.HomePage
+          locale={locale}
+          t={t}
+          featuredProjects={featuredProjects}
+          recentPosts={recentPosts}
+          experience={experience}
+          education={education}
+          skills={skills}
+        />
+      </Skin.Layout>
+    ))
+  }
+</BaseLayout>

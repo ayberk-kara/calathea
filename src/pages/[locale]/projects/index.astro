@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { skins } from '../../../config/skins';
+import { LOCALES, localizeAll } from '../../../lib/i18n';
+import { getUI } from '../../../i18n';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+const t = getUI(locale);
+
+const projects = localizeAll(await getCollection('projects'), locale).sort((a, b) =>
+  a.data.index.localeCompare(b.data.index),
+);
+---
+
+<BaseLayout
+  title="Projects — AK"
+  description="Inference systems, GPU kernels, search infrastructure, and the small tools that make them usable."
+>
+  {
+    skins.map(({ id, components: Skin }) => (
+      <Skin.Layout skinId={id} active="projects" locale={locale}>
+        <Skin.ProjectsIndexPage locale={locale} t={t} projects={projects} />
+      </Skin.Layout>
+    ))
+  }
+</BaseLayout>

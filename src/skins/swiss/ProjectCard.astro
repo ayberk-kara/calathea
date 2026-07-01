@@ -1,0 +1,81 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { CollectionEntry } from 'astro:content';
+import { getSlug, type Locale } from '../../lib/i18n';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const { data } = project;
+const href = getRelativeLocaleUrl(locale, `projects/${getSlug(project.id)}`);
+---
+
+<a href={href} class="project-card" data-filter-item data-filter-tags={data.tags.join(' ')}>
+  <div class="project-card__meta-block">
+    <div class="project-card__meta">{data.index} · {data.type}</div>
+    {data.duration && <div class="project-card__duration">{data.duration}</div>}
+  </div>
+  <h3 class="project-card__title">{data.title}</h3>
+  <p class="project-card__summary">{data.summary}</p>
+  <div class="project-card__stack">
+    {data.stack.map((tech) => <span class="swiss-chip">{tech}</span>)}
+  </div>
+</a>
+
+<style>
+  .project-card {
+    background: var(--swiss-bg);
+    padding: 26px 22px 24px;
+    border-right: 1px solid var(--swiss-border);
+    border-bottom: 1px solid var(--swiss-border);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--swiss-text);
+  }
+
+  .project-card__meta-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .project-card__meta {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--swiss-accent);
+    font-weight: 700;
+  }
+
+  .project-card__duration {
+    font-family: var(--swiss-font-mono);
+    font-size: 11px;
+    color: var(--swiss-faint);
+  }
+
+  .project-card__title {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.18;
+  }
+
+  .project-card__summary {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--swiss-muted);
+    flex: 1;
+  }
+
+  .project-card__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+</style>

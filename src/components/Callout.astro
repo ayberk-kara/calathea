@@ -1,0 +1,34 @@
+---
+interface Props {
+  label?: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="callout">
+  {label && <strong>{label}</strong>}
+  <slot />
+</div>
+
+<style>
+  .callout {
+    border-left: 4px solid var(--prose-accent);
+    background: color-mix(in srgb, var(--prose-accent) 12%, var(--prose-surface));
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin: 18px 0;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--prose-text);
+  }
+
+  .callout :global(p) {
+    margin: 0;
+  }
+
+  .callout strong {
+    font-weight: 800;
+    color: var(--prose-heading);
+  }
+</style>

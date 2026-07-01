@@ -1,0 +1,246 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../lib/i18n';
+import type { UIStrings } from '../../i18n';
+import type { ExperienceEntry, EducationEntry } from '../../data/profile';
+import ProjectCard from './ProjectCard.astro';
+import PostCard from './PostCard.astro';
+import ExperienceRow from './ExperienceRow.astro';
+import EducationRow from './EducationRow.astro';
+
+interface Props {
+  locale: Locale;
+  t: UIStrings;
+  featuredProjects: CollectionEntry<'projects'>[];
+  recentPosts: CollectionEntry<'posts'>[];
+  experience: ExperienceEntry[];
+  education: EducationEntry[];
+  skills: { languages: string[]; ml: string[]; infra: string[] };
+}
+
+const { locale, t, featuredProjects, recentPosts, experience, education, skills } = Astro.props;
+
+const skillGroups = [
+  { label: t.home.skillsLanguages, items: skills.languages },
+  { label: t.home.skillsMl, items: skills.ml },
+  { label: t.home.skillsInfra, items: skills.infra },
+];
+---
+
+<section class="console-shell hero">
+  <div class="console-prompt console-prompt--lg">
+    <span class="console-prompt__path">ayberk@dev</span><span class="console-prompt__sep">:~$</span>
+    <span class="console-prompt__cmd">whoami</span>
+  </div>
+  <h1 class="hero__name">{t.home.heroGreeting} {t.home.heroName}</h1>
+  <div class="hero__tagline">// {t.home.heroEyebrow}</div>
+  <p class="hero__intro">{t.home.heroLead}</p>
+  <div class="hero__actions">
+    <a href={getRelativeLocaleUrl(locale, 'projects')} class="console-button console-button--filled">$ {t.home.viewProjects}</a>
+    <a href="/cv.pdf" class="console-button console-button--outline">$ {t.home.downloadCv}</a>
+    <a href="https://github.com/ayberk-kara" target="_blank" rel="noopener noreferrer" class="console-bracket-link">github</a>
+    <a href="https://www.linkedin.com/in/ayberk-kara" target="_blank" rel="noopener noreferrer" class="console-bracket-link">linkedin</a>
+  </div>
+</section>
+
+<section class="console-shell console-section">
+  <div class="console-section__head">
+    <div class="console-prompt">
+      <span class="console-prompt__path">~/projects</span><span class="console-prompt__sep">$</span>
+      <span class="console-prompt__cmd">ls -la</span>
+      <span class="console-prompt__note">— {featuredProjects.length} repos</span>
+    </div>
+    <a href={getRelativeLocaleUrl(locale, 'projects')} class="console-section__link">{t.home.projectsViewAll} →</a>
+  </div>
+  <div class="console-row-list">
+    {featuredProjects.map((project) => <ProjectCard project={project} locale={locale} />)}
+  </div>
+</section>
+
+<section class="console-shell console-section">
+  <div class="console-prompt">
+    <span class="console-prompt__path">~/skills</span><span class="console-prompt__sep">$</span>
+    <span class="console-prompt__cmd">cat stack.json</span>
+  </div>
+  <div class="console-grid-3">
+    {
+      skillGroups.map((group) => (
+        <div class="console-card skills__group">
+          <div class="skills__label">"{group.label}": [</div>
+          <div class="skills__items">
+            {group.items.map((item) => <span class="console-tag">{item}</span>)}
+          </div>
+          <div class="skills__close">]</div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<section class="console-shell console-section">
+  <div class="console-grid-2">
+    <div class="console-section__head">
+      <div class="console-prompt">
+        <span class="console-prompt__path">~/experience</span><span class="console-prompt__sep">$</span>
+        <span class="console-prompt__cmd">git log</span>
+      </div>
+      <div class="console-filter" data-filter-group data-filter-target="experience-list-console" aria-label={t.home.experienceFilterAriaLabel}>
+        <button type="button" data-filter-value="all" aria-pressed="false">{t.home.experienceFilterAll}</button>
+        <button type="button" data-filter-value="eng" aria-pressed="true">{t.home.experienceFilterEng}</button>
+      </div>
+    </div>
+    <div class="console-section__head">
+      <div class="console-prompt">
+        <span class="console-prompt__path">~/education</span><span class="console-prompt__sep">$</span>
+        <span class="console-prompt__cmd">cat edu</span>
+      </div>
+    </div>
+  </div>
+  <div class="console-grid-2">
+    <div id="experience-list-console" data-filter-list class="console-row-list">
+      {experience.map((entry) => <ExperienceRow {...entry} nonEngLabel={t.home.experienceNonEngLabel} />)}
+    </div>
+    <div class="console-row-list">
+      {education.map((entry) => <EducationRow {...entry} courseworkLabel={t.home.educationCoursework} />)}
+    </div>
+  </div>
+</section>
+
+<section class="console-shell console-section">
+  <div class="console-grid-2">
+    <div>
+      <div class="console-section__head">
+        <div class="console-prompt">
+          <span class="console-prompt__path">~/blog</span><span class="console-prompt__sep">$</span>
+          <span class="console-prompt__cmd">tail -n {recentPosts.length}</span>
+        </div>
+        <a href={getRelativeLocaleUrl(locale, 'blog')} class="console-section__link">{t.home.blogAllPosts} →</a>
+      </div>
+      <div class="console-feed">
+        {recentPosts.map((post) => <PostCard post={post} locale={locale} />)}
+      </div>
+    </div>
+    <div id="contact">
+      <div class="console-prompt">
+        <span class="console-prompt__path">~/contact</span><span class="console-prompt__sep">$</span>
+        <span class="console-prompt__cmd">./say-hi.sh</span>
+      </div>
+      <form
+        class="console-card contact-form"
+        data-contact-form
+        data-sending-text={t.home.contactSending}
+        data-success-text={t.home.contactSuccess}
+        data-error-text={t.home.contactError}
+      >
+        <input type="text" name="botcheck" class="sr-only" tabindex="-1" autocomplete="off" />
+        <label class="sr-only" for="contact-name">{t.home.contactNameLabel}</label>
+        <input id="contact-name" type="text" name="name" placeholder={`> ${t.home.contactName}`} required />
+        <label class="sr-only" for="contact-email">{t.home.contactEmailLabel}</label>
+        <input id="contact-email" type="email" name="email" placeholder={`> ${t.home.contactEmail}`} required />
+        <label class="sr-only" for="contact-subject">{t.home.contactSubjectLabel}</label>
+        <input id="contact-subject" type="text" name="subject" placeholder={`> ${t.home.contactSubject}`} />
+        <label class="sr-only" for="contact-message">{t.home.contactMessageLabel}</label>
+        <textarea id="contact-message" name="message" rows="4" placeholder={`> ${t.home.contactMessage}`} required></textarea>
+        <div class="contact-form__footer">
+          <p class="contact-form__status" data-contact-status></p>
+          <button type="submit" class="console-button console-button--filled">$ {t.home.contactSend}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: 8px;
+  }
+
+  .hero__name {
+    margin: 14px 0 6px;
+    font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--console-heading);
+  }
+
+  .hero__tagline {
+    color: var(--console-accent-2);
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+
+  .hero__intro {
+    max-width: 640px;
+    color: var(--console-muted);
+    font-size: 13.5px;
+    line-height: 1.75;
+    margin: 0 0 22px;
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .skills__label {
+    color: var(--console-accent-2);
+    font-size: 12px;
+    text-transform: lowercase;
+  }
+
+  .skills__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding-left: 8px;
+  }
+
+  .skills__close {
+    color: var(--console-dim);
+    font-size: 12px;
+  }
+
+  .contact-form {
+    gap: 10px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    border: 1px solid var(--console-border);
+    border-radius: 5px;
+    background: var(--console-bg);
+    color: var(--console-text);
+    padding: 10px 12px;
+    font-size: 12.5px;
+    font-family: inherit;
+    outline: none;
+    resize: none;
+    box-sizing: border-box;
+  }
+
+  .contact-form__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .contact-form__status {
+    margin: 0;
+    font-size: 11px;
+    color: var(--console-faint);
+  }
+
+  .contact-form__status[data-state='success'] {
+    color: var(--console-accent);
+  }
+
+  .contact-form__status[data-state='error'] {
+    color: var(--console-accent-3);
+  }
+</style>

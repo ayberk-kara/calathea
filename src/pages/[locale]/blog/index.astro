@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { skins } from '../../../config/skins';
+import { LOCALES, getSlug, localize, localizeAll } from '../../../lib/i18n';
+import { getUI } from '../../../i18n';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+const t = getUI(locale);
+
+const posts = localizeAll(await getCollection('posts'), locale).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const projects = await getCollection('projects');
+const projectTitles = new Map<string, string>();
+for (const post of posts) {
+  if (post.data.project) {
+    const project = localize(projects, getSlug(post.data.project.id), locale);
+    if (project) projectTitles.set(post.id, project.data.title);
+  }
+}
+---
+
+<BaseLayout
+  title="Blog — AK"
+  description="Notes from the kernel mines — deep dives, dev notes, and release logs, cross-linked to the projects they came out of."
+>
+  {
+    skins.map(({ id, components: Skin }) => (
+      <Skin.Layout skinId={id} active="blog" locale={locale}>
+        <Skin.BlogIndexPage locale={locale} t={t} posts={posts} projectTitles={projectTitles} />
+      </Skin.Layout>
+    ))
+  }
+</BaseLayout>

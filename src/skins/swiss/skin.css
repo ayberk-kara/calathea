@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+[data-skin='swiss'][data-mode='light'] {
+  --swiss-bg: #ffffff;
+  --swiss-text: #121212;
+  --swiss-muted: #666666;
+  --swiss-faint: #999999;
+  --swiss-border: #e2e2e2;
+  --swiss-border-strong: #121212;
+  --swiss-accent: #e5341b;
+  --swiss-surface: #f1f1f1;
+  --swiss-on-accent: #ffffff;
+
+  --prose-text: var(--swiss-text);
+  --prose-heading: var(--swiss-text);
+  --prose-link: var(--swiss-accent);
+  --prose-accent: var(--swiss-accent);
+  --prose-surface: var(--swiss-surface);
+  --prose-border: var(--swiss-border);
+  --prose-font-mono: var(--swiss-font-mono);
+  --prose-code-bg: #f6f6f6;
+  --prose-code-fg: #121212;
+  --prose-code-comment: #999999;
+  --prose-code-keyword: #e5341b;
+  --prose-code-type: #3c6e47;
+  --prose-code-number: #b35900;
+  --prose-code-function: #1d4ed8;
+}
+
+[data-skin='swiss'][data-mode='dark'] {
+  --swiss-bg: #161616;
+  --swiss-text: #f1f1f1;
+  --swiss-muted: #aaaaaa;
+  --swiss-faint: #888888;
+  --swiss-border: #3c3c3c;
+  --swiss-border-strong: #f1f1f1;
+  --swiss-accent: #ff5a3c;
+  --swiss-surface: #222222;
+  --swiss-on-accent: #161616;
+
+  --prose-text: var(--swiss-text);
+  --prose-heading: var(--swiss-text);
+  --prose-link: var(--swiss-accent);
+  --prose-accent: var(--swiss-accent);
+  --prose-surface: var(--swiss-surface);
+  --prose-border: var(--swiss-border);
+  --prose-font-mono: var(--swiss-font-mono);
+  --prose-code-bg: #1e1e1e;
+  --prose-code-fg: #f1f1f1;
+  --prose-code-comment: #888888;
+  --prose-code-keyword: #ff5a3c;
+  --prose-code-type: #7fd99a;
+  --prose-code-number: #f0a868;
+  --prose-code-function: #7aa2f7;
+}
+
+[data-skin='swiss'] {
+  --swiss-font-display: 'Archivo', sans-serif;
+  --swiss-font-body: 'Archivo', sans-serif;
+  --swiss-font-mono: 'JetBrains Mono', monospace;
+  --swiss-max-width: 1080px;
+  --swiss-gutter: 44px;
+
+  --astro-code-foreground: var(--prose-code-fg);
+  --astro-code-background: var(--prose-code-bg);
+  --astro-code-token-constant: var(--prose-code-number);
+  --astro-code-token-string: var(--prose-code-type);
+  --astro-code-token-comment: var(--prose-code-comment);
+  --astro-code-token-keyword: var(--prose-code-keyword);
+  --astro-code-token-parameter: var(--prose-code-fg);
+  --astro-code-token-function: var(--prose-code-function);
+  --astro-code-token-string-expression: var(--prose-code-type);
+  --astro-code-token-punctuation: var(--prose-code-fg);
+  --astro-code-token-link: var(--prose-link);
+}
+
+html:not([data-skin='swiss']) [data-skin-root='swiss'] {
+  display: none;
+}
+
+[data-skin-root='swiss'] {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--swiss-bg);
+  color: var(--swiss-text);
+  font-family: var(--swiss-font-body);
+}
+
+[data-skin-root='swiss'] a {
+  color: inherit;
+}
+
+[data-skin-root='swiss'] .swiss-shell {
+  max-width: var(--swiss-max-width);
+  margin: 0 auto;
+  padding: 0 var(--swiss-gutter);
+  width: 100%;
+}
+
+[data-skin-root='swiss'] .swiss-section {
+  margin-top: 80px;
+}
+
+[data-skin-root='swiss'] .swiss-section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--swiss-border);
+  padding-bottom: 12px;
+  margin-bottom: 34px;
+}
+
+[data-skin-root='swiss'] .swiss-section__heading {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+[data-skin-root='swiss'] .swiss-section__link {
+  font-size: 12px;
+  color: var(--swiss-faint);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+[data-skin-root='swiss'] .swiss-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--swiss-border);
+  border-left: 1px solid var(--swiss-border);
+}
+
+[data-skin-root='swiss'] .swiss-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+[data-skin-root='swiss'] .swiss-grid-2 {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 54px;
+}
+
+[data-skin-root='swiss'] .swiss-tag {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--swiss-text);
+  background: var(--swiss-surface);
+  padding: 5px 11px;
+  display: inline-block;
+}
+
+[data-skin-root='swiss'] .swiss-chip {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--swiss-muted);
+  border: 1px solid var(--swiss-border);
+  padding: 3px 8px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+[data-skin-root='swiss'] .swiss-button {
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 12px 18px;
+  display: inline-block;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1.5px solid var(--swiss-border-strong);
+}
+
+[data-skin-root='swiss'] .swiss-button--filled {
+  background: var(--swiss-border-strong);
+  color: var(--swiss-bg);
+}
+
+[data-skin-root='swiss'] .swiss-button--accent {
+  background: var(--swiss-accent);
+  color: var(--swiss-on-accent);
+  border-color: var(--swiss-accent);
+}
+
+[data-skin-root='swiss'] .swiss-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--swiss-accent);
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+[data-skin-root='swiss'] .swiss-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+[data-skin-root='swiss'] .swiss-filter button {
+  font-family: var(--swiss-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--swiss-text);
+  background: none;
+  border: 1px solid var(--swiss-border);
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+[data-skin-root='swiss'] .swiss-filter button[aria-pressed='true'] {
+  background: var(--swiss-text);
+  color: var(--swiss-bg);
+  border-color: var(--swiss-text);
+}
+
+[data-skin-root='swiss'] .swiss-filter__status {
+  font-family: var(--swiss-font-mono);
+  font-size: 11px;
+  color: var(--swiss-faint);
+  margin-left: auto;
+}
+
+@media (max-width: 880px) {
+  [data-skin-root='swiss'] .swiss-grid-3,
+  [data-skin-root='swiss'] .swiss-skills-grid,
+  [data-skin-root='swiss'] .swiss-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+[data-skin-root='swiss'] .swiss-icon--sun,
+[data-skin-root='swiss'] .swiss-icon--moon {
+  display: none;
+}
+
+[data-skin='swiss'][data-mode='light'] [data-skin-root='swiss'] .swiss-icon--moon,
+[data-skin='swiss'][data-mode='dark'] [data-skin-root='swiss'] .swiss-icon--sun {
+  display: block;
+}
