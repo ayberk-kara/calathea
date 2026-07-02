@@ -22,7 +22,6 @@ export const tr: UIStrings = {
     showing: (visible, total, noun) => `${visible} / ${total} ${noun} GÖSTERİLİYOR`,
   },
   home: {
-    heroEyebrow: 'SİSTEM TASARIMCISI, SADECE MODEL DEĞİL',
     heroGreeting: 'Merhaba, ben',
     heroName: 'Ayberk',
     heroLead:

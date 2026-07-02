@@ -20,7 +20,6 @@ export interface UIStrings {
     showing: (visible: number | string, total: number | string, noun: string) => string;
   };
   home: {
-    heroEyebrow: string;
     heroGreeting: string;
     heroName: string;
     heroLead: string;
@@ -113,7 +112,6 @@ export const en: UIStrings = {
     showing: (visible, total, noun) => `SHOWING ${visible} / ${total} ${noun}`,
   },
   home: {
-    heroEyebrow: 'DESIGNER OF SYSTEMS, NOT JUST MODELS',
     heroGreeting: "Hey, I'm",
     heroName: 'Ayberk',
     heroLead:
