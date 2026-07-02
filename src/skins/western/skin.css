@@ -70,8 +70,8 @@
   --western-font-display: 'Rye', serif;
   --western-font-body: 'Hanken Grotesk', system-ui, sans-serif;
   --western-font-mono: 'Space Mono', monospace;
-  --western-max-width: 1180px;
-  --western-gutter: 36px;
+  --western-max-width: 1440px;
+  --western-gutter: 56px;
 
   --astro-code-foreground: var(--prose-code-fg);
   --astro-code-background: var(--prose-code-bg);
@@ -111,7 +111,7 @@ html:not([data-skin='western']) [data-skin-root='western'] {
 }
 
 [data-skin-root='western'] .western-section {
-  margin-top: 64px;
+  margin-top: 96px;
 }
 
 [data-skin-root='western'] .western-section__head {
@@ -162,6 +162,12 @@ html:not([data-skin='western']) [data-skin-root='western'] {
 [data-skin-root='western'] .western-grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+[data-skin-root='western'] .western-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
 
@@ -305,8 +311,15 @@ html:not([data-skin='western']) [data-skin-root='western'] {
   margin-left: auto;
 }
 
+@media (max-width: 1300px) {
+  [data-skin-root='western'] .western-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 880px) {
   [data-skin-root='western'] .western-grid-3,
+  [data-skin-root='western'] .western-grid-4,
   [data-skin-root='western'] .western-grid-2 {
     grid-template-columns: 1fr;
   }
