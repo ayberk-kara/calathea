@@ -77,7 +77,7 @@ export const experience: ExperienceEntry[] = [
   },
   {
     title: 'Research Assistant',
-    org: 'PURE: Program for Undergraduate Research (Istanbul, Turkey)',
+    org: 'PURE: Program for Undergraduate Research (Istanbul, Türkiye)',
     range: 'Sep 2022 — Feb 2023',
     summary:
       'Ran an NLP study on employee survey data to surface what drives organizational trust and engagement.',
