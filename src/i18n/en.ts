@@ -115,7 +115,7 @@ export const en: UIStrings = {
     heroGreeting: "Hey, I'm",
     heroName: 'Ayberk',
     heroLead:
-      'I\'m an engineer. I like making things well. I design and build software, and I enjoy the whole of that range, from shaping how something feels and looks to making what powers it efficient and reliable. What means the most is watching something I built get used, seeing it make a task lighter or move a real problem forward even slightly. That is what keeps me building: not just the craft of it, but the satisfaction I get when I see the good it does once it is in someone\'s hands.',
+      'I\'m an engineer. I like making things well. I design and build software, and I enjoy the whole of that range, from shaping how using it feels and how beautiful it looks to designing the backstage that makes it efficient and reliable. The best part is watching something I built get used, seeing it make a task lighter or solve a problem. That is what keeps me building: not just the craft of it, but the satisfaction I get when I see the good it does once it is in people\'s hands.',
     viewProjects: 'View projects',
     downloadCv: 'Download CV',
     skillsHeading: 'SKILLS',
