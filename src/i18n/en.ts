@@ -117,7 +117,7 @@ export const en: UIStrings = {
     heroGreeting: "Hey, I'm",
     heroName: 'Ayberk',
     heroLead:
-      'I build machine-learning systems and the tools around them — from training pipelines to the polished product on top. I care about shipping things that are fast, reliable, and genuinely nice to use.',
+      'I like making things well. I design and build software, and I enjoy the whole of that range, from shaping how something feels and looks to making what sits underneath efficient and reliable. What means the most is watching something I built get used, seeing it make a task lighter or move a real problem forward even slightly. That is what keeps me building: not just the craft of it, but the good it does once it is in someone\'s hands.',
     viewProjects: 'View projects',
     downloadCv: 'Download CV',
     skillsHeading: 'SKILLS',
