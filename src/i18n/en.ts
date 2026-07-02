@@ -101,7 +101,7 @@ export const en: UIStrings = {
     menuToggle: 'Toggle menu',
   },
   footer: {
-    copy: (year) => `© ${year} AK — built with Astro · Cloudflare Pages`,
+    copy: (year) => `${year} Ayberk Kara — Designed and Built With Astro From Scratch`,
   },
   filter: {
     all: 'all',

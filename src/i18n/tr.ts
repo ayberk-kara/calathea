@@ -11,7 +11,7 @@ export const tr: UIStrings = {
     menuToggle: 'Menüyü aç/kapat',
   },
   footer: {
-    copy: (year) => `© ${year} AK — Astro ile yapıldı · Cloudflare Pages`,
+    copy: (year) => `${year} Ayberk Kara — Astro ile Sıfırdan Tasarlandı ve Geliştirildi`,
   },
   filter: {
     all: 'tümü',
