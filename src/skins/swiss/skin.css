@@ -134,6 +134,13 @@ html:not([data-skin='swiss']) [data-skin-root='swiss'] {
   border-left: 1px solid var(--swiss-border);
 }
 
+[data-skin-root='swiss'] .swiss-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--swiss-border);
+  border-left: 1px solid var(--swiss-border);
+}
+
 [data-skin-root='swiss'] .swiss-skills-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -230,8 +237,15 @@ html:not([data-skin='swiss']) [data-skin-root='swiss'] {
   margin-left: auto;
 }
 
+@media (max-width: 1100px) {
+  [data-skin-root='swiss'] .swiss-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 880px) {
   [data-skin-root='swiss'] .swiss-grid-3,
+  [data-skin-root='swiss'] .swiss-grid-4,
   [data-skin-root='swiss'] .swiss-skills-grid,
   [data-skin-root='swiss'] .swiss-grid-2 {
     grid-template-columns: 1fr;
