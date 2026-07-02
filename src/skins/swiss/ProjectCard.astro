@@ -15,7 +15,7 @@ const href = getRelativeLocaleUrl(locale, `projects/${getSlug(project.id)}`);
 
 <a href={href} class="project-card" data-filter-item data-filter-tags={data.tags.join(' ')}>
   <div class="project-card__meta-block">
-    <div class="project-card__meta">{data.index} · {data.type}</div>
+    <div class="project-card__meta">{data.type}</div>
     {data.duration && <div class="project-card__duration">{data.duration}</div>}
   </div>
   <h3 class="project-card__title">{data.title}</h3>

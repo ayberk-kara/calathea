@@ -22,7 +22,7 @@ const { data } = project;
 <article class="swiss-shell project">
   <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__breadcrumb">{t.project.breadcrumb}</a>
 
-  <div class="swiss-eyebrow">{data.index} · {data.type}</div>
+  <div class="swiss-eyebrow">{data.type}</div>
   {data.duration && <div class="project__duration">{data.duration}</div>}
   <h1 class="project__title">{data.title}</h1>
   <p class="project__summary">{data.summary}</p>

@@ -7,7 +7,7 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     index: z.string(),
-    type: z.enum(['SEARCH', 'OSS', 'LLM', 'MACHINE LEARNING', 'SYSTEMS', 'TOOLS']),
+    type: z.enum(['SYSTEMS', 'ML', 'HARDWARE', 'EMBEDDED', 'TOOLS']),
     summary: z.string(),
     stack: z.array(z.string()),
     tags: z.array(z.string()),
