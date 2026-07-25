@@ -30,6 +30,7 @@ const posts = defineCollection({
     excerpt: z.string(),
     project: reference('projects').optional(),
     lang: z.enum(['en', 'tr']),
+    draft: z.boolean().default(false),
   }),
 });
 

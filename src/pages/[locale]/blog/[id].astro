@@ -6,7 +6,7 @@ import { LOCALES, getSlug, localize, localizeAll } from '../../../lib/i18n';
 import { getUI } from '../../../i18n';
 
 export async function getStaticPaths() {
-  const allPosts = await getCollection('posts');
+  const allPosts = (await getCollection('posts')).filter((p) => !p.data.draft);
   const allProjects = await getCollection('projects');
 
   return LOCALES.flatMap((locale) => {

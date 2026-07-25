@@ -19,6 +19,7 @@ const projects = localizeAll(await getCollection('projects'), locale).sort((a, b
 const featuredProjects = projects.filter((p) => p.data.featured);
 
 const recentPosts = localizeAll(await getCollection('posts'), locale)
+  .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 5);
 ---
