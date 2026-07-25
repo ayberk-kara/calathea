@@ -18,7 +18,7 @@ import architectureDiagram from './iot-people-counting/iot-people-counting-archi
 import detectionFrame from './iot-people-counting/detection-frame.png';
 import comparisonTable from './iot-people-counting/iot-comparison.png';
 
-This project counts the number of people in a room in real time, using a Raspberry Pi camera and an object-detection model. What makes it worth writing about is not the counting itself but the structure: the same problem is solved two opposite ways, and the two designs are measured against each other. It was built for an Internet of Things course in Fall 2025.
+This project counts the number of people in a room in real time, using a Raspberry Pi camera and an object-detection model. What makes it worth writing about is not the counting itself but the structure: the same problem is solved two opposite ways, and the two designs are measured against each other. It was built for the Internet of Things course in Fall 2025.
 
 The central question is where the computation should happen. A camera produces frames; a model turns frames into a person count; something has to run that model. Put the model on a server and the camera only has to stream video. Put the model on the device and only a tiny number needs to travel. Each choice moves the bottleneck somewhere different and changes the network cost entirely. The project implements both and makes the tradeoff concrete.
 
@@ -62,4 +62,4 @@ A small standalone polling utility rounds out the project: a minimal client that
 
 ## Takeaways
 
-The point of building both halves was to feel the edge-versus-cloud inference tradeoff rather than just read about it. Moving the model from the server to the device is not a single decision; it pulls the bottleneck, the network cost, the right concurrency model, and even the meaning of a latency measurement along with it. Seeing that one choice ripple through every layer of the system, and matching each design's server framework and instrumentation to its actual constraints rather than reusing one pattern for both, was the real substance of the project, and the part most relevant to building ML systems that have to run somewhere real.
+Moving the model from the server to the device is not a single decision; it pulls the bottleneck, the network cost, the right concurrency model, and even the meaning of a latency measurement along with it. Seeing that one choice ripple through every layer of the system, and matching each design's server framework and instrumentation to its actual constraints rather than reusing one pattern for both, was the real substance of the project, and the part most relevant to building ML systems that have to run somewhere real.

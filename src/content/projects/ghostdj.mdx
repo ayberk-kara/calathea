@@ -18,9 +18,8 @@ import pinchScroll from './ghostdj/ghostdj-pinch-scroll.png';
 
 GhostDJ is a music player with no buttons, no mouse, and no touchscreen. You control it by moving your hand in front of a webcam: a fingertip becomes the cursor, holding it over a control activates that control, and pinching two fingers together scrolls the song list. It was built for a Human-Computer Interaction course (February to June 2025). The interesting part is not that it tracks a hand, plenty of things do that, but how little machinery the whole interaction is built from.
 
-## No gesture classifier, on purpose
+## How it works
 
-The expected way to build a gesture interface is to train a classifier that recognizes named poses: open palm, fist, thumbs up, and so on. GhostDJ does none of that. There is no gesture-recognition model anywhere in it. The entire interaction language is constructed from exactly two tracked points, the index fingertip and the middle fingertip, plus geometry.
 
 A pretrained hand-landmark model returns 21 points for the detected hand each frame, and GhostDJ uses just two of them. Everything the interface does, pointing, selecting, adjusting volume, scrolling, is built by asking simple spatial questions about where those two fingertips are and how far apart they are. That is a deliberate design choice with a real tradeoff: it keeps the app fast and removes the need to train or ship any gesture model, at the cost of requiring a "hold still to act" interaction rather than snappy discrete clicks. The constraint shapes the whole feel of the thing, and most of the design work went into making that constraint feel natural.
 
