@@ -29,7 +29,7 @@ const { Content } = await render(project);
 
 const projectSlug = getSlug(project.id);
 const relatedPosts = localizeAll(await getCollection('posts'), locale)
-  .filter((post) => post.data.project?.id === project.id || post.data.tags.includes(projectSlug))
+  .filter((post) => !post.data.draft && (post.data.project?.id === project.id || post.data.tags.includes(projectSlug)))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 5);
 ---

@@ -30,7 +30,6 @@ const skillGroups = [
 
 <section class="hero">
   <div class="hero__intro">
-    <div class="swiss-eyebrow">★ {t.home.heroEyebrow}</div>
     <h1 class="hero__heading">{t.home.heroGreeting}<br />{t.home.heroName}.</h1>
   </div>
   <div class="hero__side">
@@ -51,7 +50,7 @@ const skillGroups = [
     <h2 class="swiss-section__heading">{t.home.projectsHeading}</h2>
     <a href={getRelativeLocaleUrl(locale, 'projects')} class="swiss-section__link">{t.home.projectsViewAll} →</a>
   </div>
-  <div class="swiss-grid-3">
+  <div class="swiss-grid-4">
     {featuredProjects.map((project) => <ProjectCard project={project} locale={locale} />)}
   </div>
 </section>
@@ -139,10 +138,14 @@ const skillGroups = [
     margin: 0 auto;
     padding: 0 var(--swiss-gutter) 40px;
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 1fr 1.85fr;
     gap: 54px;
-    align-items: end;
+    align-items: center;
     border-bottom: 2px solid var(--swiss-border-strong);
+  }
+
+  .hero__intro {
+    padding-bottom: 60px;
   }
 
   .hero__heading {

@@ -19,17 +19,15 @@ document.querySelectorAll<HTMLSelectElement>('[data-skin-select]').forEach((sele
   if (current) select.value = current;
 
   select.addEventListener('change', () => {
-    root.setAttribute('data-skin', select.value);
-
-    const mode = skinList.find((skin) => skin.id === select.value)?.defaultMode ?? 'light';
-    root.setAttribute('data-mode', mode);
-
+    const newSkin = select.value;
+    const mode = skinList.find((skin) => skin.id === newSkin)?.defaultMode ?? 'light';
     try {
-      localStorage.setItem('skin', select.value);
+      localStorage.setItem('skin', newSkin);
       localStorage.setItem('mode', mode);
     } catch {
       /* localStorage unavailable */
     }
+    window.location.reload();
   });
 });
 

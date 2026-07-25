@@ -20,53 +20,59 @@ const { data } = project;
 ---
 
 <article class="swiss-shell project">
-  <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__breadcrumb">{t.project.breadcrumb}</a>
+  <div class="project__inner">
+    <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__breadcrumb">{t.project.breadcrumb}</a>
 
-  <div class="swiss-eyebrow">{data.index} · {data.type}</div>
-  {data.duration && <div class="project__duration">{data.duration}</div>}
-  <h1 class="project__title">{data.title}</h1>
-  <p class="project__summary">{data.summary}</p>
+    <div class="swiss-eyebrow">{data.type}</div>
+    {data.duration && <div class="project__duration">{data.duration}</div>}
+    <h1 class="project__title">{data.title}</h1>
+    <p class="project__summary">{data.summary}</p>
 
-  <div class="project__stack">
-    {data.stack.map((tech) => <span class="swiss-chip">{tech}</span>)}
-  </div>
+    <div class="project__stack">
+      {data.stack.map((tech) => <span class="swiss-chip">{tech}</span>)}
+    </div>
 
-  <div class="project__links">
-    {data.liveDemo && (
-      <a href={data.liveDemo} target="_blank" rel="noopener" class="swiss-button swiss-button--accent">{t.project.liveDemo}</a>
-    )}
-    {data.repo && (
-      <a href={data.repo} target="_blank" rel="noopener" class="swiss-button">{t.project.repo}</a>
-    )}
-  </div>
+    <div class="project__links">
+      {data.liveDemo && (
+        <a href={data.liveDemo} target="_blank" rel="noopener" class="swiss-button swiss-button--accent">{t.project.liveDemo}</a>
+      )}
+      {data.repo && (
+        <a href={data.repo} target="_blank" rel="noopener" class="swiss-button">{t.project.repo}</a>
+      )}
+    </div>
 
-  <div class="project__body">
-    <Prose>
-      <Content />
-    </Prose>
-  </div>
+    <div class="project__body">
+      <Prose>
+        <Content />
+      </Prose>
+    </div>
 
-  {
-    relatedPosts.length > 0 && (
-      <div class="project__related">
-        <h2 class="project__heading">{t.project.relatedNotes}</h2>
-        <div class="project__related-list">
-          {relatedPosts.map((post) => <PostCard post={post} locale={locale} />)}
+    {
+      relatedPosts.length > 0 && (
+        <div class="project__related">
+          <h2 class="project__heading">{t.project.relatedNotes}</h2>
+          <div class="project__related-list">
+            {relatedPosts.map((post) => <PostCard post={post} locale={locale} />)}
+          </div>
         </div>
-      </div>
-    )
-  }
+      )
+    }
 
-  <div class="project__footer">
-    <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__footer-link">{t.project.allProjects}</a>
-    <a href={getRelativeLocaleUrl(locale, 'blog')} class="project__footer-link">{t.project.devBlog}</a>
+    <div class="project__footer">
+      <a href={getRelativeLocaleUrl(locale, 'projects')} class="project__footer-link">{t.project.allProjects}</a>
+      <a href={getRelativeLocaleUrl(locale, 'blog')} class="project__footer-link">{t.project.devBlog}</a>
+    </div>
   </div>
 </article>
 
 <style>
   .project {
-    max-width: 800px;
     padding-bottom: 56px;
+  }
+
+  .project__inner {
+    max-width: 800px;
+    margin: 0 auto;
   }
 
   .project__breadcrumb {

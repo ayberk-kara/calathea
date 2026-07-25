@@ -11,7 +11,7 @@ export const tr: UIStrings = {
     menuToggle: 'Menüyü aç/kapat',
   },
   footer: {
-    copy: (year) => `© ${year} AK — Astro ile yapıldı · Cloudflare Pages`,
+    copy: (year) => `${year} Ayberk Kara — Astro ile Sıfırdan Tasarlandı ve Geliştirildi`,
   },
   filter: {
     all: 'tümü',
@@ -22,7 +22,6 @@ export const tr: UIStrings = {
     showing: (visible, total, noun) => `${visible} / ${total} ${noun} GÖSTERİLİYOR`,
   },
   home: {
-    heroEyebrow: 'SİSTEM TASARIMCISI, SADECE MODEL DEĞİL',
     heroGreeting: 'Merhaba, ben',
     heroName: 'Ayberk',
     heroLead:

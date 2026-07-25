@@ -12,9 +12,9 @@ export function getStaticPaths() {
 const { locale } = Astro.params;
 const t = getUI(locale);
 
-const posts = localizeAll(await getCollection('posts'), locale).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
+const posts = localizeAll(await getCollection('posts'), locale)
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const projects = await getCollection('projects');
 const projectTitles = new Map<string, string>();

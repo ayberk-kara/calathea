@@ -15,7 +15,6 @@ const href = getRelativeLocaleUrl(locale, `projects/${getSlug(project.id)}`);
 
 <a href={href} class="console-card project-card" data-filter-item data-filter-tags={data.tags.join(' ')}>
   <div class="project-card__head">
-    <span class="project-card__index">{data.index}</span>
     <h3 class="project-card__title">{data.title}</h3>
     <span class="console-chip">{data.type}</span>
   </div>
@@ -32,11 +31,6 @@ const href = getRelativeLocaleUrl(locale, `projects/${getSlug(project.id)}`);
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
-  }
-
-  .project-card__index {
-    color: var(--console-accent-2);
-    font-size: 12px;
   }
 
   .project-card__duration {
